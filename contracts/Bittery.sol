@@ -2,6 +2,7 @@
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/security/Pausable.sol";
 // Importações para Chainlink VRF v2.5 (V2Plus)
 import "@chainlink/contracts/src/v0.8/vrf/dev/VRFConsumerBaseV2Plus.sol";
 import "@chainlink/contracts/src/v0.8/vrf/dev/libraries/VRFV2PlusClient.sol"; // Necessário para a estrutura ExtraArgsV1
@@ -10,7 +11,7 @@ import "@chainlink/contracts/src/v0.8/vrf/dev/libraries/VRFV2PlusClient.sol"; //
 
 /// @title Bittery
 /// @notice Simple lottery using Chainlink VRF v2.5 for randomness
-contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard { // Herda de VRFConsumerBaseV2Plus
+contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard, Pausable { // Herda de VRFConsumerBaseV2Plus
     uint256 public constant TICKET_PRICE = 0.01 ether;
     /// @notice percentage of the ticket price taken as a fee (0-100)
     uint256 public feePercent = 5; // 5% fee by default
@@ -21,7 +22,8 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard { // Herda de VRFCons
 
     address[] private players;
     address public recentWinner;
-    address public owner;
+    address public owner;
+    uint256 public currentRound;
     // O coordenador é acessado via s_vrfCoordinator (herdado do VRFConsumerBaseV2Plus)
     // VRFCoordinatorV2Interface private immutable coordinator; // Esta linha não é mais necessária como variável de estado, pois é herdada
     uint256 private immutable subscriptionId; // Tipo alterado para uint256 para VRF v2.5
@@ -43,11 +45,12 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard { // Herda de VRFCons
         owner = msg.sender;
         // coordinator = VRFCoordinatorV2Interface(_coordinator); // Não é mais necessário, use s_vrfCoordinator
         subscriptionId = _subscriptionId;
-        keyHash = _keyHash;
-    }
+        keyHash = _keyHash;
+        currentRound = 1;
+    }
 
     /// @notice Buy lottery ticket
-    function buyTicket() external payable nonReentrant {
+    function buyTicket() external payable nonReentrant whenNotPaused {
         require(msg.value == TICKET_PRICE, "Incorrect ETH sent");
         uint256 feeAmount = (msg.value * feePercent) / 100;
         if (feeAmount > 0) {
@@ -58,7 +61,7 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard { // Herda de VRFCons
     }
 
     /// @notice Start winner selection (owner only)
-    function requestRandomWinner() external onlyOwner {
+    function requestRandomWinner() external onlyOwner whenNotPaused {
         require(players.length > 0, "No players");
         require(!drawing, "Already drawing");
         drawing = true;
@@ -82,14 +85,15 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard { // Herda de VRFCons
     /// @notice Chainlink VRF callback
     function fulfillRandomWords(uint256, uint256[] memory randomWords) internal override {
         uint256 index = randomWords[0] % players.length;
-        recentWinner = players[index];
-        players = new address[](0);
-        drawing = false;
-        // Melhoria: Usando .call em vez de .transfer para maior robustez
-        (bool success, ) = payable(recentWinner).call{value: address(this).balance}("");
-        require(success, "Winner payout failed"); // Adiciona verificação de sucesso
-        emit WinnerPicked(recentWinner);
-    }
+        recentWinner = players[index];
+        players = new address[](0);
+        drawing = false;
+        // Melhoria: Usando .call em vez de .transfer para maior robustez
+        (bool success, ) = payable(recentWinner).call{value: address(this).balance}("");
+        require(success, "Winner payout failed"); // Adiciona verificação de sucesso
+        emit WinnerPicked(recentWinner);
+        currentRound += 1;
+    }
 
     /// @notice Return list of current players
     function getPlayers() external view returns (address[] memory) {
@@ -105,14 +109,32 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard { // Herda de VRFCons
 
     /// @notice Update the fee recipient address. Only owner can call.
     /// @param _feeRecipient Address that will receive fees
-    function setFeeRecipient(address _feeRecipient) external onlyOwner {
-        require(_feeRecipient != address(0), "Invalid recipient");
-        feeRecipient = _feeRecipient;
-    }
+    function setFeeRecipient(address _feeRecipient) external onlyOwner {
+        require(_feeRecipient != address(0), "Invalid recipient");
+        feeRecipient = _feeRecipient;
+    }
 
-    /// @notice Modifier restricting to owner
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Not owner");
-        _;
-    }
+    /// @notice Withdraw any leftover ether to the owner
+    function withdraw() external onlyOwner nonReentrant {
+        uint256 balance = address(this).balance;
+        require(balance > 0, "No funds");
+        (bool sent, ) = payable(owner).call{value: balance}("");
+        require(sent, "Withdraw failed");
+    }
+
+    /// @notice Pause the contract
+    function pause() external onlyOwner {
+        _pause();
+    }
+
+    /// @notice Unpause the contract
+    function unpause() external onlyOwner {
+        _unpause();
+    }
+
+    /// @notice Modifier restricting to owner
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not owner");
+        _;
+    }
 }
