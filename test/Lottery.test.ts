@@ -30,4 +30,24 @@ describe("Bittery", function () {
       ]
     );
   });
+
+  it("owner can update fee percent", async function () {
+    const { lottery, owner } = await loadFixture(deployFixture);
+    await lottery.connect(owner).setFeePercent(10);
+    expect(await lottery.feePercent()).to.equal(10);
+  });
+
+  it("non-owner cannot update fee percent", async function () {
+    const { lottery, user } = await loadFixture(deployFixture);
+    await expect(lottery.connect(user).setFeePercent(10)).to.be.revertedWith(
+      "Not owner"
+    );
+  });
+
+  it("owner can update fee recipient", async function () {
+    const { lottery, owner } = await loadFixture(deployFixture);
+    const newRecipient = owner.address;
+    await lottery.connect(owner).setFeeRecipient(newRecipient);
+    expect(await lottery.feeRecipient()).to.equal(newRecipient);
+  });
 });

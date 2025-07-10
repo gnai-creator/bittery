@@ -9,8 +9,10 @@ import "@chainlink/contracts/src/v0.8/vrf/interfaces/VRFCoordinatorV2Interface.s
 /// @notice Simple lottery using Chainlink VRF v2 for randomness
 contract Bittery is VRFConsumerBaseV2, ReentrancyGuard {
     uint256 public constant TICKET_PRICE = 0.01 ether;
-    uint256 private constant FEE_PERCENT = 5; // 5% fee
-    address private constant FEE_RECIPIENT =
+    /// @notice percentage of the ticket price taken as a fee (0-100)
+    uint256 public feePercent = 5; // 5% fee by default
+    /// @notice address receiving collected fees
+    address public feeRecipient =
         0x9EA7EbEb25192B6d7e8e240A852e7EC56D4FB865;
     event WinnerPicked(address indexed winner);
 
@@ -43,9 +45,9 @@ contract Bittery is VRFConsumerBaseV2, ReentrancyGuard {
     /// @notice Buy lottery ticket
     function buyTicket() external payable nonReentrant {
         require(msg.value == TICKET_PRICE, "Incorrect ETH sent");
-        uint256 feeAmount = (msg.value * FEE_PERCENT) / 100;
+        uint256 feeAmount = (msg.value * feePercent) / 100;
         if (feeAmount > 0) {
-            (bool sent, ) = payable(FEE_RECIPIENT).call{value: feeAmount}("");
+            (bool sent, ) = payable(feeRecipient).call{value: feeAmount}("");
             require(sent, "Fee transfer failed");
         }
         players.push(msg.sender);
@@ -78,6 +80,20 @@ contract Bittery is VRFConsumerBaseV2, ReentrancyGuard {
     /// @notice Return list of current players
     function getPlayers() external view returns (address[] memory) {
         return players;
+    }
+
+    /// @notice Update the fee percentage. Only owner can call.
+    /// @param _feePercent New percentage (0-100)
+    function setFeePercent(uint256 _feePercent) external onlyOwner {
+        require(_feePercent <= 100, "Percent too high");
+        feePercent = _feePercent;
+    }
+
+    /// @notice Update the fee recipient address. Only owner can call.
+    /// @param _feeRecipient Address that will receive fees
+    function setFeeRecipient(address _feeRecipient) external onlyOwner {
+        require(_feeRecipient != address(0), "Invalid recipient");
+        feeRecipient = _feeRecipient;
     }
 
     /// @notice Modifier restricting to owner
