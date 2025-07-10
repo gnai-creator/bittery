@@ -33,7 +33,7 @@ export default function InfoCarousel() {
   useEffect(() => {
     const id = setInterval(() => {
       setIndex((i) => (i + 1) % slides.length);
-    }, 5000);
+    }, 8000);
     return () => clearInterval(id);
   }, []);
 
