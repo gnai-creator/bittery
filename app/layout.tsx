@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bittery LLC",
+  title: "Bittery",
   description: "Decentralized lottery game",
 };
 
