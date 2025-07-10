@@ -1,16 +1,16 @@
-'use client';
-import { useEffect, useState } from 'react';
-import { ethers } from 'ethers';
-import lotteryAbi from '../contracts/Bittery.json';
-import InfoCarousel from './components/InfoCarousel';
+"use client";
+import { useEffect, useState } from "react";
+import { ethers } from "ethers";
+import lotteryAbi from "../contracts/Bittery.json";
+import InfoCarousel from "./components/InfoCarousel";
 
-const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '';
+const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "";
 
 export default function Home() {
   const [provider, setProvider] = useState<ethers.BrowserProvider>();
   const [signer, setSigner] = useState<ethers.JsonRpcSigner>();
   const [players, setPlayers] = useState<string[]>([]);
-  const [winner, setWinner] = useState<string>('');
+  const [winner, setWinner] = useState<string>("");
   const [contract, setContract] = useState<ethers.Contract>();
   const [animate, setAnimate] = useState(false);
 
@@ -23,14 +23,14 @@ export default function Home() {
     const c = new ethers.Contract(CONTRACT_ADDRESS, lotteryAbi.abi, provider);
     setContract(c);
     getPlayers(c);
-    c.on('WinnerPicked', () => getWinner(c));
+    c.on("WinnerPicked", () => getWinner(c));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [provider]);
 
   async function connect() {
     if ((window as any).ethereum) {
       const prov = new ethers.BrowserProvider((window as any).ethereum);
-      await prov.send('eth_requestAccounts', []);
+      await prov.send("eth_requestAccounts", []);
       setProvider(prov);
       setSigner(await prov.getSigner());
     }
@@ -38,7 +38,9 @@ export default function Home() {
 
   async function buy() {
     if (!contract || !signer) return;
-    const tx = await (contract as any).connect(signer).buyTicket({ value: ethers.parseEther('0.01') });
+    const tx = await (contract as any)
+      .connect(signer)
+      .buyTicket({ value: ethers.parseEther("0.01") });
     await tx.wait();
     getPlayers(contract);
   }
@@ -55,10 +57,19 @@ export default function Home() {
 
   return (
     <main
-      className={`flex flex-col items-center justify-center w-full px-4 py-12 text-center gap-8 ${animate ? 'animate-fade' : ''}`}
+      className={`flex flex-col items-center justify-center w-full px-4 py-12 text-center gap-8 ${
+        animate ? "animate-fade" : ""
+      }`}
     >
       <header className="space-y-2">
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight title">Bittery Lottery</h1>
+        <img
+          src="/logo-alpha.png"
+          alt="Bittery Lottery"
+          className="mx-auto w-32 h-32"
+        />
+        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight title">
+          Bittery Lottery
+        </h1>
         <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg">
           Join the decentralized lottery and try your luck!
         </p>
