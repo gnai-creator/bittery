@@ -9,6 +9,9 @@ import "@chainlink/contracts/src/v0.8/vrf/interfaces/VRFCoordinatorV2Interface.s
 /// @notice Simple lottery using Chainlink VRF v2 for randomness
 contract Bittery is VRFConsumerBaseV2, ReentrancyGuard {
     uint256 public constant TICKET_PRICE = 0.01 ether;
+    uint256 private constant FEE_PERCENT = 5; // 5% fee
+    address private constant FEE_RECIPIENT =
+        0x9EA7EbEb25192B6d7e8e240A852e7EC56D4FB865;
     event WinnerPicked(address indexed winner);
 
     address[] private players;
@@ -40,6 +43,11 @@ contract Bittery is VRFConsumerBaseV2, ReentrancyGuard {
     /// @notice Buy lottery ticket
     function buyTicket() external payable nonReentrant {
         require(msg.value == TICKET_PRICE, "Incorrect ETH sent");
+        uint256 feeAmount = (msg.value * FEE_PERCENT) / 100;
+        if (feeAmount > 0) {
+            (bool sent, ) = payable(FEE_RECIPIENT).call{value: feeAmount}("");
+            require(sent, "Fee transfer failed");
+        }
         players.push(msg.sender);
     }
 
