@@ -150,11 +150,11 @@ export default function Home() {
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight title">
           Bittery
         </h1>
-        <Link href={"terms"} className="text-sm text-gray-500 hover:underline">
+        <Link href={"/terms"} className="text-sm text-gray-500 hover:underline">
           Terms of Service
         </Link>
         <Link
-          href={"privacy"}
+          href={"/privacy"}
           className="text-sm text-gray-500 hover:underline"
         >
           Privacy Policy
