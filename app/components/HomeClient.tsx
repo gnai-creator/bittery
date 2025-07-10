@@ -171,11 +171,10 @@ export default function HomeClient() {
       </div>
       {launched && <p className="text-lg">Next draw in: {timeLeft}</p>}
       <InfoCarousel />
-      <iframe
-        src="https://youtube.com/shorts/j-gwGXYP8YU"
-        className="w-full max-w-2xl h-64 sm:h-80 rounded-lg shadow-lg"
-        title="Lottery Intro Video"
-      />
+      <video controls autoPlay loop className="w-full rounded-xl shadow-lg">
+        <source src="/Bittery - Always a Winner.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
       <div className="flex flex-col sm:flex-row gap-4">
         <button
           className="rounded bg-black text-white px-6 py-2 hover:bg-gray-800 transition-colors"
