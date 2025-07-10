@@ -3,10 +3,10 @@ import { expect } from "chai";
 import hre from "hardhat";
 const { ethers } = hre;
 
-describe("DecentralizedLottery", function () {
+describe("Bittery", function () {
   async function deployFixture() {
     const [owner, user] = await ethers.getSigners();
-    const Lottery = await ethers.getContractFactory("DecentralizedLottery");
+    const Lottery = await ethers.getContractFactory("Bittery");
     const lottery = (await Lottery.deploy(
       ethers.ZeroAddress,
       0,

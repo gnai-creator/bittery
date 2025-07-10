@@ -1,7 +1,7 @@
 {
   "_format": "hh-sol-artifact-1",
-  "contractName": "DecentralizedLottery",
-  "sourceName": "contracts/DecentralizedLottery.sol",
+  "contractName": "Bittery",
+  "sourceName": "contracts/Bittery.sol",
   "abi": [
     {
       "inputs": [

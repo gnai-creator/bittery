@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
-import lotteryAbi from '../contracts/DecentralizedLottery.json';
+import lotteryAbi from '../contracts/Bittery.json';
 
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '';
 
@@ -49,7 +49,7 @@ export default function Home() {
 
   return (
     <main className="p-8 flex flex-col gap-4">
-      <h1 className="text-2xl font-bold">Decentralized Lottery</h1>
+      <h1 className="text-2xl font-bold">Bittery Lottery</h1>
       <button className="border px-3 py-1" onClick={connect}>Connect Wallet</button>
       <button className="border px-3 py-1" onClick={buy}>Buy Ticket (0.01 ETH)</button>
       <div>
