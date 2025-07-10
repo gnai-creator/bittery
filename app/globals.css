@@ -30,6 +30,10 @@ body {
   text-shadow: 0 0 5px rgba(255, 138, 0, 0.5);
 }
 
+button{
+  border-color: #ff8a00;
+}
+
 @keyframes fade {
   from {
     opacity: 0;
