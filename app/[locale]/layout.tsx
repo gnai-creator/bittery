@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import TermsBanner from "./components/TermsBanner";
-import Footer from "./components/Footer";
-import "./globals.css";
+import TermsBanner from "../components/TermsBanner";
+import Footer from "../components/Footer";
+import "../globals.css";
+
+import {NextIntlClientProvider, useMessages} from "next-intl";
+import {unstable_setRequestLocale} from "next-intl/server";
+import {locales} from "../../i18n";
+import { notFound } from "next/navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,19 +46,30 @@ export const metadata: Metadata = {
   },
 };
 
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
 export default function RootLayout({
   children,
+  params: { locale },
 }: Readonly<{
   children: React.ReactNode;
+  params: { locale: string };
 }>) {
+  if (!locales.includes(locale as any)) notFound();
+  unstable_setRequestLocale(locale);
+  const messages = useMessages();
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-br from-white to-gray-100 dark:from-neutral-900 dark:to-neutral-800 text-gray-900 dark:text-gray-100 flex flex-col min-h-screen`}
       >
-        <main className="flex-grow">{children}</main>
-        <Footer />
-        <TermsBanner />
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <main className="flex-grow">{children}</main>
+          <Footer />
+          <TermsBanner />
+        </NextIntlClientProvider>
       </body>
     </html>
   );
