@@ -63,7 +63,7 @@ export default function Home() {
     >
       <header className="space-y-2">
         <img
-          src="/logo-alpha.png"
+          src="/bittery-alpha.png"
           alt="Bittery Lottery"
           className="mx-auto w-32 h-32"
         />
