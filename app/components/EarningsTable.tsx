@@ -5,14 +5,14 @@ interface RowData {
   players: number;
   referrals: number;
   referralEarningsETH: number;
-  referralEarningsBRL: number;
+  referralEarningsUSD: number;
   chance: number;
   prizePoolETH: number;
-  prizePoolBRL: number;
-  totalPotentialBRL: number;
+  prizePoolUSD: number;
+  totalPotentialUSD: number;
 }
 
-const ETH_TO_BRL = 15400;
+const ETH_TO_USD = 3000;
 const REF_PERCENT_ETH = 0.00025; // 2.5% of 0.01 ETH
 
 function generateData(start = 2, end = 50): RowData[] {
@@ -20,20 +20,20 @@ function generateData(start = 2, end = 50): RowData[] {
   for (let players = start; players <= end; players++) {
     const referrals = players - 1;
     const referralEarningsETH = referrals * REF_PERCENT_ETH;
-    const referralEarningsBRL = referralEarningsETH * ETH_TO_BRL;
+    const referralEarningsUSD = referralEarningsETH * ETH_TO_USD;
     const chance = 1 / players;
     const prizePoolETH = 0.0095 * players;
-    const prizePoolBRL = prizePoolETH * ETH_TO_BRL;
-    const totalPotentialBRL = referralEarningsBRL + prizePoolBRL * chance;
+    const prizePoolUSD = prizePoolETH * ETH_TO_USD;
+    const totalPotentialUSD = referralEarningsUSD + prizePoolUSD * chance;
     data.push({
       players,
       referrals,
       referralEarningsETH,
-      referralEarningsBRL,
+      referralEarningsUSD,
       chance,
       prizePoolETH,
-      prizePoolBRL,
-      totalPotentialBRL,
+      prizePoolUSD,
+      totalPotentialUSD,
     });
   }
   return data;
@@ -50,11 +50,11 @@ export default function EarningsTable() {
             <th className="border px-2">Players</th>
             <th className="border px-2">Referrals</th>
             <th className="border px-2">Referral Earnings (ETH)</th>
-            <th className="border px-2">Referral Earnings (R$)</th>
+            <th className="border px-2">Referral Earnings ($)</th>
             <th className="border px-2">Chance to Win</th>
             <th className="border px-2">Prize Pool (ETH)</th>
-            <th className="border px-2">Prize Pool (R$)</th>
-            <th className="border px-2">Total Potential Gain (R$)</th>
+            <th className="border px-2">Prize Pool ($)</th>
+            <th className="border px-2">Total Potential Gain ($)</th>
           </tr>
         </thead>
         <tbody>
@@ -66,12 +66,12 @@ export default function EarningsTable() {
                 {row.referralEarningsETH.toFixed(6)}
               </td>
               <td className="border px-2 text-right">
-                {row.referralEarningsBRL.toFixed(2)}
+                {row.referralEarningsUSD.toFixed(2)}
               </td>
               <td className="border px-2 text-right">{row.chance.toFixed(4)}</td>
               <td className="border px-2 text-right">{row.prizePoolETH.toFixed(6)}</td>
-              <td className="border px-2 text-right">{row.prizePoolBRL.toFixed(2)}</td>
-              <td className="border px-2 text-right">{row.totalPotentialBRL.toFixed(2)}</td>
+              <td className="border px-2 text-right">{row.prizePoolUSD.toFixed(2)}</td>
+              <td className="border px-2 text-right">{row.totalPotentialUSD.toFixed(2)}</td>
             </tr>
           ))}
         </tbody>
