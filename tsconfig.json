@@ -9,15 +9,36 @@
     "skipLibCheck": true,
     "outDir": "./dist", // Onde os arquivos JS compilados podem ser colocados (mesmo que não seja usado diretamente)
     "resolveJsonModule": true // Útil para importar JSON
+    ,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "noEmit": true,
+    "incremental": true,
+    "moduleResolution": "node",
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
+    "./hardhat.config.ts",
     "./scripts",
-    "./test",
-    "./typechain-types", // Se você usa o Typechain para tipos de contrato
-    "./hardhat.config.ts" // Inclua seu arquivo de configuração do Hardhat
+    "./test", // Se você usa o Typechain para tipos de contrato
+    "./typechain-types" // Inclua seu arquivo de configuração do Hardhat
+    ,
+    ".next/types/**/*.ts"
   ],
   "files": [ // Para garantir que o Hardhat.config seja processado
     "./hardhat.config.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
