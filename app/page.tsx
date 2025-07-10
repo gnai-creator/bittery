@@ -4,6 +4,7 @@ import { ethers } from "ethers";
 import lotteryAbi from "../contracts/Bittery.json";
 import InfoCarousel from "./components/InfoCarousel";
 import ReferralLink from "./components/ReferralLink";
+import EarningsTable from "./components/EarningsTable";
 
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "";
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
@@ -159,6 +160,7 @@ export default function Home() {
       </div>
       <p className="text-lg">Next draw in: {timeLeft}</p>
       <InfoCarousel />
+      {!launched && <EarningsTable />}
       <div className="flex flex-col sm:flex-row gap-4">
         <button
           className="rounded bg-black text-white px-6 py-2 hover:bg-gray-800 transition-colors"
