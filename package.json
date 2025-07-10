@@ -9,7 +9,8 @@
     "lint": "next lint",
     "test": "hardhat test",
     "compile": "hardhat compile",
-    "deploy": "hardhat run scripts/deploy.ts --network sepolia"
+    "deploy": "hardhat run scripts/deploy.ts --network sepolia",
+    "schedule": "ts-node scripts/scheduleDraw.ts"
   },
   "dependencies": {
     "@chainlink/contracts": "^1.4.0",
@@ -17,7 +18,8 @@
     "ethers": "^6.15.0",
     "next": "15.3.5",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "node-cron": "^3.0.3"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^6.0.0",
