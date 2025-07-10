@@ -168,7 +168,7 @@ export default function Home() {
           ? "🟢 We're already launched! Buy your ticket now!"
           : `⏳ ${launchCountdown} left until Bittery's launch`}
       </div>
-      <p className="text-lg">Next draw in: {timeLeft}</p>
+      {launched && <p className="text-lg">Next draw in: {timeLeft}</p>}
       <InfoCarousel />
       <div className="flex flex-col sm:flex-row gap-4">
         <button
