@@ -1,5 +1,5 @@
 "use client";
-import {useRouter, usePathname, useLocale} from 'next-intl/client';
+import {useRouter, usePathname, useLocale} from 'next-intl/navigation';
 
 export default function LanguageSwitcher() {
   const router = useRouter();
@@ -20,6 +20,11 @@ export default function LanguageSwitcher() {
     >
       <option value="en">EN</option>
       <option value="pt">PT</option>
+      <option value="es">ES</option>
+      <option value="fr">FR</option>
+      <option value="sv">SV</option>
+      <option value="de">DE</option>
+      <option value="ru">RU</option>
     </select>
   );
 }
