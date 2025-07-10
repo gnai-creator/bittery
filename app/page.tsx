@@ -152,7 +152,7 @@ export default function Home() {
         </h1>
         <Link href={"/terms"} className="text-sm text-gray-500 hover:underline">
           Terms of Service
-        </Link>
+        </Link>{" "}
         <Link
           href={"/privacy"}
           className="text-sm text-gray-500 hover:underline"
