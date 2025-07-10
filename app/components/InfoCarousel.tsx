@@ -14,7 +14,7 @@ const slides: Slide[] = [
   },
   {
     title: 'Rules',
-    text: 'Send exactly 0.01 ETH when buying. Only the contract owner can start the drawing and a 5% fee is sent to the configured address.',
+    text: 'Send exactly 0.01 ETH when buying. Only the contract owner can start the drawing or with two valid players all drawings start Sunday at 8 PM and a 5% fee is sent to the configured address.',
   },
   {
     title: 'Technical Details',
@@ -23,7 +23,7 @@ const slides: Slide[] = [
   {
     title: 'Code',
     text: 'The full project is available on GitHub.',
-    link: 'https://github.com/yourusername/bittery',
+    link: 'https://github.com/gna-creator/bittery',
   },
 ];
 
