@@ -33,7 +33,9 @@ export default function Home() {
         setLaunched(true);
       } else {
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const hours = Math.floor(
+          (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         setLaunchCountdown(`${days} dias, ${hours} horas e ${minutes} minutos`);
         setLaunched(false);
@@ -150,8 +152,8 @@ export default function Home() {
       </header>
       <div id="status" className="text-lg">
         {launched
-          ? "🟢 Já lançamos! Compre seu bilhete agora!"
-          : `⏳ Faltam ${launchCountdown} para o lançamento do Bittery`}
+          ? "🟢 We're already launched! Buy your ticket now!"
+          : `⏳ ${launchCountdown} left until Bittery's launch`}
       </div>
       <p className="text-lg">Next draw in: {timeLeft}</p>
       <InfoCarousel />
@@ -174,7 +176,9 @@ export default function Home() {
       </div>
       {launched && <ReferralLink />}
       <div className="w-full max-w-md text-left">
-        <h2 className="text-xl font-semibold mb-2">Players ({players.length})</h2>
+        <h2 className="text-xl font-semibold mb-2">
+          Players ({players.length})
+        </h2>
         <ul className="space-y-1">
           {players.map((p) => (
             <li key={p} className="truncate">
