@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="public/logo.png" alt="Bittery Logo" width="250"/>
+</p>
+
 # 🎲 Bittery
 
 **Bittery** is a decentralized, fair, and transparent lottery system built on the Polygon network. It uses **Chainlink VRF** (Verifiable Random Function) to ensure that all draws are provably random and tamper-proof.
