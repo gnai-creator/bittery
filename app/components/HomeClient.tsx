@@ -172,10 +172,13 @@ export default function HomeClient() {
       {launched && <p className="text-lg">Next draw in: {timeLeft}</p>}
       <InfoCarousel />
 
-      <video controls autoPlay loop className=" rounded-xl shadow-lg">
-        <source src="/Bittery - Always a Winner.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+      <div className="flex justify-center p-4">
+        <video controls autoPlay loop className="w-64 rounded-lg shadow-md">
+          <source src="/Bittery - Always a Winner.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
       <div className="flex flex-col sm:flex-row gap-4">
         <button
           className="rounded bg-black text-white px-6 py-2 hover:bg-gray-800 transition-colors"
