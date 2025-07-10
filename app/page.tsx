@@ -171,7 +171,7 @@ export default function Home() {
       </div>
       {/* This is the YouTube iframe for the lottery intro video 1080x1920 */}
       <iframe
-        src="https://youtube.com/shorts/j-gwGXYP8YU?feature=share"
+        src="https://youtube.com/shorts/j-gwGXYP8YU"
         className="max-w-2xl aspect-video rounded-lg shadow-lg"
         title="Bittery Lottery Intro"
       ></iframe>
