@@ -11,7 +11,7 @@
           "type": "address"
         },
         {
-          "internalType": "uint64",
+          "internalType": "uint256",
           "name": "_subscriptionId",
           "type": "uint64"
         },
