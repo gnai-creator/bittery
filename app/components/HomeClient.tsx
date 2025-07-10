@@ -171,7 +171,8 @@ export default function HomeClient() {
       </div>
       {launched && <p className="text-lg">Next draw in: {timeLeft}</p>}
       <InfoCarousel />
-      <video controls autoPlay loop className="w-full rounded-xl shadow-lg">
+
+      <video controls autoPlay loop className=" rounded-xl shadow-lg">
         <source src="/Bittery - Always a Winner.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
