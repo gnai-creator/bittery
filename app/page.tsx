@@ -151,14 +151,15 @@ export default function Home() {
           Bittery
         </h1>
         <Link href={"/terms"} className="text-sm text-gray-500 hover:underline">
-          Terms of Service
+          Terms •
         </Link>{" "}
         <Link
           href={"/privacy"}
           className="text-sm text-gray-500 hover:underline"
         >
-          Privacy Policy
-        </Link>
+          Privacy •
+        </Link>{" "}
+        © 2025 Bittery LLC
         <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg">
           A Decentralized Lottery Powered by Chainlink VRF
         </p>
