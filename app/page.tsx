@@ -68,7 +68,7 @@ export default function Home() {
           className="mx-auto w-32 h-32"
         />
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight title">
-          🎲 Bittery
+          Bittery
         </h1>
         <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg">
           A Decentralized Lottery Powered by Chainlink VRF
