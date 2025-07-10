@@ -18,6 +18,8 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard, Pausable { // Herda 
         0x9EA7EbEb25192B6d7e8e240A852e7EC56D4FB865;
     event WinnerPicked(address indexed winner);
 
+    
+    uint256 public referralPercent = 50; // 50% da taxa (não do valor total) vai para o referenciador por padrão
     address[] private players;
     address public recentWinner;
     // REMOVIDO: address public owner; // Esta variável é herdada da Chainlink/OpenZeppelin agora
@@ -45,16 +47,36 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard, Pausable { // Herda 
         currentRound = 1;
     }
 
-    /// @notice Buy lottery ticket
-    function buyTicket() external payable nonReentrant whenNotPaused {
+    /// @notice Buy lottery ticket with optional referral
+    function buyTicket(address referrer) external payable nonReentrant whenNotPaused {
         require(msg.value == TICKET_PRICE, "Incorrect ETH sent");
+        require(referrer != msg.sender, "Can't refer yourself");
+
         uint256 feeAmount = (msg.value * feePercent) / 100;
-        if (feeAmount > 0) {
-            (bool sent, ) = payable(feeRecipient).call{value: feeAmount}("");
-            require(sent, "Fee transfer failed");
+        uint256 referralBonus = 0;
+
+        if (referrer != address(0)) {
+            referralBonus = (feeAmount * referralPercent) / 100;
+            (bool referralSent, ) = payable(referrer).call{value: referralBonus}("");
+            require(referralSent, "Referral payout failed");
         }
+
+        uint256 remainingFee = feeAmount - referralBonus;
+        if (remainingFee > 0) {
+            (bool feeSent, ) = payable(feeRecipient).call{value: remainingFee}("");
+            require(feeSent, "Fee transfer failed");
+        }
+
         players.push(msg.sender);
     }
+
+    /// @notice Update the referral bonus percentage (portion of the fee). Only owner can call.
+    /// @param _referralPercent New referral percentage (0-100)
+    function setReferralPercent(uint256 _referralPercent) external onlyOwner {
+        require(_referralPercent <= 100, "Referral percent too high");
+        referralPercent = _referralPercent;
+    }
+
 
     /// @notice Start winner selection (owner only)
     function requestRandomWinner() external onlyOwner whenNotPaused {
