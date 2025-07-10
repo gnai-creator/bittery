@@ -1,5 +1,5 @@
-"use client";
-import { useState } from "react";
+'use client';
+import { useState, useEffect } from 'react';
 
 interface Slide {
   title: string;
@@ -30,6 +30,13 @@ const slides: Slide[] = [
 export default function InfoCarousel() {
   const [index, setIndex] = useState(0);
 
+  useEffect(() => {
+    const id = setInterval(() => {
+      setIndex((i) => (i + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(id);
+  }, []);
+
   const next = () => setIndex((index + 1) % slides.length);
   const prev = () => setIndex((index - 1 + slides.length) % slides.length);
 
@@ -59,6 +66,16 @@ export default function InfoCarousel() {
           </a>
         )}
       </p>
+      <div className="flex items-center justify-center gap-2 pt-2">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setIndex(i)}
+            className={`w-3 h-3 rounded-full ${i === index ? 'bg-black dark:bg-white' : 'bg-gray-400 dark:bg-gray-600'}`}
+            aria-label={`Go to slide ${i + 1}`}
+          />
+        ))}
+      </div>
     </div>
   );
 }
