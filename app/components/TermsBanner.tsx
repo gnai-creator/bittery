@@ -25,14 +25,14 @@ export default function TermsBanner() {
         <p className="text-sm">
           By using this site, you agree to our{" "}
           <a
-            href="/terms"
+            href="terms"
             className="underline text-blue-400 hover:text-blue-300 title"
           >
             Terms
           </a>{" "}
           and{" "}
           <a
-            href="/privacy"
+            href="privacy"
             className="underline text-blue-400 hover:text-blue-300 title"
           >
             Privacy Policy

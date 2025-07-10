@@ -6,6 +6,7 @@ import InfoCarousel from "./InfoCarousel";
 import ReferralLink from "./ReferralLink";
 import EarningsTable from "./EarningsTable";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "";
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
@@ -22,6 +23,7 @@ export default function HomeClient() {
   const [animate, setAnimate] = useState(false);
   const [launched, setLaunched] = useState(false);
   const [launchCountdown, setLaunchCountdown] = useState("");
+  const t = useTranslations("common");
 
   useEffect(() => {
     setAnimate(true);
@@ -147,14 +149,14 @@ export default function HomeClient() {
           alt="Bittery Logo"
           className="mx-auto w-32 h-32"
         />
-        {/* <h1 className="text-4xl sm:text-5xl font-bold tracking-tight title">
-          Bittery
-        </h1> */}
-        <Link href={"/terms"} className="text-sm text-gray-500 hover:underline">
+        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight title">
+          {t("title")}
+        </h1>
+        <Link href={"terms"} className="text-sm text-gray-500 hover:underline">
           Terms •
         </Link>{" "}
         <Link
-          href={"/privacy"}
+          href={"privacy"}
           className="text-sm text-gray-500 hover:underline"
         >
           Privacy •

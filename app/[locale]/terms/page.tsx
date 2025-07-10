@@ -48,7 +48,7 @@ export default function TermsPage() {
 
       <p className="mt-8 text-sm text-gray-500">Last updated: July 10, 2025</p>
       <Link
-        href="/"
+        href="../"
         className="text-blue-600 hover:underline mt-4 inline-block title"
       >
         Back to Home

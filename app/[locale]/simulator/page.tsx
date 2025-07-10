@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import SimulatorClient from "../components/SimulatorClient";
+import SimulatorClient from "../../components/SimulatorClient";
 
 export const metadata: Metadata = {
   title: "Referral Simulator",
