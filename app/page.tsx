@@ -169,6 +169,7 @@ export default function Home() {
           ? "🟢 We're already launched! Buy your ticket now!"
           : `⏳ ${launchCountdown} left until Bittery's launch`}
       </div>
+      {/* This is the YouTube iframe for the lottery intro video 1080x1920 */}
       <iframe
         src="https://youtube.com/shorts/j-gwGXYP8YU?feature=share"
         className="max-w-2xl aspect-video rounded-lg shadow-lg"
