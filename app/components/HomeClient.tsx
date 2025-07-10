@@ -147,9 +147,9 @@ export default function HomeClient() {
           alt="Bittery Logo"
           className="mx-auto w-32 h-32"
         />
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight title">
+        {/* <h1 className="text-4xl sm:text-5xl font-bold tracking-tight title">
           Bittery
-        </h1>
+        </h1> */}
         <Link href={"/terms"} className="text-sm text-gray-500 hover:underline">
           Terms •
         </Link>{" "}
