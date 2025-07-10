@@ -13,7 +13,7 @@
         {
           "internalType": "uint256",
           "name": "_subscriptionId",
-          "type": "uint64"
+          "type": "uint256"
         },
         {
           "internalType": "bytes32",
