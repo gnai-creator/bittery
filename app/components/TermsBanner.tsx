@@ -26,14 +26,14 @@ export default function TermsBanner() {
           By using this site, you agree to our{" "}
           <a
             href="/terms"
-            className="underline text-blue-400 hover:text-blue-300"
+            className="underline text-blue-400 hover:text-blue-300 title"
           >
             Terms
           </a>{" "}
           and{" "}
           <a
             href="/privacy"
-            className="underline text-blue-400 hover:text-blue-300"
+            className="underline text-blue-400 hover:text-blue-300 title"
           >
             Privacy Policy
           </a>
@@ -41,7 +41,7 @@ export default function TermsBanner() {
         </p>
         <button
           onClick={handleAccept}
-          className="bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-4 py-2 rounded"
+          className="bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-4 py-2 rounded title"
         >
           Accept
         </button>
