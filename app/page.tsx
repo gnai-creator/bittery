@@ -170,7 +170,6 @@ export default function Home() {
       </div>
       <p className="text-lg">Next draw in: {timeLeft}</p>
       <InfoCarousel />
-      {!launched && <EarningsTable />}
       <div className="flex flex-col sm:flex-row gap-4">
         <button
           className="rounded bg-black text-white px-6 py-2 hover:bg-gray-800 transition-colors"
@@ -188,6 +187,7 @@ export default function Home() {
           </button>
         )}
       </div>
+      {!launched && <EarningsTable />}
       {launched && <ReferralLink />}
       <div className="w-full max-w-md text-left">
         <h2 className="text-xl font-semibold mb-2">
