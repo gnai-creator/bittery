@@ -48,7 +48,7 @@ export default function InfoCarousel() {
         <button onClick={prev} className="px-2 py-1" aria-label="Previous">
           ‹
         </button>
-        <h2 className="text-2xl font-bold">{slide.title}</h2>
+        <h2 className="text-2xl font-bold title">{slide.title}</h2>
         <button onClick={next} className="px-2 py-1" aria-label="Next">
           ›
         </button>
