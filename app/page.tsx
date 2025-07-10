@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import lotteryAbi from '../contracts/Bittery.json';
+import InfoCarousel from './components/InfoCarousel';
 
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '';
 
@@ -62,6 +63,7 @@ export default function Home() {
           Join the decentralized lottery and try your luck!
         </p>
       </header>
+      <InfoCarousel />
       <div className="flex flex-col sm:flex-row gap-4">
         <button
           className="rounded bg-black text-white px-6 py-2 hover:bg-gray-800 transition-colors"
