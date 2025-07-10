@@ -41,6 +41,8 @@ SUBSCRIPTION_ID=
 KEY_HASH=
 ```
 
+**Important**: Replace the placeholders with your real configuration. `SUBSCRIPTION_ID` must be a numeric value with digits only (e.g. `123`). Using strings like `<SUBSCRIPTION_ID>` will cause deployment to fail.
+
 Deploy with:
 
 ```bash

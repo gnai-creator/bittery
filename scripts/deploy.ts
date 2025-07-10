@@ -5,6 +5,15 @@ async function main() {
   const subscriptionIdRaw = process.env.SUBSCRIPTION_ID;
   const keyHashRaw = process.env.KEY_HASH;
 
+  // Validate SUBSCRIPTION_ID early
+  const digitsOnly = /^\d+$/;
+  if (!subscriptionIdRaw || !digitsOnly.test(subscriptionIdRaw)) {
+    console.error(
+      "Erro: SUBSCRIPTION_ID deve conter apenas dígitos. Substitua valores de placeholder pelo número real."
+    );
+    process.exit(1);
+  }
+
   // --- Adicione estes logs para TODOS os argumentos ---
   console.log(
     "DEBUG: coordinator (raw):",
@@ -41,6 +50,14 @@ async function main() {
     console.error(
       "Erro ao converter SUBSCRIPTION_ID para BigInt. Verifique se é um número válido.",
       e
+    );
+    process.exit(1);
+  }
+
+  const MAX_UINT64 = (1n << 64n) - 1n;
+  if (subscriptionId < 0n || subscriptionId > MAX_UINT64) {
+    console.error(
+      `Erro: SUBSCRIPTION_ID fora do intervalo uint64 (0-${MAX_UINT64}).`
     );
     process.exit(1);
   }
