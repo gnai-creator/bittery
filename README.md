@@ -1,4 +1,4 @@
-# Decentralized Lottery DApp
+# Bittery - Decentralized Lottery DApp
 
 This project contains a simple lottery built with **Next.js 15**, **Hardhat**, **Solidity**, and **ethers.js**. Players buy tickets with 0.01 ETH and a random winner is picked using **Chainlink VRF v2**.
 
