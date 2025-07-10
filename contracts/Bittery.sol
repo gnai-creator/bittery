@@ -33,7 +33,7 @@ contract Bittery is VRFConsumerBaseV2, ReentrancyGuard {
     /// @param _keyHash Gas lane key hash
     constructor(
         address _coordinator,
-        uint64 _subscriptionId,
+        uint256 _subscriptionId,
         bytes32 _keyHash
     ) VRFConsumerBaseV2(_coordinator) {
         owner = msg.sender;
