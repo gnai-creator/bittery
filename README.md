@@ -16,6 +16,14 @@
 - 🧾 Transparent draw history stored on-chain
 - 🛠️ Deployable on Polygon with Hardhat
 - ❌ Non-commercial license to protect the original creator
+- 🤝 Built-in referral system rewarding players who invite others
+- ⏱ Real-time dashboard with player count, countdown, and recent winners
+
+---
+
+## 🤝 Referral System
+
+Share your referral link (?ref=YOUR_ADDRESS) and earn a portion of the fee whenever someone you invite buys a ticket. The default referral reward is 50% of the collected fee.
 
 ---
 
