@@ -33,6 +33,9 @@ body {
 button{
   border-color: #ff8a00;
 }
+p {
+  font-size: smaller;
+}
 
 @keyframes fade {
   from {

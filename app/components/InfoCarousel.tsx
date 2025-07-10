@@ -10,24 +10,24 @@ interface Slide {
 const slides: Slide[] = [
   {
     title: "How It Works",
-    text: "Each ticket costs 0.01 ETH. \nWhen two players join, the contract triggers a draw \nevery Sunday at 8 PM, \nor the owner can trigger it manually. \nA random winner is selected using Chainlink VRF, \nand the full prize (minus fee) is sent to them.",
+    text: "Each ticket costs 0.01 ETH. \nWhen two players join, \nthe contract triggers a draw \nevery Sunday at 8 PM, \nor the owner can trigger it manually. \nA random winner is selected \nusing Chainlink VRF, \nand the full prize (minus fee) \nis sent to them.",
   },
   {
     title: "Rules",
     text: `• Each ticket: 0.01 ETH\n
-• Always a winner\n 
-• Auto-draw: every Sunday at 8 PM (if ≥ 2 players)\n
+• Always a winner\n
+• Auto-draw: all Sundays \nat 8 PM (if ≥ 2 players)\n
 • Manual draw: by contract owner\n
-• Chainlink VRF rotates the participant index\n
-• Winner gets the prize; 5% goes to fee address`,
+• Chainlink VRF rotates \nthe participant index\n
+• Winner gets the prize; \n5% goes to fee address`,
   },
   {
     title: "Technical Details",
-    text: "Smart contract written in Solidity, using Chainlink VRF v2 \nfor verifiable randomness. \nDeployed on the Polygon Mumbai testnet. \nFrontend built with Next.js and ethers.js.",
+    text: "Smart contract written in Solidity, \nusing Chainlink VRF v2 \nfor verifiable randomness. \nDeployed on the Polygon Mumbai testnet. \nFrontend built with Next.js and ethers.js.",
   },
   {
     title: "Trust & Transparency",
-    text: "All draws are provably fair using Chainlink VRF. \nAll transactions, draws, and winners \nare permanently stored on-chain. \nNo middlemen, no manipulation.",
+    text: "All draws are provably fair \nusing Chainlink VRF. \nAll transactions, \nall draws, and winners \nare permanently stored on-chain. \nNo middlemen, no manipulation.",
   },
   {
     title: "Code",
