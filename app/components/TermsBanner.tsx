@@ -41,7 +41,7 @@ export default function TermsBanner() {
         </p>
         <button
           onClick={handleAccept}
-          className="bg-green-600 hover:bg-orange-700 text-white text-sm font-semibold px-4 py-2 rounded shadow transition-colors"
+          className="bg-orange-600 hover:bg-orange-700 text-white text-sm font-semibold px-4 py-2 rounded transition-colors"
         >
           Accept
         </button>
