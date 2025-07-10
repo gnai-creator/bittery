@@ -5,6 +5,7 @@ import lotteryAbi from "../contracts/Bittery.json";
 import InfoCarousel from "./components/InfoCarousel";
 
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "";
+const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 export default function Home() {
   const [provider, setProvider] = useState<ethers.BrowserProvider>();
@@ -16,6 +17,15 @@ export default function Home() {
 
   useEffect(() => {
     setAnimate(true);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get("ref");
+    if (ref) {
+      localStorage.setItem("referrer", ref);
+    }
   }, []);
 
   useEffect(() => {
@@ -38,9 +48,12 @@ export default function Home() {
 
   async function buy() {
     if (!contract || !signer) return;
+    const referrer =
+      (typeof window !== "undefined" && localStorage.getItem("referrer")) ||
+      ZERO_ADDRESS;
     const tx = await (contract as any)
       .connect(signer)
-      .buyTicket({ value: ethers.parseEther("0.01") });
+      .buyTicket(referrer, { value: ethers.parseEther("0.01") });
     await tx.wait();
     getPlayers(contract);
   }
