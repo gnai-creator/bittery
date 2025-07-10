@@ -50,3 +50,10 @@ npx hardhat run scripts/deploy.ts --network sepolia
 ```
 
 Set `NEXT_PUBLIC_CONTRACT_ADDRESS` in `.env` for the frontend to interact with the deployed contract.
+
+
+### 📄 License
+
+This project is licensed under the [Business Source License 1.1](./LICENSE) — non-commercial use only.  
+Commercial use requires authorization. This license will convert to MIT on **July 10, 2075**.
+

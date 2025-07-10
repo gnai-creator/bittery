@@ -1,5 +1,35 @@
-# Licença de Uso Pago
+Business Source License 1.1
 
-Este software é fornecido sob uma licença paga. A utilização, distribuição ou modificação do código-fonte está condicionada à aquisição de uma licença junto ao autor.
+Licensor: Felipe Maya Muniz (gnai-creator)
 
-Todos os direitos reservados.
+Licensed Work: The Bittery decentralized lottery platform and its source code located at https://github.com/gnai-creator/bittery
+
+Change Date: July 10, 2075
+
+Change License: MIT License
+
+---
+
+Terms:
+
+1. **Grant of Non-Commercial Use**:  
+You are granted the right to use, modify, copy, and distribute the Licensed Work **only for non-commercial purposes**, including educational, personal, or research use.
+
+2. **Commercial Use Prohibited**:  
+Use of the Licensed Work for **any commercial purpose**, including offering it as a service (SaaS), integrating into commercial products, or using it for profit, **is strictly prohibited** unless you receive a commercial license from the Licensor.
+
+3. **Change Date and License Transition**:  
+On or after the Change Date (July 10, 2075), this license will automatically convert to the MIT License, under which all rights are granted freely.
+
+4. **Attribution Required**:  
+Any public or private distribution of modified or unmodified versions must retain this license and clearly credit the original author: **Felipe Maya Muniz**.
+
+5. **No Warranty**:  
+The Licensed Work is provided “as-is” without any warranties or guarantees. The Licensor is not liable for any damages resulting from the use of this work.
+
+6. **Enforcement**:  
+Any attempt to circumvent this license, obfuscate authorship, or use the Licensed Work commercially without permission constitutes a violation and may be subject to legal action.
+
+---
+
+For commercial licensing inquiries, contact: **contact@bittery.org**
