@@ -5,6 +5,7 @@ import lotteryAbi from "../contracts/Bittery.json";
 import InfoCarousel from "./components/InfoCarousel";
 import ReferralLink from "./components/ReferralLink";
 import EarningsTable from "./components/EarningsTable";
+import Link from "next/link";
 
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "";
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
@@ -149,6 +150,15 @@ export default function Home() {
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight title">
           Bittery
         </h1>
+        <Link href={"terms"} className="text-sm text-gray-500 hover:underline">
+          Terms of Service
+        </Link>
+        <Link
+          href={"privacy"}
+          className="text-sm text-gray-500 hover:underline"
+        >
+          Privacy Policy
+        </Link>
         <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg">
           A Decentralized Lottery Powered by Chainlink VRF
         </p>
