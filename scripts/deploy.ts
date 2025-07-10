@@ -1,95 +1,62 @@
 import { ethers } from "hardhat";
 
 async function main() {
-  const coordinatorRaw = process.env.VRF_COORDINATOR;
   const subscriptionIdRaw = process.env.SUBSCRIPTION_ID;
-  const keyHashRaw = process.env.KEY_HASH;
+  const coordinatorRaw = process.env.VRF_COORDINATOR; // Mantenha para log, mas não será passado ao deploy
+  const keyHashRaw = process.env.KEY_HASH; // Mantenha para log, mas não será passado ao deploy
 
-  // Validate SUBSCRIPTION_ID early
-  const digitsOnly = /^\d+$/;
-  if (!subscriptionIdRaw || !digitsOnly.test(subscriptionIdRaw)) {
-    console.error(
-      "Erro: SUBSCRIPTION_ID deve conter apenas dígitos. Substitua valores de placeholder pelo número real."
-    );
-    process.exit(1);
-  }
-
-  // --- Adicione estes logs para TODOS os argumentos ---
-  console.log(
-    "DEBUG: coordinator (raw):",
-    JSON.stringify(coordinatorRaw),
-    "Type:",
-    typeof coordinatorRaw
-  );
-  console.log(
-    "DEBUG: subscriptionId (raw):",
-    JSON.stringify(subscriptionIdRaw),
-    "Type:",
-    typeof subscriptionIdRaw
-  );
-  console.log(
-    "DEBUG: keyHash (raw):",
-    JSON.stringify(keyHashRaw),
-    "Type:",
-    typeof keyHashRaw
-  );
+  // --- Seus logs de debug existentes ---
+  console.log("DEBUG: coordinator (raw):", JSON.stringify(coordinatorRaw), "Type:", typeof coordinatorRaw);
+  console.log("DEBUG: subscriptionId (raw):", JSON.stringify(subscriptionIdRaw), "Type:", typeof subscriptionIdRaw);
+  console.log("DEBUG: keyHash (raw):", JSON.stringify(keyHashRaw), "Type:", typeof keyHashRaw);
   // --- Fim dos logs ---
 
-  if (!coordinatorRaw || !subscriptionIdRaw || !keyHashRaw) {
-    console.error(
-      "Erro: Uma ou mais variáveis de ambiente VRF estão faltando ou vazias."
-    );
-    process.exit(1);
+  if (!subscriptionIdRaw) {
+      console.error("Erro: SUBSCRIPTION_ID está faltando ou vazio.");
+      process.exit(1);
   }
 
-  // Converta subscriptionId para BigInt de forma robusta
+  // Regex para garantir que o SUBSCRIPTION_ID contém apenas dígitos
+  const digitsOnly = /^\d+$/;
+  if (!digitsOnly.test(subscriptionIdRaw)) {
+      console.error(
+          "Erro: SUBSCRIPTION_ID deve conter apenas dígitos. Substitua valores de placeholder pelo número real."
+      );
+      process.exit(1);
+  }
+
   let subscriptionId: bigint;
   try {
-    subscriptionId = BigInt(subscriptionIdRaw);
+      subscriptionId = BigInt(subscriptionIdRaw);
   } catch (e) {
-    console.error(
-      "Erro ao converter SUBSCRIPTION_ID para BigInt. Verifique se é um número válido.",
-      e
-    );
-    process.exit(1);
+      console.error(
+          "Erro ao converter SUBSCRIPTION_ID para BigInt. Verifique se é um número válido.",
+          e
+      );
+      process.exit(1);
   }
 
-  const MAX_UINT64 = (1n << 64n) - 1n;
-  if (subscriptionId < 0n || subscriptionId > MAX_UINT64) {
-    console.error(
-      `Erro: SUBSCRIPTION_ID fora do intervalo uint64 (0-${MAX_UINT64}).`
-    );
-    process.exit(1);
-  }
+  // --- REMOVA OU COMENTE ESTE BLOCO DE VERIFICAÇÃO uint64 ---
+  // const MAX_UINT64 = (1n << 64n) - 1n;
+  // if (subscriptionId < 0n || subscriptionId > MAX_UINT64) {
+  //   console.error(
+  //     `Erro: SUBSCRIPTION_ID fora do intervalo uint64 (0-${MAX_UINT64}).`
+  //   );
+  //   process.exit(1);
+  // }
+  // --- FIM DO BLOCO A REMOVER/COMENTAR ---
 
   // --- Logs dos valores convertidos/finalizados que serão passados ---
-  console.log(
-    "DEBUG: coordinator (final):",
-    coordinatorRaw,
-    "Type:",
-    typeof coordinatorRaw
-  );
   console.log(
     "DEBUG: subscriptionId (final):",
     subscriptionId,
     "Type:",
     typeof subscriptionId
   );
-  console.log(
-    "DEBUG: keyHash (final):",
-    keyHashRaw,
-    "Type:",
-    typeof keyHashRaw
-  );
   // --- Fim dos logs ---
 
-  const Lottery = await ethers.getContractFactory("DecentralizedLottery");
-  // Passe as variáveis para o deploy
-  const lottery = await Lottery.deploy(
-    coordinatorRaw,
-    subscriptionId,
-    keyHashRaw
-  );
+  const Lottery = await ethers.getContractFactory("SubscriptionConsumer"); // Usando o nome correto do seu contrato
+  const lottery = await Lottery.deploy(subscriptionId); // Passando apenas o subscriptionId
   await lottery.waitForDeployment();
 
   console.log("Lottery deployed to:", lottery.target);
