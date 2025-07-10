@@ -73,7 +73,7 @@ export default function AdminPanel({ provider, signer }: Props) {
     if (!window.confirm("Confirm updating fee percent?")) return;
     const tx = await contract
       .connect(signer)
-      .setFeePercent(Number(feePercent));
+      .getFunction("setFeePercent")(Number(feePercent));
     await tx.wait();
     refreshValues();
   }
@@ -83,7 +83,7 @@ export default function AdminPanel({ provider, signer }: Props) {
     if (!window.confirm("Confirm updating referral percent?")) return;
     const tx = await contract
       .connect(signer)
-      .setReferralPercent(Number(referralPercent));
+      .getFunction("setReferralPercent")(Number(referralPercent));
     await tx.wait();
     refreshValues();
   }
@@ -93,7 +93,7 @@ export default function AdminPanel({ provider, signer }: Props) {
     if (!window.confirm("Confirm updating fee recipient?")) return;
     const tx = await contract
       .connect(signer)
-      .setFeeRecipient(feeRecipient);
+      .getFunction("setFeeRecipient")(feeRecipient);
     await tx.wait();
     refreshValues();
   }
