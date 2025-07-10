@@ -58,7 +58,7 @@ export default function Home() {
       className={`flex flex-col items-center justify-center w-full px-4 py-12 text-center gap-8 ${animate ? 'animate-fade' : ''}`}
     >
       <header className="space-y-2">
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">Bittery Lottery</h1>
+        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight title">Bittery Lottery</h1>
         <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg">
           Join the decentralized lottery and try your luck!
         </p>
