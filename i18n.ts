@@ -1,4 +1,4 @@
-export const locales = ['en', 'pt'] as const;
+export const locales = ['en', 'pt', 'es', 'fr', 'sv', 'de', 'ru'] as const;
 export const defaultLocale = 'en';
 export const localePrefix = 'always';
 
