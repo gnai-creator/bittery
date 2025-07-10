@@ -5,9 +5,9 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@chainlink/contracts/src/v0.8/vrf/VRFConsumerBaseV2.sol";
 import "@chainlink/contracts/src/v0.8/vrf/interfaces/VRFCoordinatorV2Interface.sol";
 
-/// @title DecentralizedLottery
+/// @title Bittery
 /// @notice Simple lottery using Chainlink VRF v2 for randomness
-contract DecentralizedLottery is VRFConsumerBaseV2, ReentrancyGuard {
+contract Bittery is VRFConsumerBaseV2, ReentrancyGuard {
     uint256 public constant TICKET_PRICE = 0.01 ether;
     event WinnerPicked(address indexed winner);
 

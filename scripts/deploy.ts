@@ -55,7 +55,7 @@ async function main() {
   );
   // --- Fim dos logs ---
 
-  const Lottery = await ethers.getContractFactory("SubscriptionConsumer"); // Usando o nome correto do seu contrato
+  const Lottery = await ethers.getContractFactory("Bittery");
   const lottery = await Lottery.deploy(subscriptionId); // Passando apenas o subscriptionId
   await lottery.waitForDeployment();
 
