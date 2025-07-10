@@ -1,22 +1,23 @@
-"use client";
-import { useState } from "react";
-import { ethers } from "ethers";
-import ConnectWalletButton from "../components/ConnectWalletButton";
-import AdminPanel from "../components/AdminPanel";
+import type { Metadata } from "next";
+import AdminClient from "../components/AdminClient";
+
+export const metadata: Metadata = {
+  title: "Admin",
+  description: "Administrative panel for Bittery contract management",
+  openGraph: {
+    title: "Bittery Admin",
+    description: "Administrative panel for Bittery contract management",
+    images: ["/Bittery-Logo.png"],
+    url: "https://bittery.org/admin",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Bittery Admin",
+    description: "Administrative panel for Bittery contract management",
+    images: ["/Bittery-Logo.png"],
+  },
+};
 
 export default function AdminPage() {
-  const [provider, setProvider] = useState<ethers.BrowserProvider>();
-  const [signer, setSigner] = useState<ethers.JsonRpcSigner>();
-
-  return (
-    <main className="flex flex-col items-center gap-6 p-6">
-      <ConnectWalletButton
-        onConnect={(prov, sig) => {
-          setProvider(prov);
-          setSigner(sig);
-        }}
-      />
-      <AdminPanel provider={provider} signer={signer} />
-    </main>
-  );
+  return <AdminClient />;
 }

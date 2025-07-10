@@ -1,6 +1,18 @@
 export const metadata = {
   title: "Terms of Use",
   description: "Terms of service for using the Bittery platform",
+  openGraph: {
+    title: "Terms of Use",
+    description: "Terms of service for using the Bittery platform",
+    images: ["/Bittery-Logo.png"],
+    url: "https://bittery.org/terms",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Terms of Use",
+    description: "Terms of service for using the Bittery platform",
+    images: ["/Bittery-Logo.png"],
+  },
 };
 import Link from "next/link";
 

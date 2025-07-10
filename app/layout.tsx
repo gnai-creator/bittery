@@ -15,8 +15,30 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bittery",
+  metadataBase: new URL("https://bittery.org"),
+  title: {
+    default: "Bittery",
+    template: "%s | Bittery",
+  },
   description: "Decentralized lottery game",
+  openGraph: {
+    title: "Bittery",
+    description: "Decentralized lottery game",
+    url: "https://bittery.org",
+    siteName: "Bittery",
+    images: ["/Bittery-Logo.png"],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Bittery",
+    description: "Decentralized lottery game",
+    images: ["/Bittery-Logo.png"],
+  },
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
