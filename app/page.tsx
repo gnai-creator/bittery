@@ -11,6 +11,11 @@ export default function Home() {
   const [players, setPlayers] = useState<string[]>([]);
   const [winner, setWinner] = useState<string>('');
   const [contract, setContract] = useState<ethers.Contract>();
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    setAnimate(true);
+  }, []);
 
   useEffect(() => {
     if (!provider) return;
@@ -48,18 +53,43 @@ export default function Home() {
   }
 
   return (
-    <main className="p-8 flex flex-col gap-4">
-      <h1 className="text-2xl font-bold">Bittery Lottery</h1>
-      <button className="border px-3 py-1" onClick={connect}>Connect Wallet</button>
-      <button className="border px-3 py-1" onClick={buy}>Buy Ticket (0.01 ETH)</button>
-      <div>
-        <h2 className="font-semibold">Players:</h2>
-        <ul>{players.map((p) => (<li key={p}>{p}</li>))}</ul>
+    <main
+      className={`flex flex-col items-center justify-center w-full px-4 py-12 text-center gap-8 ${animate ? 'animate-fade' : ''}`}
+    >
+      <header className="space-y-2">
+        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">Bittery Lottery</h1>
+        <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg">
+          Join the decentralized lottery and try your luck!
+        </p>
+      </header>
+      <div className="flex flex-col sm:flex-row gap-4">
+        <button
+          className="rounded bg-black text-white px-6 py-2 hover:bg-gray-800 transition-colors"
+          onClick={connect}
+        >
+          Connect Wallet
+        </button>
+        <button
+          className="rounded border border-gray-800 dark:border-gray-200 px-6 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          onClick={buy}
+        >
+          Buy Ticket (0.01 ETH)
+        </button>
+      </div>
+      <div className="w-full max-w-md text-left">
+        <h2 className="text-xl font-semibold mb-2">Players</h2>
+        <ul className="space-y-1">
+          {players.map((p) => (
+            <li key={p} className="truncate">
+              {p}
+            </li>
+          ))}
+        </ul>
       </div>
       {winner && (
         <div>
-          <h2 className="font-semibold">Last Winner:</h2>
-          <p>{winner}</p>
+          <h2 className="text-xl font-semibold">Last Winner</h2>
+          <p className="truncate">{winner}</p>
         </div>
       )}
     </main>
