@@ -1,6 +1,18 @@
 export const metadata = {
   title: "Privacy Policy",
   description: "Privacy policy for using the Bittery platform",
+  openGraph: {
+    title: "Privacy Policy",
+    description: "Privacy policy for using the Bittery platform",
+    images: ["/Bittery-Logo.png"],
+    url: "https://bittery.org/privacy",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Privacy Policy",
+    description: "Privacy policy for using the Bittery platform",
+    images: ["/Bittery-Logo.png"],
+  },
 };
 import Link from "next/link";
 
