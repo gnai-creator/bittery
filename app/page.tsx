@@ -12,6 +12,8 @@ export default function Home() {
   const [players, setPlayers] = useState<string[]>([]);
   const [winner, setWinner] = useState<string>("");
   const [contract, setContract] = useState<ethers.Contract>();
+  const [pastWinners, setPastWinners] = useState<string[]>([]);
+  const [timeLeft, setTimeLeft] = useState<string>("");
   const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
@@ -19,11 +21,36 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    const id = setInterval(() => {
+      const now = new Date();
+      const target = new Date();
+      target.setHours(20, 0, 0, 0); // 8 PM local time
+      const day = target.getDay();
+      const diffToSunday = (7 - day) % 7;
+      target.setDate(target.getDate() + diffToSunday);
+      if (target.getTime() <= now.getTime()) {
+        target.setDate(target.getDate() + 7);
+      }
+      const diff = target.getTime() - now.getTime();
+      const hrs = Math.floor(diff / 1000 / 3600);
+      const mins = Math.floor((diff / 1000 % 3600) / 60);
+      const secs = Math.floor(diff / 1000 % 60);
+      setTimeLeft(`${hrs}h ${mins}m ${secs}s`);
+    }, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
     if (!provider) return;
     const c = new ethers.Contract(CONTRACT_ADDRESS, lotteryAbi.abi, provider);
     setContract(c);
     getPlayers(c);
-    c.on("WinnerPicked", () => getWinner(c));
+    getPastWinners(c);
+    getWinner(c);
+    c.on("WinnerPicked", () => {
+      getWinner(c);
+      getPastWinners(c);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [provider]);
 
@@ -55,6 +82,13 @@ export default function Home() {
     setWinner(w);
   }
 
+  async function getPastWinners(c: ethers.Contract) {
+    const filter = c.filters.WinnerPicked();
+    const events = await c.queryFilter(filter, 0, "latest");
+    const winners = events.map((e: any) => e.args?.winner as string).reverse();
+    setPastWinners(winners);
+  }
+
   return (
     <main
       className={`flex flex-col items-center justify-center w-full px-4 py-12 text-center gap-8 ${
@@ -75,6 +109,10 @@ export default function Home() {
         </p>
       </header>
       <InfoCarousel />
+      <div>
+        <h2 className="text-xl font-semibold">Próximo Sorteio</h2>
+        <p>{timeLeft}</p>
+      </div>
       <div className="flex flex-col sm:flex-row gap-4">
         <button
           className="rounded bg-black text-white px-6 py-2 hover:bg-gray-800 transition-colors"
@@ -90,7 +128,7 @@ export default function Home() {
         </button>
       </div>
       <div className="w-full max-w-md text-left">
-        <h2 className="text-xl font-semibold mb-2">Players</h2>
+        <h2 className="text-xl font-semibold mb-2">Players ({players.length})</h2>
         <ul className="space-y-1">
           {players.map((p) => (
             <li key={p} className="truncate">
@@ -103,6 +141,18 @@ export default function Home() {
         <div>
           <h2 className="text-xl font-semibold">Last Winner</h2>
           <p className="truncate">{winner}</p>
+        </div>
+      )}
+      {pastWinners.length > 0 && (
+        <div className="w-full max-w-md text-left">
+          <h2 className="text-xl font-semibold mb-2">Past Winners</h2>
+          <ul className="space-y-1">
+            {pastWinners.map((w, i) => (
+              <li key={i} className="truncate">
+                {w}
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </main>
