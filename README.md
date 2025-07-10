@@ -77,4 +77,8 @@ View full license in [`LICENSE`](./LICENSE).
 
 ## ⚠ Disclaimer
 
-Bittery is an experimental educational project. It is not intended to be used for real-money gambling or commercial deployment without proper licensing and jurisdictional compliance.
+Bittery is a decentralized lottery protocol currently released under a non-commercial license (BUSL 1.1).  
+Commercial deployment — including real-money use, hosted platforms, and integrations — is **strictly prohibited without an official license** from the author.
+
+If you wish to operate Bittery commercially or as a public service, please request a commercial license at: [contact@bittery.org](mailto:contact@bittery.org)
+
