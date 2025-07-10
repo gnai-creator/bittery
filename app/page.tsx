@@ -169,6 +169,11 @@ export default function Home() {
           ? "🟢 We're already launched! Buy your ticket now!"
           : `⏳ ${launchCountdown} left until Bittery's launch`}
       </div>
+      <iframe
+        src="https://youtube.com/shorts/j-gwGXYP8YU?feature=share"
+        className="max-w-2xl aspect-video rounded-lg shadow-lg"
+        title="Bittery Lottery Intro"
+      ></iframe>
       {launched && <p className="text-lg">Next draw in: {timeLeft}</p>}
       <InfoCarousel />
       <div className="flex flex-col sm:flex-row gap-4">
