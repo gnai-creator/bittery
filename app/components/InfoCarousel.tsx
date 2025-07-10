@@ -1,5 +1,5 @@
-'use client';
-import { useState, useEffect } from 'react';
+"use client";
+import { useState, useEffect } from "react";
 
 interface Slide {
   title: string;
@@ -23,7 +23,7 @@ const slides: Slide[] = [
   {
     title: "Code",
     text: "The full project is available on GitHub.",
-    link: "https://github.com/gna-creator/bittery",
+    link: "https://github.com/gnai-creator/bittery",
   },
 ];
 
@@ -71,7 +71,11 @@ export default function InfoCarousel() {
           <button
             key={i}
             onClick={() => setIndex(i)}
-            className={`w-3 h-3 rounded-full ${i === index ? 'bg-black dark:bg-white' : 'bg-gray-400 dark:bg-gray-600'}`}
+            className={`w-3 h-3 rounded-full ${
+              i === index
+                ? "bg-black dark:bg-white"
+                : "bg-gray-400 dark:bg-gray-600"
+            }`}
             aria-label={`Go to slide ${i + 1}`}
           />
         ))}
