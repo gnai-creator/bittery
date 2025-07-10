@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import lotteryAbi from "../contracts/Bittery.json";
 import InfoCarousel from "./components/InfoCarousel";
+import ReferralLink from "./components/ReferralLink";
 
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "";
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
@@ -141,6 +142,7 @@ export default function Home() {
           Buy Ticket (0.01 ETH)
         </button>
       </div>
+      <ReferralLink />
       <div className="w-full max-w-md text-left">
         <h2 className="text-xl font-semibold mb-2">Players ({players.length})</h2>
         <ul className="space-y-1">
