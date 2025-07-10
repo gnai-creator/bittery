@@ -23,7 +23,7 @@ const slides: Slide[] = [
   },
   {
     title: "Technical Details",
-    text: "Smart contract written in Solidity, \nusing Chainlink VRF v2 \nfor verifiable randomness. \nDeployed on the Polygon Mumbai testnet. \nFrontend built with Next.js and ethers.js.",
+    text: "Smart contract written in Solidity, \nusing Chainlink VRF v2 \nfor verifiable randomness. \nDeployed on the Polygon Mumbai testnet. \nFrontend built with Next.js and \nethers.js.",
   },
   {
     title: "Trust & Transparency",
