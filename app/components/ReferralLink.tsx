@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { ethers } from "ethers";
 
-const ETH_TO_BRL = 15410; // 1 ETH ≈ R$ 15.410
+const ETH_TO_USD = 3000; // 1 ETH ≈ $3,000
 const TICKET_PRICE_ETH = 0.01;
 const COMMISSION_PERCENT = 0.025;
 
@@ -31,7 +31,7 @@ export default function ReferralLink() {
     }
   }
 
-  const reward = (TICKET_PRICE_ETH * COMMISSION_PERCENT * ETH_TO_BRL).toFixed(2);
+  const reward = (TICKET_PRICE_ETH * COMMISSION_PERCENT * ETH_TO_USD).toFixed(2);
 
   return (
     <div className="space-y-2">
@@ -47,7 +47,7 @@ export default function ReferralLink() {
             Link copiado! 🟢 {link}
           </p>
           <p>
-            Você ganhará aproximadamente R$ {reward} por cada indicado que comprar
+            Você ganhará aproximadamente $ {reward} por cada indicado que comprar
             um bilhete.
           </p>
         </div>
