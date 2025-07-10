@@ -20,7 +20,7 @@ contract Bittery is VRFConsumerBaseV2, ReentrancyGuard {
     address public recentWinner;
     address public owner;
     VRFCoordinatorV2Interface private immutable coordinator;
-    uint64 private immutable subscriptionId;
+    uint256 private immutable subscriptionId;
     bytes32 private immutable keyHash;
     uint32 private constant CALLBACK_GAS_LIMIT = 100000;
     uint16 private constant REQUEST_CONFIRMATIONS = 3;
