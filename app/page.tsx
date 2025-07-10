@@ -12,11 +12,28 @@ export default function Home() {
   const [signer, setSigner] = useState<ethers.JsonRpcSigner>();
   const [players, setPlayers] = useState<string[]>([]);
   const [winner, setWinner] = useState<string>("");
+  const [winners, setWinners] = useState<string[]>([]);
+  const [timeLeft, setTimeLeft] = useState<string>("");
   const [contract, setContract] = useState<ethers.Contract>();
   const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
     setAnimate(true);
+  }, []);
+
+  useEffect(() => {
+    const calc = () => {
+      const now = new Date();
+      const next = getNextDraw();
+      const diff = next.getTime() - now.getTime();
+      const h = Math.floor(diff / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      setTimeLeft(`${h}h ${m}m ${s}s`);
+    };
+    calc();
+    const id = setInterval(calc, 1000);
+    return () => clearInterval(id);
   }, []);
 
   useEffect(() => {
@@ -33,7 +50,12 @@ export default function Home() {
     const c = new ethers.Contract(CONTRACT_ADDRESS, lotteryAbi.abi, provider);
     setContract(c);
     getPlayers(c);
-    c.on("WinnerPicked", () => getWinner(c));
+    getWinner(c);
+    getWinners(c);
+    c.on("WinnerPicked", () => {
+      getWinner(c);
+      getWinners(c);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [provider]);
 
@@ -68,6 +90,22 @@ export default function Home() {
     setWinner(w);
   }
 
+  async function getWinners(c: ethers.Contract) {
+    const list: string[] = await c.getWinners();
+    setWinners(list.slice(-5).reverse());
+  }
+
+  function getNextDraw() {
+    const now = new Date();
+    const next = new Date(now);
+    next.setUTCDate(now.getUTCDate() + ((7 - now.getUTCDay()) % 7));
+    next.setUTCHours(20, 0, 0, 0);
+    if (next <= now) {
+      next.setUTCDate(next.getUTCDate() + 7);
+    }
+    return next;
+  }
+
   return (
     <main
       className={`flex flex-col items-center justify-center w-full px-4 py-12 text-center gap-8 ${
@@ -87,6 +125,7 @@ export default function Home() {
           A Decentralized Lottery Powered by Chainlink VRF
         </p>
       </header>
+      <p className="text-lg">Next draw in: {timeLeft}</p>
       <InfoCarousel />
       <div className="flex flex-col sm:flex-row gap-4">
         <button
@@ -103,7 +142,7 @@ export default function Home() {
         </button>
       </div>
       <div className="w-full max-w-md text-left">
-        <h2 className="text-xl font-semibold mb-2">Players</h2>
+        <h2 className="text-xl font-semibold mb-2">Players ({players.length})</h2>
         <ul className="space-y-1">
           {players.map((p) => (
             <li key={p} className="truncate">
@@ -116,6 +155,18 @@ export default function Home() {
         <div>
           <h2 className="text-xl font-semibold">Last Winner</h2>
           <p className="truncate">{winner}</p>
+        </div>
+      )}
+      {winners.length > 0 && (
+        <div className="w-full max-w-md text-left">
+          <h2 className="text-xl font-semibold mb-2">Recent Winners</h2>
+          <ul className="space-y-1">
+            {winners.map((w) => (
+              <li key={w} className="truncate">
+                {w}
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </main>

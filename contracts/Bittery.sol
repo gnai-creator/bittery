@@ -22,6 +22,7 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard, Pausable { // Herda 
     uint256 public referralPercent = 50; // 50% da taxa (não do valor total) vai para o referenciador por padrão
     address[] private players;
     address public recentWinner;
+    address[] public winners;
     // REMOVIDO: address public owner; // Esta variável é herdada da Chainlink/OpenZeppelin agora
     uint256 public currentRound;
     // O coordenador é acessado via s_vrfCoordinator (herdado do VRFConsumerBaseV2Plus)
@@ -103,6 +104,7 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard, Pausable { // Herda 
     function fulfillRandomWords(uint256, uint256[] calldata randomWords) internal override { // 'memory' alterado para 'calldata'
         uint256 index = randomWords[0] % players.length;
         recentWinner = players[index];
+        winners.push(recentWinner);
         players = new address[](0);
         drawing = false;
         (bool success, ) = payable(recentWinner).call{value: address(this).balance}("");
@@ -114,6 +116,11 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard, Pausable { // Herda 
     /// @notice Return list of current players
     function getPlayers() external view returns (address[] memory) {
         return players;
+    }
+
+    /// @notice Return list of past winners
+    function getWinners() external view returns (address[] memory) {
+        return winners;
     }
 
     /// @notice Update the fee percentage. Only owner can call.
