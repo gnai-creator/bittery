@@ -7,6 +7,7 @@ import ReferralLink from "./components/ReferralLink";
 
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "";
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+const LAUNCH_DATE = new Date("2025-08-05T20:00:00-03:00").getTime();
 
 export default function Home() {
   const [provider, setProvider] = useState<ethers.BrowserProvider>();
@@ -17,9 +18,30 @@ export default function Home() {
   const [timeLeft, setTimeLeft] = useState<string>("");
   const [contract, setContract] = useState<ethers.Contract>();
   const [animate, setAnimate] = useState(false);
+  const [launched, setLaunched] = useState(false);
+  const [launchCountdown, setLaunchCountdown] = useState("");
 
   useEffect(() => {
     setAnimate(true);
+  }, []);
+
+  useEffect(() => {
+    const calc = () => {
+      const now = Date.now();
+      const diff = LAUNCH_DATE - now;
+      if (diff <= 0) {
+        setLaunched(true);
+      } else {
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        setLaunchCountdown(`${days} dias, ${hours} horas e ${minutes} minutos`);
+        setLaunched(false);
+      }
+    };
+    calc();
+    const id = setInterval(calc, 1000);
+    return () => clearInterval(id);
   }, []);
 
   useEffect(() => {
@@ -126,6 +148,11 @@ export default function Home() {
           A Decentralized Lottery Powered by Chainlink VRF
         </p>
       </header>
+      <div id="status" className="text-lg">
+        {launched
+          ? "🟢 Já lançamos! Compre seu bilhete agora!"
+          : `⏳ Faltam ${launchCountdown} para o lançamento do Bittery`}
+      </div>
       <p className="text-lg">Next draw in: {timeLeft}</p>
       <InfoCarousel />
       <div className="flex flex-col sm:flex-row gap-4">
@@ -135,14 +162,17 @@ export default function Home() {
         >
           Connect Wallet
         </button>
-        <button
-          className="rounded border border-gray-800 dark:border-gray-200 px-6 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-          onClick={buy}
-        >
-          Buy Ticket (0.01 ETH)
-        </button>
+        {launched && (
+          <button
+            id="buy-button"
+            className="rounded border border-gray-800 dark:border-gray-200 px-6 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            onClick={buy}
+          >
+            Buy Ticket (0.01 ETH)
+          </button>
+        )}
       </div>
-      <ReferralLink />
+      {launched && <ReferralLink />}
       <div className="w-full max-w-md text-left">
         <h2 className="text-xl font-semibold mb-2">Players ({players.length})</h2>
         <ul className="space-y-1">
