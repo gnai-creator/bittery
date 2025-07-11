@@ -5,7 +5,7 @@ import lotteryAbi from "../contracts/Bittery.json";
 
 dotenv.config();
 
-const RPC_URL = process.env.RPC_URL || process.env.SEPOLIA_RPC_URL || "";
+const RPC_URL = process.env.POLYGON_RPC_URL || process.env.SEPOLIA_RPC_URL || "";
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
 const CONTRACT_ADDRESS = "0xbfa9A081EDe54008287740EaD6CDE9bc7020f999";
 

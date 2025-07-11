@@ -5,18 +5,27 @@ import artifact from "../contracts/Bittery.json";
 
 dotenv.config();
 
-const RPC_URL = process.env.RPC_URL || process.env.SEPOLIA_RPC_URL || "";
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
-const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS || process.env.CONTRACT_ADDRESS_TEST || "";
 
-if (!RPC_URL || !PRIVATE_KEY || !CONTRACT_ADDRESS) {
-  console.error("RPC_URL, PRIVATE_KEY and CONTRACT_ADDRESS must be set in the environment");
-  process.exit(1);
+type Network = "test" | "main";
+
+function getNetworkConfig(network: Network) {
+  const rpcUrl = network === "main" ? process.env.POLYGON_RPC_URL : process.env.SEPOLIA_RPC_URL;
+  const contractAddress =
+    network === "main"
+      ? process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_MAIN
+      : process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_TEST;
+
+  if (!rpcUrl || !contractAddress || !PRIVATE_KEY) {
+    throw new Error(`Missing env vars for ${network}`);
+  }
+
+  const provider = new ethers.JsonRpcProvider(rpcUrl);
+  const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
+  const contract = new ethers.Contract(contractAddress, (artifact as any).abi || artifact, wallet);
+
+  return { contract };
 }
-
-const provider = new ethers.JsonRpcProvider(RPC_URL);
-const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
-const contract = new ethers.Contract(CONTRACT_ADDRESS, (artifact as any).abi || artifact, wallet);
 
 interface RoomConfig {
   maxPlayers: number;
@@ -41,7 +50,7 @@ const rooms: RoomConfig[] = [
   { maxPlayers: 1000, price: "0.0005" },
 ];
 
-async function ensureRooms() {
+async function ensureRoomsForContract(contract: ethers.Contract) {
   const next = await contract.nextRoomId();
   const total = Number(next);
 
@@ -55,7 +64,10 @@ async function ensureRooms() {
         const roomPlayers: string[] = room.players;
         const finished = room.winner !== ethers.ZeroAddress || room.drawing || roomPlayers.length >= maxPlayers;
         if (finished) {
-          const tx = await contract.createRoom(ethers.parseEther(price), maxPlayers);
+          const tx = await contract.createRoom(
+            ethers.parseEther(price),
+            maxPlayers
+          );
           await tx.wait();
           console.log(`Created room #${await contract.nextRoomId() - 1n} with price ${price} ETH and ${maxPlayers} players`);
         }
@@ -64,15 +76,25 @@ async function ensureRooms() {
     }
 
     if (latestIndex === -1) {
-      const tx = await contract.createRoom(ethers.parseEther(price), maxPlayers);
+      const tx = await contract.createRoom(
+        ethers.parseEther(price),
+        maxPlayers
+      );
       await tx.wait();
       console.log(`Created initial room with price ${price} ETH and ${maxPlayers} players`);
     }
   }
 }
 
+async function ensureRooms(network: Network) {
+  const { contract } = getNetworkConfig(network);
+  await ensureRoomsForContract(contract);
+}
+
 // Check every minute
 cron.schedule("* * * * *", () => {
   console.log("Checking rooms...");
-  ensureRooms().catch((err) => console.error("Failed to ensure rooms:", err));
+  Promise.all([ensureRooms("test"), ensureRooms("main")]).catch((err) =>
+    console.error("Failed to ensure rooms:", err)
+  );
 });
