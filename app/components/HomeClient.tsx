@@ -5,14 +5,14 @@ import lotteryAbi from "../../contracts/Bittery.json";
 import InfoCarousel from "./InfoCarousel";
 import ReferralLink from "./ReferralLink";
 import EarningsTable from "./EarningsTable";
-import { Link } from "../../navigation";
+import { Link, usePathname } from "../../navigation";
 import { useTranslations, useLocale } from "next-intl";
 
-const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "";
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 const LAUNCH_DATE = new Date("2025-08-05T20:00:00-03:00").getTime();
 
 export default function HomeClient() {
+  const pathname = usePathname();
   const [provider, setProvider] = useState<ethers.BrowserProvider>();
   const [signer, setSigner] = useState<ethers.JsonRpcSigner>();
   const [players, setPlayers] = useState<string[]>([]);
@@ -79,7 +79,10 @@ export default function HomeClient() {
 
   useEffect(() => {
     if (!provider) return;
-    const c = new ethers.Contract(CONTRACT_ADDRESS, lotteryAbi.abi, provider);
+    const address = pathname.includes('/main')
+      ? process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_MAIN
+      : process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_TEST;
+    const c = new ethers.Contract(address ?? '', lotteryAbi.abi, provider);
     setContract(c);
     getPlayers(c);
     getWinner(c);
@@ -89,7 +92,7 @@ export default function HomeClient() {
       getWinners(c);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [provider]);
+  }, [provider, pathname]);
 
   async function connect() {
     if ((window as any).ethereum) {

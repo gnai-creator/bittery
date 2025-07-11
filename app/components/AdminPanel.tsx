@@ -2,9 +2,9 @@
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { useTranslations } from "next-intl";
+import { usePathname } from "../../navigation";
 import contractAbi from "../../contracts/Bittery.json"; // Replace with your ABI if needed
 
-const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || ""; // Replace with your deployed address
 
 interface Props {
   provider?: ethers.BrowserProvider;
@@ -13,6 +13,7 @@ interface Props {
 
 export default function AdminPanel({ provider, signer }: Props) {
   const t = useTranslations("common");
+  const pathname = usePathname();
   const [contract, setContract] = useState<ethers.Contract>();
   const [isOwner, setIsOwner] = useState(false);
   const [showPanel, setShowPanel] = useState(false);
@@ -25,13 +26,16 @@ export default function AdminPanel({ provider, signer }: Props) {
 
   useEffect(() => {
     if (!provider) return;
+    const address = pathname.includes('/main')
+      ? process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_MAIN
+      : process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_TEST;
     const c = new ethers.Contract(
-      CONTRACT_ADDRESS,
+      address ?? '',
       (contractAbi as any).abi || contractAbi,
       provider
     );
     setContract(c);
-  }, [provider]);
+  }, [provider, pathname]);
 
   useEffect(() => {
     if (!contract || !signer) return;
