@@ -27,13 +27,15 @@ export default function HomeClient() {
   const [launchCountdown, setLaunchCountdown] = useState("");
   const t = useTranslations("common");
   const locale = useLocale();
-  const network = pathname.includes('/main') ? 'main' : 'test';
+  const network = pathname.includes("/main") ? "main" : "test";
   const symbol = useNativeSymbol(network);
   const prices = useUsdPrices();
   const TICKET_PRICE = 0.01;
   const ticketPriceUSD =
-    symbol !== 'UNKNOWN' && (symbol === 'ETH' ? prices.ETH : prices.MATIC)
-      ? (TICKET_PRICE * (symbol === 'ETH' ? prices.ETH! : prices.MATIC!)).toFixed(2)
+    symbol !== "UNKNOWN" && (symbol === "ETH" ? prices.ETH : prices.MATIC)
+      ? (
+          TICKET_PRICE * (symbol === "ETH" ? prices.ETH! : prices.MATIC!)
+        ).toFixed(2)
       : null;
 
   useEffect(() => {
@@ -89,10 +91,10 @@ export default function HomeClient() {
 
   useEffect(() => {
     if (!provider) return;
-    const address = pathname.includes('/main')
+    const address = pathname.includes("/main")
       ? process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_MAIN
       : process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_TEST;
-    const c = new ethers.Contract(address ?? '', lotteryAbi.abi, provider);
+    const c = new ethers.Contract(address ?? "", lotteryAbi.abi, provider);
     setContract(c);
     getPlayers(c);
     getWinner(c);
@@ -170,16 +172,10 @@ export default function HomeClient() {
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight title">
           {t("title")}
         </h1>
-        <Link
-          href="/terms"
-          className="text-sm text-gray-500 hover:underline"
-        >
+        <Link href="/terms" className="text-sm text-gray-500 hover:underline">
           {t("terms")} •
         </Link>{" "}
-        <Link
-          href="/privacy"
-          className="text-sm text-gray-500 hover:underline"
-        >
+        <Link href="/privacy" className="text-sm text-gray-500 hover:underline">
           {t("privacyPolicy")} •
         </Link>{" "}
         {t("allRightsReserved", { year: 2025 })}{" "}
@@ -213,18 +209,20 @@ export default function HomeClient() {
           >
             {t("buyTicket", { price: TICKET_PRICE.toFixed(2), symbol })}
             {ticketPriceUSD && (
-              <span className="ml-2 text-sm text-gray-500">(~ $ {ticketPriceUSD})</span>
+              <span className="ml-2 text-sm text-gray-500">
+                (~ $ {ticketPriceUSD})
+              </span>
             )}
           </button>
         )}
       </div>
 
-      <div className="flex justify-center p-4">
+      {/* <div className="flex justify-center p-4">
         <video controls autoPlay loop className="w-64 rounded-lg shadow-md">
           <source src="/Bittery - Always a Winner.mp4" type="video/mp4" />
           {t("videoUnsupported")}
         </video>
-      </div>
+      </div> */}
 
       {!launched && <EarningsTable />}
       {!launched && <ReferralLink />}
