@@ -8,7 +8,7 @@ import EarningsTable from "./EarningsTable";
 import { Link, usePathname } from "../../navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { useNativeSymbol } from "../../hooks/useNativeSymbol";
-import { useBrlPrices } from "../../hooks/useBrlPrices";
+import { useUsdPrices } from "../../hooks/useUsdPrices";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 const LAUNCH_DATE = new Date("2025-08-05T20:00:00-03:00").getTime();
@@ -29,9 +29,9 @@ export default function HomeClient() {
   const locale = useLocale();
   const network = pathname.includes('/main') ? 'main' : 'test';
   const symbol = useNativeSymbol(network);
-  const prices = useBrlPrices();
+  const prices = useUsdPrices();
   const TICKET_PRICE = 0.01;
-  const ticketPriceBRL =
+  const ticketPriceUSD =
     symbol !== 'UNKNOWN' && (symbol === 'ETH' ? prices.ETH : prices.MATIC)
       ? (TICKET_PRICE * (symbol === 'ETH' ? prices.ETH! : prices.MATIC!)).toFixed(2)
       : null;
@@ -212,8 +212,8 @@ export default function HomeClient() {
             onClick={buy}
           >
             {t("buyTicket", { price: TICKET_PRICE.toFixed(2), symbol })}
-            {ticketPriceBRL && (
-              <span className="ml-2 text-sm text-gray-500">(~ R$ {ticketPriceBRL})</span>
+            {ticketPriceUSD && (
+              <span className="ml-2 text-sm text-gray-500">(~ $ {ticketPriceUSD})</span>
             )}
           </button>
         )}

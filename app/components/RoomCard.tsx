@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useBitteryContract } from '../../hooks/useBitteryContract';
 import { Network } from '../../lib/contracts';
 import { useNativeSymbol } from '../../hooks/useNativeSymbol';
-import { useBrlPrices } from '../../hooks/useBrlPrices';
+import { useUsdPrices } from '../../hooks/useUsdPrices';
 
 interface Props {
   network: Network;
@@ -20,7 +20,7 @@ export default function RoomCard({ network, id }: Props) {
   const [price, setPrice] = useState(0);
   const [prize, setPrize] = useState(0);
   const symbol = useNativeSymbol(network);
-  const prices = useBrlPrices();
+  const prices = useUsdPrices();
   const t = useTranslations('common');
 
   async function refresh() {
@@ -64,7 +64,7 @@ export default function RoomCard({ network, id }: Props) {
         Ticket Price: {price.toFixed(4)} {symbol}
         {symbol !== 'UNKNOWN' && (symbol === 'ETH' ? prices.ETH : prices.MATIC) && (
           <span className="ml-1 text-sm text-gray-500">
-            (~ R$ {(price * (symbol === 'ETH' ? prices.ETH! : prices.MATIC!)).toFixed(2)})
+            (~ $ {(price * (symbol === 'ETH' ? prices.ETH! : prices.MATIC!)).toFixed(2)})
           </span>
         )}
       </div>
@@ -72,7 +72,7 @@ export default function RoomCard({ network, id }: Props) {
         Prize: {prize.toFixed(4)} {symbol}
         {symbol !== 'UNKNOWN' && (symbol === 'ETH' ? prices.ETH : prices.MATIC) && (
           <span className="ml-1 text-sm text-gray-500">
-            (~ R$ {(prize * (symbol === 'ETH' ? prices.ETH! : prices.MATIC!)).toFixed(2)})
+            (~ $ {(prize * (symbol === 'ETH' ? prices.ETH! : prices.MATIC!)).toFixed(2)})
           </span>
         )}
       </div>

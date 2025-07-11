@@ -7,9 +7,9 @@ export interface Prices {
 }
 
 const API_URL =
-  'https://api.coingecko.com/api/v3/simple/price?ids=ethereum,polygon&vs_currencies=brl';
+  'https://api.coingecko.com/api/v3/simple/price?ids=ethereum,polygon&vs_currencies=usd';
 
-export function useBrlPrices() {
+export function useUsdPrices() {
   const [prices, setPrices] = useState<Prices>({});
 
   useEffect(() => {
@@ -18,14 +18,14 @@ export function useBrlPrices() {
         const res = await fetch(API_URL);
         if (!res.ok) throw new Error('fetch error');
         const data = await res.json();
-        const next = { ETH: data.ethereum.brl, MATIC: data.polygon.brl } as Prices;
+        const next = { ETH: data.ethereum.usd, MATIC: data.polygon.usd } as Prices;
         setPrices(next);
         if (typeof window !== 'undefined') {
-          localStorage.setItem('brl_prices', JSON.stringify({ time: Date.now(), data: next }));
+          localStorage.setItem('usd_prices', JSON.stringify({ time: Date.now(), data: next }));
         }
       } catch {
         if (typeof window !== 'undefined') {
-          const cached = localStorage.getItem('brl_prices');
+          const cached = localStorage.getItem('usd_prices');
           if (cached) {
             try {
               const parsed = JSON.parse(cached);
