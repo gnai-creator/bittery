@@ -15,8 +15,8 @@ export default function WagmiProviders({ children }: { children: ReactNode }) {
           process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || "bittery",
         chains: [polygon, sepolia] as const,
         transports: {
-          [polygon.id]: http(),
-          [sepolia.id]: http(),
+          [polygon.id]: http(process.env.NEXT_PUBLIC_POLYGON_RPC_URL || ""),
+          [sepolia.id]: http(process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL || ""),
         },
       }),
     []
