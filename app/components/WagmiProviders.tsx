@@ -2,9 +2,11 @@
 import { WagmiConfig, http } from "wagmi";
 import { polygon, polygonMumbai } from "wagmi/chains";
 import { RainbowKitProvider, getDefaultConfig } from "@rainbow-me/rainbowkit";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export default function WagmiProviders({ children }: { children: ReactNode }) {
+  const [queryClient] = useState(() => new QueryClient());
   const wagmiConfig = getDefaultConfig({
     appName: "Bittery",
     projectId: "bittery",
@@ -16,8 +18,10 @@ export default function WagmiProviders({ children }: { children: ReactNode }) {
   });
   const { chains } = wagmiConfig;
   return (
-    <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={chains}>{children}</RainbowKitProvider>
-    </WagmiConfig>
+    <QueryClientProvider client={queryClient}>
+      <WagmiConfig config={wagmiConfig}>
+        <RainbowKitProvider chains={chains}>{children}</RainbowKitProvider>
+      </WagmiConfig>
+    </QueryClientProvider>
   );
 }
