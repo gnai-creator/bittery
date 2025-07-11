@@ -1,41 +1,32 @@
 import { ethers } from "hardhat";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 async function main() {
-  const subscriptionIdRaw = process.env.SUBSCRIPTION_ID; // Mantenha estas variáveis para passar ao construtor
+  const subscriptionIdRaw = process.env.SUBSCRIPTION_ID;
   const coordinatorRaw = process.env.VRF_COORDINATOR;
-  const keyHashRaw = process.env.KEY_HASH; // --- Seus logs de debug existentes ---
+  const keyHashRaw = process.env.KEY_HASH;
+  const feeRecipientRaw = process.env.FEE_RECIPIENT;
 
-  console.log(
-    "DEBUG: coordinator (raw):",
-    JSON.stringify(coordinatorRaw),
-    "Type:",
-    typeof coordinatorRaw
-  );
-  console.log(
-    "DEBUG: subscriptionId (raw):",
-    JSON.stringify(subscriptionIdRaw),
-    "Type:",
-    typeof subscriptionIdRaw
-  );
-  console.log(
-    "DEBUG: keyHash (raw):",
-    JSON.stringify(keyHashRaw),
-    "Type:",
-    typeof keyHashRaw
-  ); // --- Fim dos logs ---
-  if (!subscriptionIdRaw || !coordinatorRaw || !keyHashRaw) {
-    // Verifique todos
-    console.error(
-      "Erro: Uma ou mais variáveis de ambiente VRF estão faltando ou vazias."
-    );
+  console.log("DEBUG: coordinator:", coordinatorRaw);
+  console.log("DEBUG: subscriptionId:", subscriptionIdRaw);
+  console.log("DEBUG: keyHash:", keyHashRaw);
+  console.log("DEBUG: feeRecipient:", feeRecipientRaw);
+
+  // Verificações de ambiente
+  if (
+    !subscriptionIdRaw ||
+    !coordinatorRaw ||
+    !keyHashRaw ||
+    !feeRecipientRaw
+  ) {
+    console.error("❌ Erro: Uma ou mais variáveis de ambiente estão faltando.");
     process.exit(1);
-  } // Regex para garantir que o SUBSCRIPTION_ID contém apenas dígitos
+  }
 
-  const digitsOnly = /^\d+$/;
-  if (!digitsOnly.test(subscriptionIdRaw)) {
-    console.error(
-      "Erro: SUBSCRIPTION_ID deve conter apenas dígitos. Substitua valores de placeholder pelo número real."
-    );
+  if (!/^\d+$/.test(subscriptionIdRaw)) {
+    console.error("❌ Erro: SUBSCRIPTION_ID deve conter apenas dígitos.");
     process.exit(1);
   }
 
@@ -43,43 +34,24 @@ async function main() {
   try {
     subscriptionId = BigInt(subscriptionIdRaw);
   } catch (e) {
-    console.error(
-      "Erro ao converter SUBSCRIPTION_ID para BigInt. Verifique se é um número válido.",
-      e
-    );
+    console.error("❌ Erro ao converter SUBSCRIPTION_ID para BigInt:", e);
     process.exit(1);
-  } // --- Logs dos valores convertidos/finalizados que serão passados ---
+  }
 
-  console.log(
-    "DEBUG: coordinator (final):",
+  // Deploy do contrato com os 4 argumentos
+  const Bittery = await ethers.getContractFactory("Bittery");
+  const bittery = await Bittery.deploy(
     coordinatorRaw,
-    "Type:",
-    typeof coordinatorRaw
-  );
-  console.log(
-    "DEBUG: subscriptionId (final):",
     subscriptionId,
-    "Type:",
-    typeof subscriptionId
-  );
-  console.log(
-    "DEBUG: keyHash (final):",
     keyHashRaw,
-    "Type:",
-    typeof keyHashRaw
-  ); // --- Fim dos logs ---
-  const Lottery = await ethers.getContractFactory("Bittery"); // PASSE OS TRÊS ARGUMENTOS AQUI, NA ORDEM CORRETA
-  const lottery = await Lottery.deploy(
-    coordinatorRaw, // 1º argumento: o endereço do coordenador
-    subscriptionId, // 2º argumento: o ID da assinatura (já convertido para BigInt)
-    keyHashRaw // 3º argumento: o key hash
+    feeRecipientRaw
   );
-  await lottery.waitForDeployment();
 
-  console.log("Lottery deployed to:", lottery.target);
+  await bittery.waitForDeployment();
+  console.log("✅ Bittery deployed to:", bittery.target);
 }
 
 main().catch((error) => {
-  console.error(error);
+  console.error("❌ Erro durante o deploy:", error);
   process.exitCode = 1;
 });
