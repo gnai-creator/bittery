@@ -36,7 +36,7 @@ export default function RoomsView({ network }: { network: Network }) {
   return (
     <div className="space-y-8">
       {sorted.map(([max, ids]) => (
-        <div key={max} className="space-y-2 justify-center">
+        <div key={max} className="space-y-2 justify-center text-center">
           <h2 className="text-xl font-bold">{max} Player Rooms</h2>
           <div className="grid md:grid-cols-2 gap-4">
             {ids.map((id) => (
