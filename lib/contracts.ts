@@ -1,6 +1,6 @@
-import contractJson from '../contracts/Bittery.json';
+import artifact from '../contracts/Bittery.json';
+const abi = artifact.abi;
 
-const abi = (contractJson as any).abi ?? contractJson;
 
 export type Network = 'test' | 'main';
 

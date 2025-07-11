@@ -16,11 +16,10 @@ export default function WagmiProviders({ children }: { children: ReactNode }) {
       [polygonMumbai.id]: http(),
     },
   });
-  const { chains } = wagmiConfig;
   return (
     <QueryClientProvider client={queryClient}>
       <WagmiConfig config={wagmiConfig}>
-        <RainbowKitProvider chains={chains}>{children}</RainbowKitProvider>
+        <RainbowKitProvider>{children}</RainbowKitProvider>
       </WagmiConfig>
     </QueryClientProvider>
   );
