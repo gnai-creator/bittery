@@ -1,4 +1,6 @@
-import abi from '../contracts/Bittery.json';
+import contractJson from '../contracts/Bittery.json';
+
+const abi = (contractJson as any).abi ?? contractJson;
 
 export type Network = 'test' | 'main';
 
