@@ -1,6 +1,7 @@
 import artifact from '../contracts/Bittery.json';
 const abi = artifact.abi;
 
+
 export type Network = 'test' | 'main';
 
 export function getContractConfig(network: Network) {

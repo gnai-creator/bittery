@@ -14,7 +14,7 @@ export const metadata = {
     images: ["/Bittery-Logo.png"],
   },
 };
-import Link from "next/link";
+import { Link } from "../../../navigation";
 import { useTranslations } from "next-intl";
 
 export default function PrivacyPage() {
@@ -46,7 +46,7 @@ export default function PrivacyPage() {
 
       <p className="mt-8 text-sm text-gray-500">{t("lastUpdated", { date: "July 10, 2025" })}</p>
       <Link
-        href="../"
+        href="/"
         className="text-blue-600 hover:underline mt-4 inline-block title"
       >
         {t("backToHome")}
