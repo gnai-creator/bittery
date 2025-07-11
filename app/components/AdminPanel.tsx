@@ -19,8 +19,8 @@ export default function AdminPanel({ provider, signer }: Props) {
   const [feePercent, setFeePercent] = useState("");
   const [referralPercent, setReferralPercent] = useState("");
   const [feeRecipient, setFeeRecipient] = useState("");
-  const [currentFeePercent, setCurrentFeePercent] = useState<number>();
-  const [currentReferralPercent, setCurrentReferralPercent] = useState<number>();
+  const [currentFeePercent, setCurrentFeePercent] = useState<number>(0);
+  const [currentReferralPercent, setCurrentReferralPercent] = useState<number>(0);
   const [currentFeeRecipient, setCurrentFeeRecipient] = useState<string>("");
 
   useEffect(() => {
