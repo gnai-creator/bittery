@@ -87,10 +87,14 @@ export default function HomeClient() {
     getPlayers(c);
     getWinner(c);
     getWinners(c);
-    c.on("WinnerPicked", () => {
+    const listener = () => {
       getWinner(c);
       getWinners(c);
-    });
+    };
+    c.on("WinnerPicked", listener);
+    return () => {
+      c.off("WinnerPicked", listener);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [provider, pathname]);
 

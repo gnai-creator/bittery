@@ -14,7 +14,11 @@ export default function ConnectWalletButton({ onConnect }: Props) {
       return;
     }
     try {
-      const provider = new ethers.BrowserProvider((window as any).ethereum);
+      const ethereum = (window as any).ethereum;
+      if (typeof ethereum.setMaxListeners === "function") {
+        ethereum.setMaxListeners(100);
+      }
+      const provider = new ethers.BrowserProvider(ethereum);
       await provider.send("eth_requestAccounts", []);
       const signer = await provider.getSigner();
       onConnect(provider, signer);
