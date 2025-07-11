@@ -74,6 +74,7 @@ SEPOLIA_RPC_URL=https://sepolia.infura.io/v3/YOUR_API_KEY
 CHAINLINK_SUBSCRIPTION_ID=your_vrf_subscription_id
 CHAINLINK_COORDINATOR=coordinator_address
 CHAINLINK_KEY_HASH=keyhash_value
+CRON_SECRET=your_secret_for_cron
 ```
 
 Then deploy with:
@@ -85,6 +86,9 @@ To automatically maintain one room of each type on-chain, use the scheduler rout
 On Vercel you can create a [Cron Job](https://vercel.com/docs/cron-jobs) that
 invokes `/api/schedule-rooms` at the desired interval (for example, every
 minute).
+Ensure the `CRON_SECRET` environment variable is configured so Vercel includes
+`Authorization: Bearer <CRON_SECRET>` on each invocation; the route rejects
+requests without this token.
 
 For local development you can still run:
 
