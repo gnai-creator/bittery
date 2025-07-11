@@ -81,6 +81,13 @@ Then deploy with:
 npx hardhat run scripts/deploy.ts --network sepolia
 ```
 
+To automatically maintain one room of each type on-chain, run the scheduler:
+
+```bash
+npm run schedule:rooms
+```
+This task checks the contract every minute and creates new rooms when the previous ones finish.
+
 ---
 
 ## ❓ Why Bittery?
