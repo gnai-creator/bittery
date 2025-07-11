@@ -1,20 +1,33 @@
 import artifact from '../contracts/Bittery.json';
+import { isAddress } from 'ethers';
+
 const abi = artifact.abi;
 
 
 export type Network = 'test' | 'main';
 
 export function getContractConfig(network: Network) {
-  if (network === 'main') {
-    return {
-      address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_MAIN as `0x${string}`,
-      chainId: Number(process.env.NEXT_PUBLIC_CHAIN_ID_MAIN || '1'),
-      abi,
-    } as const;
+  const address =
+    network === 'main'
+      ? process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_MAIN
+      : process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_TEST;
+
+  const chainId =
+    network === 'main'
+      ? Number(process.env.NEXT_PUBLIC_CHAIN_ID_MAIN || '1')
+      : Number(process.env.NEXT_PUBLIC_CHAIN_ID_TEST || '1');
+
+  if (!address) {
+    throw new Error(`Contract address not configured for network: ${network}`);
   }
+
+  if (!isAddress(address)) {
+    throw new Error(`Invalid contract address for network ${network}: ${address}`);
+  }
+
   return {
-    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_TEST as `0x${string}`,
-    chainId: Number(process.env.NEXT_PUBLIC_CHAIN_ID_TEST || '1'),
+    address: address as `0x${string}`,
+    chainId,
     abi,
   } as const;
 }
