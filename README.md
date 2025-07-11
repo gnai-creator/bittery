@@ -81,12 +81,17 @@ Then deploy with:
 npx hardhat run scripts/deploy.ts --network sepolia
 ```
 
-To automatically maintain one room of each type on-chain, run the scheduler:
+To automatically maintain one room of each type on-chain, use the scheduler route.
+On Vercel you can create a [Cron Job](https://vercel.com/docs/cron-jobs) that
+invokes `/api/schedule-rooms` at the desired interval (for example, every
+minute).
+
+For local development you can still run:
 
 ```bash
 npm run schedule:rooms
 ```
-This task checks the contract every minute and creates new rooms when the previous ones finish.
+The route executes the same logic and creates new rooms when the previous ones finish.
 
 ---
 
