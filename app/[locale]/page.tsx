@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Link } from "../../navigation";
 import { useTranslations } from "next-intl";
-
+import HomeClient from "../components/HomeClient";
 export const metadata: Metadata = {
   title: "Home",
   description:
@@ -41,6 +41,7 @@ export default function Home() {
           Mainnet
         </Link>
       </div>
+      <HomeClient />
     </main>
   );
 }
