@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 const ETH_TO_USD = 3000;
 const REF_PERCENT_ETH = 0.00025; // 2.5% of 0.01 ETH
@@ -65,6 +66,7 @@ function useAnimatedNumber(value: number, duration = 400) {
 }
 
 export default function SimulatorClient() {
+  const t = useTranslations("common");
   const [weeklyReferrals, setWeeklyReferrals] = useState(0);
   const groups = useMemo(() => generateData(), []);
 
@@ -81,10 +83,10 @@ export default function SimulatorClient() {
   return (
     <main className="px-4 py-8 space-y-8 max-w-7xl mx-auto">
       <div className="space-y-4">
-        <h1 className="text-3xl font-bold title">Referral Earnings Simulator</h1>
+        <h1 className="text-3xl font-bold title">{t("simulatorTitle")}</h1>
         <div className="flex flex-col sm:flex-row items-center gap-4">
           <label className="font-medium">
-            Weekly referred players:
+            {t("weeklyReferredPlayers")}
             <input
               type="number"
               min={1}
@@ -97,22 +99,22 @@ export default function SimulatorClient() {
         </div>
         <div className="grid sm:grid-cols-3 gap-4 pt-4">
           <div className="border rounded p-4 bg-white dark:bg-neutral-900 shadow">
-            <h2 className="font-semibold">Weekly</h2>
+            <h2 className="font-semibold">{t("weekly")}</h2>
             <p>{dispWeeklyETH.toFixed(6)} ETH</p>
             <p>$ {dispWeeklyUSD.toFixed(2)}</p>
           </div>
           <div className="border rounded p-4 bg-white dark:bg-neutral-900 shadow">
-            <h2 className="font-semibold">Monthly</h2>
+            <h2 className="font-semibold">{t("monthly")}</h2>
             <p>$ {dispMonthlyUSD.toFixed(2)}</p>
           </div>
           <div className="border rounded p-4 bg-white dark:bg-neutral-900 shadow">
-            <h2 className="font-semibold">Yearly</h2>
+            <h2 className="font-semibold">{t("yearly")}</h2>
             <p>$ {dispYearlyUSD.toFixed(2)}</p>
           </div>
         </div>
       </div>
       <div className="space-y-4">
-        <h2 className="text-2xl font-bold title">Referral & Prize Table</h2>
+        <h2 className="text-2xl font-bold title">{t("referralPrizeTable")}</h2>
         {groups.map((group, i) => (
           <div key={i} className="overflow-x-auto">
             <h3 className="font-semibold my-2">
@@ -121,14 +123,14 @@ export default function SimulatorClient() {
             <table className="min-w-full text-sm border-collapse border">
               <thead>
                 <tr>
-                  <th className="border px-2">Players</th>
-                  <th className="border px-2">Referrals</th>
-                  <th className="border px-2">Referral Earnings (ETH)</th>
-                  <th className="border px-2">Referral Earnings ($)</th>
-                  <th className="border px-2">Chance to Win</th>
-                  <th className="border px-2">Prize Pool (ETH)</th>
-                  <th className="border px-2">Prize Pool ($)</th>
-                  <th className="border px-2">Total Potential Gain ($)</th>
+                  <th className="border px-2">{t("tablePlayers")}</th>
+                  <th className="border px-2">{t("tableReferrals")}</th>
+                  <th className="border px-2">{t("tableReferralEarningsETH")}</th>
+                  <th className="border px-2">{t("tableReferralEarningsUSD")}</th>
+                  <th className="border px-2">{t("tableChanceToWin")}</th>
+                  <th className="border px-2">{t("tablePrizePoolETH")}</th>
+                  <th className="border px-2">{t("tablePrizePoolUSD")}</th>
+                  <th className="border px-2">{t("tableTotalPotentialGainUSD")}</th>
                 </tr>
               </thead>
               <tbody>

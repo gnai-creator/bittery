@@ -15,44 +15,41 @@ export const metadata = {
   },
 };
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export default function PrivacyPage() {
+  const t = useTranslations("common");
   return (
     <main className="max-w-3xl mx-auto py-12 px-4">
-      <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
+      <h1 className="text-3xl font-bold mb-6">{t("privacyTitle")}</h1>
       <p className="mb-4">
-        At Bittery, we value your privacy. As a decentralized application
-        (dApp), we do not collect personal information directly.
+        {t("privacyIntro")}
       </p>
 
       <ul className="list-disc pl-6 space-y-2">
-        <li>We do not store names, emails, or any personal identifiers.</li>
+        <li>{t("privacyBullet1")}</li>
         <li>
-          We interact with your Ethereum wallet (e.g., MetaMask) to process
-          transactions.
+          {t("privacyBullet2")}
         </li>
         <li>
-          Wallet addresses and transaction history are publicly recorded on the
-          blockchain.
+          {t("privacyBullet3")}
         </li>
         <li>
-          Third-party services (e.g., Chainlink VRF, Alchemy, Cloudflare) may
-          collect metadata such as IP addresses.
+          {t("privacyBullet4")}
         </li>
-        <li>We may use anonymous analytics to improve site performance.</li>
+        <li>{t("privacyBullet5")}</li>
       </ul>
 
       <p className="mt-6">
-        By using Bittery, you consent to this privacy policy. If you do not
-        agree, please disconnect and refrain from using the application.
+        {t("privacyConclusion")}
       </p>
 
-      <p className="mt-8 text-sm text-gray-500">Last updated: July 10, 2025</p>
+      <p className="mt-8 text-sm text-gray-500">{t("lastUpdated", { date: "July 10, 2025" })}</p>
       <Link
         href="../"
         className="text-blue-600 hover:underline mt-4 inline-block title"
       >
-        Back to Home
+        {t("backToHome")}
       </Link>
     </main>
   );

@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 interface Slide {
   title: string;
@@ -7,36 +8,17 @@ interface Slide {
   link?: string;
 }
 
-const slides: Slide[] = [
-  {
-    title: "How It Works",
-    text: "Each ticket costs 0.01 ETH. \nWhen two players join, \nthe contract triggers a draw \nevery Sunday at 8 PM, \nor the owner can trigger it manually. \nA random winner is selected \nusing Chainlink VRF, \nand the full prize (minus fee) \nis sent to them.",
-  },
-  {
-    title: "Rules",
-    text: `• Each ticket: 0.01 ETH\n
-• Always a winner\n
-• Auto-draw: all Sundays \nat 8 PM (if ≥ 2 players)\n
-• Manual draw: by contract owner\n
-• Chainlink VRF rotates \nthe participant index\n
-• Winner gets the prize; \n5% goes to fee address`,
-  },
-  {
-    title: "Technical Details",
-    text: "Smart contract written in Solidity, \nusing Chainlink VRF v2 \nfor verifiable randomness. \nDeployed on the Polygon Mumbai testnet. \nFrontend built with Next.js and \nethers.js.",
-  },
-  {
-    title: "Trust & Transparency",
-    text: "All draws are provably fair \nusing Chainlink VRF. \nAll transactions, \nall draws, and winners \nare permanently stored on-chain. \nNo middlemen, no manipulation.",
-  },
-  {
-    title: "Code",
-    text: "The full project is open source \nand available on GitHub. \nContributions are welcome!",
-    link: "https://github.com/gnai-creator/bittery",
-  },
-];
 
 export default function InfoCarousel() {
+  const t = useTranslations("common");
+  const slides: Slide[] = [
+    { title: t("howItWorksTitle"), text: t("howItWorksText") },
+    { title: t("rulesTitle"), text: t("rulesText") },
+    { title: t("technicalTitle"), text: t("technicalText") },
+    { title: t("trustTitle"), text: t("trustText") },
+    { title: t("codeTitle"), text: t("codeText"), link: "https://github.com/gnai-creator/bittery" },
+  ];
+
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
