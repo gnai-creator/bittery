@@ -115,7 +115,7 @@ export default function AdminPanel({ provider, signer }: Props) {
       {showPanel && (
         <div className="space-y-6 max-w-md">
           <div className="space-y-1">
-            <div>{t("currentFeePercent", { value: currentFeePercent })}</div>
+            <div>{t("currentFeePercent", { value: currentFeePercent ?? 0 })}</div>
             <input
               type="number"
               value={feePercent}
