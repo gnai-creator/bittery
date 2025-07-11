@@ -161,7 +161,7 @@ export default function HomeClient() {
         >
           {t("privacyPolicy")} •
         </Link>{" "}
-        {t("allRightsReserved", { year: 2025 })} {" "}
+        {t("allRightsReserved", { year: 2025 })}{" "}
         <span className="font-semibold">{t("bitteryLLC")}</span>
         <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg">
           {t("subtitle")}
@@ -177,14 +177,7 @@ export default function HomeClient() {
       )}
       <InfoCarousel />
 
-      <div className="flex justify-center p-4">
-        <video controls autoPlay loop className="w-64 rounded-lg shadow-md">
-          <source src="/Bittery - Always a Winner.mp4" type="video/mp4" />
-          {t("videoUnsupported")}
-        </video>
-      </div>
-
-      <div className="flex flex-col sm:flex-row gap-4">
+      <div className="flex justify-center gap-4">
         <button
           className="rounded bg-black text-white px-6 py-2 hover:bg-gray-800 transition-colors"
           onClick={connect}
@@ -201,6 +194,14 @@ export default function HomeClient() {
           </button>
         )}
       </div>
+
+      <div className="flex justify-center p-4">
+        <video controls autoPlay loop className="w-64 rounded-lg shadow-md">
+          <source src="/Bittery - Always a Winner.mp4" type="video/mp4" />
+          {t("videoUnsupported")}
+        </video>
+      </div>
+
       {!launched && <EarningsTable />}
       {launched && <ReferralLink />}
       <div className="w-full max-w-md text-left">
