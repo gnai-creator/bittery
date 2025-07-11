@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
+import Link from "next/link";
 
 const TERMS_VERSION = "2025-07-10"; // Atualize esta versão quando mudar os termos
 
 export default function TermsBanner() {
   const [accepted, setAccepted] = useState<boolean>(true);
   const t = useTranslations("common");
+  const locale = useLocale();
 
   useEffect(() => {
     const savedVersion = localStorage.getItem("termsVersionAccepted");
@@ -26,19 +28,19 @@ export default function TermsBanner() {
       <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
         <p className="text-sm">
           {t("agreeTerms")} {" "}
-          <a
-            href="terms"
+          <Link
+            href={`/${locale}/terms`}
             className="underline text-blue-400 hover:text-blue-300 title"
           >
             {t("terms")}
-          </a>{" "}
+          </Link>{" "}
           {t("and") ?? "and"} {" "}
-          <a
-            href="privacy"
+          <Link
+            href={`/${locale}/privacy`}
             className="underline text-blue-400 hover:text-blue-300 title"
           >
             {t("privacyPolicy")}
-          </a>
+          </Link>
           .
         </p>
         <button
