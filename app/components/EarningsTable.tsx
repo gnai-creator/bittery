@@ -2,6 +2,7 @@
 import { useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { useNativeSymbol } from "../../hooks/useNativeSymbol";
+import { useUsdPrices } from "../../hooks/useUsdPrices";
 
 interface RowData {
   players: number;
@@ -14,18 +15,21 @@ interface RowData {
   totalPotentialUSD: number;
 }
 
-const ETH_TO_USD = 3000;
-const REF_PERCENT_ETH = 0.00025; // 2.5% of 0.01 ETH
-
-function generateData(start = 2, end = 50): RowData[] {
+const REF_PERCENT_NATIVE = 0.00025; // 2.5% of 0.01 token
+function generateData(
+  start = 2,
+  end = 50,
+  offset = 1,
+  usdRate = 3000
+): RowData[] {
   const data: RowData[] = [];
-  for (let players = start; players <= end; players++) {
+  for (let players = start; players <= end; players += offset) {
     const referrals = players - 1;
-    const referralEarningsETH = referrals * REF_PERCENT_ETH;
-    const referralEarningsUSD = referralEarningsETH * ETH_TO_USD;
+    const referralEarningsETH = referrals * REF_PERCENT_NATIVE;
+    const referralEarningsUSD = referralEarningsETH * usdRate;
     const chance = 1 / players;
     const prizePoolETH = 0.0095 * players;
-    const prizePoolUSD = prizePoolETH * ETH_TO_USD;
+    const prizePoolUSD = prizePoolETH * usdRate;
     const totalPotentialUSD = referralEarningsUSD + prizePoolUSD * chance;
     data.push({
       players,
@@ -44,7 +48,14 @@ function generateData(start = 2, end = 50): RowData[] {
 export default function EarningsTable() {
   const t = useTranslations("common");
   const symbol = useNativeSymbol();
-  const rows = useMemo(() => generateData(), []);
+  const prices = useUsdPrices();
+  const usdRate =
+    symbol === "ETH"
+      ? prices.ETH ?? 3000
+      : symbol === "MATIC"
+      ? prices.MATIC ?? 1
+      : 3000;
+  const rows = useMemo(() => generateData(2, 50, 1, usdRate), [usdRate]);
   return (
     <div className="overflow-x-auto w-full max-w-2xl mx-auto mt-8">
       <h2 className="text-2xl font-bold title mb-2">{t("lotteryEarningsTable")}</h2>
