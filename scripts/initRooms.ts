@@ -4,18 +4,27 @@ import artifact from "../contracts/Bittery.json";
 
 dotenv.config();
 
-const RPC_URL = process.env.RPC_URL || process.env.SEPOLIA_RPC_URL || "";
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
-const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS || process.env.CONTRACT_ADDRESS_TEST || "";
 
-if (!RPC_URL || !PRIVATE_KEY || !CONTRACT_ADDRESS) {
-  console.error("RPC_URL, PRIVATE_KEY and CONTRACT_ADDRESS must be set in the environment");
-  process.exit(1);
+type Network = "test" | "main";
+
+function getNetworkConfig(network: Network) {
+  const rpcUrl = network === "main" ? process.env.POLYGON_RPC_URL : process.env.SEPOLIA_RPC_URL;
+  const contractAddress =
+    network === "main"
+      ? process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_MAIN
+      : process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_TEST;
+
+  if (!rpcUrl || !contractAddress || !PRIVATE_KEY) {
+    throw new Error(`Missing env vars for ${network}`);
+  }
+
+  const provider = new ethers.JsonRpcProvider(rpcUrl);
+  const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
+  const contract = new ethers.Contract(contractAddress, (artifact as any).abi || artifact, wallet);
+
+  return { contract };
 }
-
-const provider = new ethers.JsonRpcProvider(RPC_URL);
-const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
-const contract = new ethers.Contract(CONTRACT_ADDRESS, (artifact as any).abi || artifact, wallet);
 
 interface RoomConfig {
   maxPlayers: number;
@@ -40,11 +49,12 @@ const rooms: RoomConfig[] = [
   { maxPlayers: 1000, price: "0.0005" },
 ];
 
-async function main() {
+async function initRooms(network: Network) {
+  const { contract } = getNetworkConfig(network);
   const next = await contract.nextRoomId();
   const startIndex = Number(next);
   if (startIndex >= rooms.length) {
-    console.log("All rooms already exist. Skipping creation.");
+    console.log(`All rooms already exist on ${network}. Skipping creation.`);
     return;
   }
 
@@ -52,11 +62,13 @@ async function main() {
     const { price, maxPlayers } = rooms[i];
     const tx = await contract.createRoom(ethers.parseEther(price), maxPlayers);
     await tx.wait();
-    console.log(`Created room #${i} with price ${price} ETH and ${maxPlayers} players`);
+    console.log(
+      `Created room #${i} on ${network} with price ${price} ETH and ${maxPlayers} players`
+    );
   }
 }
 
-main().catch((err) => {
+Promise.all([initRooms("test"), initRooms("main")]).catch((err) => {
   console.error("Failed to create rooms:", err);
   process.exitCode = 1;
 });
