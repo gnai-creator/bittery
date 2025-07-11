@@ -4,12 +4,7 @@ import TermsBanner from "../components/TermsBanner";
 import Footer from "../components/Footer";
 import "../globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
-import { WagmiConfig, http } from "wagmi";
-import { polygon, polygonMumbai } from "wagmi/chains";
-import {
-  RainbowKitProvider,
-  getDefaultConfig,
-} from "@rainbow-me/rainbowkit";
+import WagmiProviders from "../components/WagmiProviders";
 
 import {NextIntlClientProvider} from "next-intl";
 import {setRequestLocale, getMessages} from "next-intl/server";
@@ -26,16 +21,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const wagmiConfig = getDefaultConfig({
-  appName: "Bittery",
-  projectId: "bittery",
-  chains: [polygon, polygonMumbai] as const,
-  transports: {
-    [polygon.id]: http(),
-    [polygonMumbai.id]: http(),
-  },
-});
-const { chains } = wagmiConfig;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://bittery.org"),
@@ -81,15 +66,13 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-br from-white to-gray-100 dark:from-neutral-900 dark:to-neutral-800 text-gray-900 dark:text-gray-100 flex flex-col min-h-screen`}
       >
-        <WagmiConfig config={wagmiConfig}>
-          <RainbowKitProvider chains={chains}>
-            <NextIntlClientProvider locale={locale} messages={messages}>
-              <main className="flex-grow">{children}</main>
-              <Footer />
-              <TermsBanner />
-            </NextIntlClientProvider>
-          </RainbowKitProvider>
-        </WagmiConfig>
+        <WagmiProviders>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <main className="flex-grow">{children}</main>
+            <Footer />
+            <TermsBanner />
+          </NextIntlClientProvider>
+        </WagmiProviders>
       </body>
     </html>
   );
