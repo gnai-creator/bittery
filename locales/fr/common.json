@@ -1,1 +1,5 @@
-{ "title": "Loterie Décentralisée" }
+{
+  "common": {
+    "title": "Loterie Décentralisée"
+  }
+}
