@@ -1,6 +1,7 @@
 "use client";
 import { useMemo } from "react";
 import { useTranslations } from "next-intl";
+import { useNativeSymbol } from "../../hooks/useNativeSymbol";
 
 interface RowData {
   players: number;
@@ -42,6 +43,7 @@ function generateData(start = 2, end = 50): RowData[] {
 
 export default function EarningsTable() {
   const t = useTranslations("common");
+  const symbol = useNativeSymbol();
   const rows = useMemo(() => generateData(), []);
   return (
     <div className="overflow-x-auto w-full max-w-2xl mx-auto mt-8">
@@ -51,10 +53,10 @@ export default function EarningsTable() {
           <tr>
             <th className="border px-2">{t("tablePlayers")}</th>
             <th className="border px-2">{t("tableReferrals")}</th>
-            <th className="border px-2">{t("tableReferralEarningsETH")}</th>
+            <th className="border px-2">{t("tableReferralEarningsETH", { symbol })}</th>
             <th className="border px-2">{t("tableReferralEarningsUSD")}</th>
             <th className="border px-2">{t("tableChanceToWin")}</th>
-            <th className="border px-2">{t("tablePrizePoolETH")}</th>
+            <th className="border px-2">{t("tablePrizePoolETH", { symbol })}</th>
             <th className="border px-2">{t("tablePrizePoolUSD")}</th>
             <th className="border px-2">{t("tableTotalPotentialGainUSD")}</th>
           </tr>
