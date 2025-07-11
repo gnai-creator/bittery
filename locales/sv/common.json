@@ -1,5 +1,15 @@
 {
   "common": {
-    "title": "Decentraliserat lotteri"
+    "title": "Decentraliserat lotteri",
+    "agreeTerms": "Genom att använda den här webbplatsen samtycker du till våra villkor och sekretesspolicy.",
+    "accept": "Acceptera",
+    "terms": "Villkor",
+    "privacyPolicy": "Integritetspolicy",
+    "connectWallet": "Anslut plånbok",
+    "metamaskRequired": "Metamask krävs",
+    "generateReferralLink": "Generera remisslänk",
+    "linkCopied": "Länk kopia!",
+    "referralReward": "Du kommer att tjäna ungefär $ {reward} för varje hänvisat biljettköp.",
+    "and": "och"
   }
 }

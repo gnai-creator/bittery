@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { ethers } from "ethers";
+import { useTranslations } from "next-intl";
 
 const ETH_TO_USD = 3000; // 1 ETH ≈ $3,000
 const TICKET_PRICE_ETH = 0.01;
@@ -9,6 +10,7 @@ const COMMISSION_PERCENT = 0.025;
 export default function ReferralLink() {
   const [link, setLink] = useState("");
   const [copied, setCopied] = useState(false);
+  const t = useTranslations("common");
 
   async function generate() {
     if (typeof window === "undefined" || !(window as any).ethereum) return;
@@ -39,16 +41,15 @@ export default function ReferralLink() {
         onClick={generate}
         className="rounded border border-gray-800 dark:border-gray-200 px-6 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
       >
-        Gerar link de referenciador
+        {t("generateReferralLink")}
       </button>
       {copied && (
         <div className="space-y-1">
           <p>
-            Link copiado! 🟢 {link}
+            {t("linkCopied")} 🟢 {link}
           </p>
           <p>
-            Você ganhará aproximadamente $ {reward} por cada indicado que comprar
-            um bilhete.
+            {t("referralReward", { reward })}
           </p>
         </div>
       )}

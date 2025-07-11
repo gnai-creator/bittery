@@ -1,5 +1,15 @@
 {
   "common": {
-    "title": "Dezentrale Lotterie"
+    "title": "Dezentrale Lotterie",
+    "agreeTerms": "Durch die Nutzung dieser Website stimmen Sie unseren Bedingungen und Datenschutzrichtlinien zu.",
+    "accept": "Akzeptieren",
+    "terms": "Bedingungen",
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "connectWallet": "Brieftasche anschließen",
+    "metamaskRequired": "Metamaske ist erforderlich",
+    "generateReferralLink": "Überweisungslink erzeugen",
+    "linkCopied": "Link kopiert!",
+    "referralReward": "Sie verdienen ungefähr $ {reward} für jeden genannten Ticketkauf.",
+    "and": "Und"
   }
 }

@@ -1,5 +1,15 @@
 {
   "common": {
-    "title": "Loterie Décentralisée"
+    "title": "Loterie Décentralisée",
+    "agreeTerms": "En utilisant ce site, vous acceptez notre politique de conditions de confidentialité.",
+    "accept": "Accepter",
+    "terms": "Termes",
+    "privacyPolicy": "politique de confidentialité",
+    "connectWallet": "Portefeuille de connexion",
+    "metamaskRequired": "Metamask est requis",
+    "generateReferralLink": "Générer un lien de référence",
+    "linkCopied": "Lien copié!",
+    "referralReward": "Vous gagnerez environ $ {reward} pour chaque achat de billets référé.",
+    "and": "et"
   }
 }
