@@ -1,5 +1,15 @@
 {
   "common": {
-    "title": "Loteria Descentralizada"
+    "title": "Loteria Descentralizada",
+    "agreeTerms": "Ao usar este site, você concorda com nossos termos e política de privacidade.",
+    "accept": "Aceitar",
+    "terms": "Termos",
+    "privacyPolicy": "política de Privacidade",
+    "connectWallet": "Conecte a carteira",
+    "metamaskRequired": "Metamask é necessário",
+    "generateReferralLink": "Gerar link de referência",
+    "linkCopied": "Link copiado!",
+    "referralReward": "Você ganhará aproximadamente $ {reward} para cada compra de ingresso referida.",
+    "and": "e"
   }
 }

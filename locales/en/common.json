@@ -1,5 +1,15 @@
 {
   "common": {
-    "title": "Decentralized Lottery"
+    "title": "Decentralized Lottery",
+    "agreeTerms": "By using this site, you agree to our Terms and Privacy Policy.",
+    "accept": "Accept",
+    "terms": "Terms",
+    "privacyPolicy": "Privacy Policy",
+    "connectWallet": "Connect Wallet",
+    "metamaskRequired": "MetaMask is required",
+    "generateReferralLink": "Generate referral link",
+    "linkCopied": "Link copied!",
+    "referralReward": "You will earn approximately $ {reward} for each referred ticket purchase.",
+    "and": "and"
   }
 }
