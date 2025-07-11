@@ -11,8 +11,8 @@
     "test": "hardhat test",
     "deploy:test": "npx hardhat clean && hardhat run scripts/deploy.ts --network sepolia",
     "deploy:main": "npx hardhat clean && hardhat run scripts/deploy.ts --network polygon",
-    "verify:test": "hardhat verify --network sepolia <CONTRACT_ADDRESS> <constructor args...>",
-    "verify:main": "hardhat verify --network polygon <CONTRACT_ADDRESS> <constructor args...>",
+    "verify:test": "npx hardhat verify --network sepolia <CONTRACT_ADDRESS> <constructor args...>",
+    "verify:main": "npx hardhat verify --network polygon <CONTRACT_ADDRESS> <constructor args...>",
     "schedule": "ts-node scripts/scheduleDraw.ts",
     "schedule:rooms": "ts-node scripts/scheduleRooms.ts",
     "init:rooms": "ts-node scripts/initRooms.ts"
