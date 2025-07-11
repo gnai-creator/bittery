@@ -7,6 +7,8 @@ import ReferralLink from "./ReferralLink";
 import EarningsTable from "./EarningsTable";
 import { Link, usePathname } from "../../navigation";
 import { useTranslations, useLocale } from "next-intl";
+import { useNativeSymbol } from "../../hooks/useNativeSymbol";
+import { useBrlPrices } from "../../hooks/useBrlPrices";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 const LAUNCH_DATE = new Date("2025-08-05T20:00:00-03:00").getTime();
@@ -25,6 +27,14 @@ export default function HomeClient() {
   const [launchCountdown, setLaunchCountdown] = useState("");
   const t = useTranslations("common");
   const locale = useLocale();
+  const network = pathname.includes('/main') ? 'main' : 'test';
+  const symbol = useNativeSymbol(network);
+  const prices = useBrlPrices();
+  const TICKET_PRICE = 0.01;
+  const ticketPriceBRL =
+    symbol !== 'UNKNOWN' && (symbol === 'ETH' ? prices.ETH : prices.MATIC)
+      ? (TICKET_PRICE * (symbol === 'ETH' ? prices.ETH! : prices.MATIC!)).toFixed(2)
+      : null;
 
   useEffect(() => {
     setAnimate(true);
@@ -201,7 +211,10 @@ export default function HomeClient() {
             className="rounded border border-gray-800 dark:border-gray-200 px-6 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             onClick={buy}
           >
-            {t("buyTicket", { price: "0.01" })}
+            {t("buyTicket", { price: TICKET_PRICE.toFixed(2), symbol })}
+            {ticketPriceBRL && (
+              <span className="ml-2 text-sm text-gray-500">(~ R$ {ticketPriceBRL})</span>
+            )}
           </button>
         )}
       </div>

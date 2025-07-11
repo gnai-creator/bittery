@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { useTranslations } from "next-intl";
+import { useNativeSymbol } from "../../hooks/useNativeSymbol";
 
 const ETH_TO_USD = 3000;
 const REF_PERCENT_ETH = 0.00025; // 2.5% of 0.01 ETH
@@ -67,6 +68,7 @@ function useAnimatedNumber(value: number, duration = 400) {
 
 export default function SimulatorClient() {
   const t = useTranslations("common");
+  const symbol = useNativeSymbol();
   const [weeklyReferrals, setWeeklyReferrals] = useState(0);
   const groups = useMemo(() => generateData(), []);
 
@@ -100,7 +102,7 @@ export default function SimulatorClient() {
         <div className="grid sm:grid-cols-3 gap-4 pt-4">
           <div className="border rounded p-4 bg-white dark:bg-neutral-900 shadow">
             <h2 className="font-semibold">{t("weekly")}</h2>
-            <p>{dispWeeklyETH.toFixed(6)} ETH</p>
+            <p>{dispWeeklyETH.toFixed(6)} {symbol}</p>
             <p>$ {dispWeeklyUSD.toFixed(2)}</p>
           </div>
           <div className="border rounded p-4 bg-white dark:bg-neutral-900 shadow">
@@ -125,10 +127,10 @@ export default function SimulatorClient() {
                 <tr>
                   <th className="border px-2">{t("tablePlayers")}</th>
                   <th className="border px-2">{t("tableReferrals")}</th>
-                  <th className="border px-2">{t("tableReferralEarningsETH")}</th>
+                  <th className="border px-2">{t("tableReferralEarningsETH", { symbol })}</th>
                   <th className="border px-2">{t("tableReferralEarningsUSD")}</th>
                   <th className="border px-2">{t("tableChanceToWin")}</th>
-                  <th className="border px-2">{t("tablePrizePoolETH")}</th>
+                  <th className="border px-2">{t("tablePrizePoolETH", { symbol })}</th>
                   <th className="border px-2">{t("tablePrizePoolUSD")}</th>
                   <th className="border px-2">{t("tableTotalPotentialGainUSD")}</th>
                 </tr>
@@ -139,7 +141,7 @@ export default function SimulatorClient() {
                     <td className="border px-2 text-center">{row.players}</td>
                     <td className="border px-2 text-center">{row.referrals}</td>
                     <td className="border px-2 text-right">
-                      {row.referralEarningsETH.toFixed(6)}
+                      {row.referralEarningsETH.toFixed(6)} {symbol}
                     </td>
                     <td className="border px-2 text-right">
                       {row.referralEarningsUSD.toFixed(2)}
@@ -148,7 +150,7 @@ export default function SimulatorClient() {
                       {row.chance.toFixed(4)}
                     </td>
                     <td className="border px-2 text-right">
-                      {row.prizePoolETH.toFixed(6)}
+                      {row.prizePoolETH.toFixed(6)} {symbol}
                     </td>
                     <td className="border px-2 text-right">
                       {row.prizePoolUSD.toFixed(2)}
