@@ -44,11 +44,9 @@ export default function InfoCarousel() {
           ›
         </button>
       </div>
-      <pre>
-        <p className="text-gray-700 dark:text-gray-300 text-left">
+        <p className="text-gray-700 dark:text-gray-300 text-left break-words">
           {slide.text}
         </p>
-      </pre>
       <p className="text-gray-600 dark:text-gray-400 text-sm">
         {slide.link && (
           <a
