@@ -207,19 +207,7 @@ export default function HomeClient() {
       </div>
 
       {!launched && <EarningsTable />}
-      {launched && <ReferralLink />}
-      <div className="w-full max-w-md text-left">
-        <h2 className="text-xl font-semibold mb-2">
-          {t("playersHeading")} ({players.length})
-        </h2>
-        <ul className="space-y-1">
-          {players.map((p) => (
-            <li key={p} className="truncate">
-              {p}
-            </li>
-          ))}
-        </ul>
-      </div>
+      {!launched && <ReferralLink />}
       {winner && (
         <div>
           <h2 className="text-xl font-semibold">{t("lastWinner")}</h2>
@@ -233,6 +221,21 @@ export default function HomeClient() {
             {winners.map((w) => (
               <li key={w} className="truncate">
                 {w}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {launched && (
+        <div className="w-full max-w-md text-left">
+          <h2 className="text-xl font-semibold mb-2">
+            {t("playersHeading")} ({players.length})
+          </h2>
+          <ul className="space-y-1">
+            {players.map((p) => (
+              <li key={p} className="truncate">
+                {p}
               </li>
             ))}
           </ul>
