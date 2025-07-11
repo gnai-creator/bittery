@@ -13,10 +13,6 @@ const config: HardhatUserConfig = {
       url: process.env.SEPOLIA_RPC_URL || "",
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
-    mumbai: {
-      url: process.env.POLYGON_TESTNET_RPC_URL || "",
-      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
-    },
     polygon: {
       url: "https://polygon-rpc.com",
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
