@@ -76,13 +76,29 @@ If these variables are missing the app will attempt to create a contract with an
 Ensure you have a `.env` file with the following variables:
 ```env
 PRIVATE_KEY=your_wallet_private_key
-POLYGON_RPC_URL=https://polygon-rpc.com # or from Alchemy/Infura
-SEPOLIA_RPC_URL=https://sepolia.infura.io/v3/YOUR_API_KEY
-CHAINLINK_SUBSCRIPTION_ID=your_vrf_subscription_id
-CHAINLINK_COORDINATOR=coordinator_address
-CHAINLINK_KEY_HASH=keyhash_value
+
+# RPC endpoints
+POLYGON_RPC_URL=https://polygon-rpc.com # Polygon mainnet
+SEPOLIA_RPC_URL=https://sepolia.infura.io/v3/YOUR_API_KEY # Sepolia testnet
+
+# Chainlink VRF for Polygon mainnet
+VRF_COORDINATOR_MAIN=coordinator_address_mainnet
+SUBSCRIPTION_ID_MAIN=your_mainnet_vrf_subscription_id
+KEY_HASH_MAIN=keyhash_mainnet
+
+# Chainlink VRF for Sepolia testnet
+VRF_COORDINATOR_TEST=coordinator_address_testnet
+SUBSCRIPTION_ID_TEST=your_testnet_vrf_subscription_id
+KEY_HASH_TEST=keyhash_testnet
+
+# Address to receive collected fees
+FEE_RECIPIENT=0xYourFeeRecipient
+
 CRON_SECRET=your_secret_for_cron
 ```
+
+Variables ending in `_MAIN` apply to Polygon mainnet, while `_TEST` ones are
+for Ethereum Sepolia.
 
 Then deploy with:
 ```bash
