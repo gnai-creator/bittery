@@ -10,6 +10,16 @@
     "generateReferralLink": "Generar un enlace de referencia",
     "linkCopied": "Enlace copiado!",
     "referralReward": "Ganará aproximadamente $ {reward} por cada compra de boletos referidos.",
-    "and": "y"
+    "and": "y",
+    "howItWorksTitle": "Cómo funciona",
+    "howItWorksText": "Compra un boleto, espera a que termine el temporizador y mira si ganaste. Cada sorteo es aleatorio y transparente.",
+    "rulesTitle": "Reglas",
+    "rulesText": "Los jugadores deben ser mayores de 18 años. Los boletos no son reembolsables. El abuso no está permitido.",
+    "technicalTitle": "Detalles técnicos",
+    "technicalText": "Bittery utiliza Chainlink VRF para la aleatoriedad y funciona completamente con contratos inteligentes.",
+    "trustTitle": "Confianza",
+    "trustText": "Todos los sorteos y transacciones se realizan on-chain, por lo que cualquiera puede verificarlos.",
+    "codeTitle": "Código abierto",
+    "codeText": "Nuestro código es público en GitHub para que cualquiera lo inspeccione."
   }
 }
