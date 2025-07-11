@@ -5,7 +5,7 @@ import lotteryAbi from "../../contracts/Bittery.json";
 import InfoCarousel from "./InfoCarousel";
 import ReferralLink from "./ReferralLink";
 import EarningsTable from "./EarningsTable";
-import Link from "next/link";
+import { Link } from "../../navigation";
 import { useTranslations, useLocale } from "next-intl";
 
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "";
@@ -154,13 +154,13 @@ export default function HomeClient() {
           {t("title")}
         </h1>
         <Link
-          href={`/${locale}/terms`}
+          href="/terms"
           className="text-sm text-gray-500 hover:underline"
         >
           {t("terms")} •
         </Link>{" "}
         <Link
-          href={`/${locale}/privacy`}
+          href="/privacy"
           className="text-sm text-gray-500 hover:underline"
         >
           {t("privacyPolicy")} •

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Link } from "../../navigation";
 import { useTranslations } from "next-intl";
 
 export const metadata: Metadata = {
@@ -29,13 +29,13 @@ export default function Home() {
       <h1 className="text-2xl font-bold">{t("selectNetwork")}</h1>
       <div className="flex gap-4">
         <Link
-          href="./test"
+          href="/test"
           className="rounded border px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800"
         >
           Testnet
         </Link>
         <Link
-          href="./main"
+          href="/main"
           className="rounded border px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800"
         >
           Mainnet

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import Link from "next/link";
+import { Link } from "../../navigation";
 
 const TERMS_VERSION = "2025-07-10"; // Atualize esta versão quando mudar os termos
 
@@ -29,14 +29,14 @@ export default function TermsBanner() {
         <p className="text-sm">
           {t("agreeTerms")} {" "}
           <Link
-            href={`/${locale}/terms`}
+            href="/terms"
             className="underline text-blue-400 hover:text-blue-300 title"
           >
             {t("terms")}
           </Link>{" "}
           {t("and") ?? "and"} {" "}
           <Link
-            href={`/${locale}/privacy`}
+            href="/privacy"
             className="underline text-blue-400 hover:text-blue-300 title"
           >
             {t("privacyPolicy")}
