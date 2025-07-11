@@ -1,5 +1,5 @@
 "use client";
-import { WagmiConfig, http } from "wagmi";
+import { WagmiProvider, http } from "wagmi";
 import { polygon, sepolia } from "wagmi/chains";
 import { RainbowKitProvider, getDefaultConfig } from "@rainbow-me/rainbowkit";
 import { ReactNode, useMemo, useState } from "react";
@@ -11,7 +11,8 @@ export default function WagmiProviders({ children }: { children: ReactNode }) {
     () =>
       getDefaultConfig({
         appName: "Bittery",
-        projectId: "bittery",
+        projectId:
+          process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || "bittery",
         chains: [polygon, sepolia] as const,
         transports: {
           [polygon.id]: http(),
@@ -22,9 +23,9 @@ export default function WagmiProviders({ children }: { children: ReactNode }) {
   );
   return (
     <QueryClientProvider client={queryClient}>
-      <WagmiConfig config={wagmiConfig}>
+      <WagmiProvider config={wagmiConfig}>
         <RainbowKitProvider>{children}</RainbowKitProvider>
-      </WagmiConfig>
+      </WagmiProvider>
     </QueryClientProvider>
   );
 }

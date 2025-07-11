@@ -58,7 +58,14 @@ NEXT_PUBLIC_CONTRACT_ADDRESS_MAIN=0xYourMainnetAddress
 NEXT_PUBLIC_CHAIN_ID_MAIN=137
 NEXT_PUBLIC_CONTRACT_ADDRESS_TEST=0xYourTestnetAddress
 NEXT_PUBLIC_CHAIN_ID_TEST=11155111
+# WalletConnect project identifier for RainbowKit
+NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_walletconnect_id
 ```
+
+The WalletConnect project ID identifies your app on WalletConnect Cloud. Sign up
+at <https://cloud.walletconnect.com>, create a project, and copy the generated
+identifier. If not provided, the app falls back to the default `bittery`
+identifier used in development.
 
 If these variables are missing the app will attempt to create a contract with an empty address and throw an `UNCONFIGURED_NAME` error.
 
