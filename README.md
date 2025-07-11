@@ -4,7 +4,7 @@
 
 # 🎲 Bittery
 
-**Bittery** is a decentralized, fair, and transparent lottery system built on the Polygon network. It uses **Chainlink VRF** (Verifiable Random Function) to ensure that all draws are provably random and tamper-proof.
+**Bittery** is a decentralized, fair, and transparent lottery system built on the Polygon network for mainnet and Ethereum Sepolia for testing. It uses **Chainlink VRF** (Verifiable Random Function) to ensure that all draws are provably random and tamper-proof.
 
 ---
 
@@ -32,7 +32,7 @@ Share your referral link (?ref=YOUR_ADDRESS) and earn a portion of the fee whene
 - Solidity (Smart Contracts)
 - Hardhat (Development Framework)
 - Chainlink VRF v2
-- Polygon (Mumbai testnet or Mainnet)
+- Polygon (Mainnet) and Ethereum Sepolia testnet
 
 ---
 
@@ -57,7 +57,7 @@ Create a `.env.local` file and set the following variables:
 NEXT_PUBLIC_CONTRACT_ADDRESS_MAIN=0xYourMainnetAddress
 NEXT_PUBLIC_CHAIN_ID_MAIN=137
 NEXT_PUBLIC_CONTRACT_ADDRESS_TEST=0xYourTestnetAddress
-NEXT_PUBLIC_CHAIN_ID_TEST=80001
+NEXT_PUBLIC_CHAIN_ID_TEST=11155111
 ```
 
 If these variables are missing the app will attempt to create a contract with an empty address and throw an `UNCONFIGURED_NAME` error.
@@ -69,7 +69,8 @@ If these variables are missing the app will attempt to create a contract with an
 Ensure you have a `.env` file with the following variables:
 ```env
 PRIVATE_KEY=your_wallet_private_key
-POLYGON_RPC_URL=https://polygon-rpc.com or from Alchemy/Infura
+POLYGON_RPC_URL=https://polygon-rpc.com # or from Alchemy/Infura
+SEPOLIA_RPC_URL=https://sepolia.infura.io/v3/YOUR_API_KEY
 CHAINLINK_SUBSCRIPTION_ID=your_vrf_subscription_id
 CHAINLINK_COORDINATOR=coordinator_address
 CHAINLINK_KEY_HASH=keyhash_value
@@ -77,7 +78,7 @@ CHAINLINK_KEY_HASH=keyhash_value
 
 Then deploy with:
 ```bash
-npx hardhat run scripts/deploy.js --network mumbai
+npx hardhat run scripts/deploy.ts --network sepolia
 ```
 
 ---
