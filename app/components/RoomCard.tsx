@@ -19,6 +19,7 @@ export default function RoomCard({ network, id }: Props) {
   const [drawing, setDrawing] = useState(false);
   const [price, setPrice] = useState(0);
   const [prize, setPrize] = useState(0);
+  const [maxPlayers, setMaxPlayers] = useState(0);
   const symbol = useNativeSymbol(network);
   const prices = useUsdPrices();
   const t = useTranslations('common');
@@ -29,6 +30,7 @@ export default function RoomCard({ network, id }: Props) {
     setWinner(room.winner);
     const list = await contract.getRoomPlayers(id);
     setPlayers(list);
+    setMaxPlayers(Number(room.maxPlayers));
     const p = Number(ethers.formatEther(room.ticketPrice));
     setPrice(p);
     setPrize(p * room.maxPlayers);
@@ -59,7 +61,7 @@ export default function RoomCard({ network, id }: Props) {
         Refresh
       </button>
       <div className="font-semibold">Room #{id}</div>
-      <div>Players: {players.length}</div>
+      <div>Players: {players.length}/{maxPlayers}</div>
       <div>
         Ticket Price: {price.toFixed(4)} {symbol}
         {symbol !== 'UNKNOWN' && (symbol === 'ETH' ? prices.ETH : prices.MATIC) && (
