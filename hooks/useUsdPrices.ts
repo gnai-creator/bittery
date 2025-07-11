@@ -7,7 +7,7 @@ export interface Prices {
 }
 
 const API_URL =
-  'https://api.coingecko.com/api/v3/simple/price?ids=ethereum,polygon&vs_currencies=usd';
+  'https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,MATIC&tsyms=USD';
 
 export function useUsdPrices() {
   const [prices, setPrices] = useState<Prices>({});
@@ -18,7 +18,7 @@ export function useUsdPrices() {
         const res = await fetch(API_URL);
         if (!res.ok) throw new Error('fetch error');
         const data = await res.json();
-        const next = { ETH: data.ethereum.usd, MATIC: data.polygon.usd } as Prices;
+        const next = { ETH: data.ETH.USD, MATIC: data.MATIC.USD } as Prices;
         setPrices(next);
         if (typeof window !== 'undefined') {
           localStorage.setItem('usd_prices', JSON.stringify({ time: Date.now(), data: next }));
