@@ -55,19 +55,25 @@ export default function EarningsTable() {
       : symbol === "MATIC"
       ? prices.MATIC ?? 1
       : 3000;
-  const rows = useMemo(() => generateData(2, 50, 1, usdRate), [usdRate]);
+  const rows = useMemo(() => generateData(2, 1000, 100, usdRate), [usdRate]);
   return (
     <div className="overflow-x-auto w-full max-w-2xl mx-auto mt-8">
-      <h2 className="text-2xl font-bold title mb-2">{t("lotteryEarningsTable")}</h2>
+      <h2 className="text-2xl font-bold title mb-2">
+        {t("lotteryEarningsTable")}
+      </h2>
       <table className="min-w-full text-sm border-collapse border">
         <thead>
           <tr>
             <th className="border px-2">{t("tablePlayers")}</th>
             <th className="border px-2">{t("tableReferrals")}</th>
-            <th className="border px-2">{t("tableReferralEarningsETH", { symbol })}</th>
+            <th className="border px-2">
+              {t("tableReferralEarningsETH", { symbol })}
+            </th>
             <th className="border px-2">{t("tableReferralEarningsUSD")}</th>
             <th className="border px-2">{t("tableChanceToWin")}</th>
-            <th className="border px-2">{t("tablePrizePoolETH", { symbol })}</th>
+            <th className="border px-2">
+              {t("tablePrizePoolETH", { symbol })}
+            </th>
             <th className="border px-2">{t("tablePrizePoolUSD")}</th>
             <th className="border px-2">{t("tableTotalPotentialGainUSD")}</th>
           </tr>
@@ -83,10 +89,18 @@ export default function EarningsTable() {
               <td className="border px-2 text-right">
                 {row.referralEarningsUSD.toFixed(2)}
               </td>
-              <td className="border px-2 text-right">{row.chance.toFixed(4)}</td>
-              <td className="border px-2 text-right">{row.prizePoolETH.toFixed(6)}</td>
-              <td className="border px-2 text-right">{row.prizePoolUSD.toFixed(2)}</td>
-              <td className="border px-2 text-right">{row.totalPotentialUSD.toFixed(2)}</td>
+              <td className="border px-2 text-right">
+                {row.chance.toFixed(4)}
+              </td>
+              <td className="border px-2 text-right">
+                {row.prizePoolETH.toFixed(6)}
+              </td>
+              <td className="border px-2 text-right">
+                {row.prizePoolUSD.toFixed(2)}
+              </td>
+              <td className="border px-2 text-right">
+                {row.totalPotentialUSD.toFixed(2)}
+              </td>
             </tr>
           ))}
         </tbody>
