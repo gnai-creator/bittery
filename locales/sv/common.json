@@ -10,6 +10,16 @@
     "generateReferralLink": "Generera remisslänk",
     "linkCopied": "Länk kopia!",
     "referralReward": "Du kommer att tjäna ungefär $ {reward} för varje hänvisat biljettköp.",
-    "and": "och"
+    "and": "och",
+    "howItWorksTitle": "Hur det fungerar",
+    "howItWorksText": "Köp en biljett, vänta tills timern går ut och se om du vann! Varje dragning är slumpmässig och transparent.",
+    "rulesTitle": "Regler",
+    "rulesText": "Spelare måste vara minst 18 år. Biljetter är slutgiltiga och kan inte återbetalas. Missbruk tolereras inte.",
+    "technicalTitle": "Tekniska detaljer",
+    "technicalText": "Bittery använder Chainlink VRF för slumpmässighet och körs helt med smarta kontrakt.",
+    "trustTitle": "Förtroende",
+    "trustText": "Alla dragningar och transaktioner sker on-chain så att alla kan verifiera resultaten.",
+    "codeTitle": "Öppen källkod",
+    "codeText": "Vår kod är offentlig på GitHub för alla att granska."
   }
 }

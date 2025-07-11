@@ -10,6 +10,16 @@
     "generateReferralLink": "Générer un lien de référence",
     "linkCopied": "Lien copié!",
     "referralReward": "Vous gagnerez environ $ {reward} pour chaque achat de billets référé.",
-    "and": "et"
+    "and": "et",
+    "howItWorksTitle": "Comment ça marche",
+    "howItWorksText": "Achetez un billet, attendez la fin du compte à rebours et voyez si vous avez gagné ! Chaque tirage est aléatoire et transparent.",
+    "rulesTitle": "Règles",
+    "rulesText": "Les joueurs doivent avoir 18 ans ou plus. Les billets sont définitifs et non remboursables. Les abus ne sont pas tolérés.",
+    "technicalTitle": "Détails techniques",
+    "technicalText": "Bittery utilise Chainlink VRF pour le hasard et fonctionne entièrement sur des contrats intelligents.",
+    "trustTitle": "Confiance",
+    "trustText": "Tous les tirages et transactions se produisent sur la chaîne, donc n'importe qui peut vérifier les résultats.",
+    "codeTitle": "Code source",
+    "codeText": "Notre code est public sur GitHub pour être inspecté par tous."
   }
 }

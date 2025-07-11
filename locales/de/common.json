@@ -10,6 +10,16 @@
     "generateReferralLink": "Überweisungslink erzeugen",
     "linkCopied": "Link kopiert!",
     "referralReward": "Sie verdienen ungefähr $ {reward} für jeden genannten Ticketkauf.",
-    "and": "Und"
+    "and": "Und",
+    "howItWorksTitle": "Wie es funktioniert",
+    "howItWorksText": "Kaufe ein Ticket, warte bis der Timer endet und sieh, ob du gewonnen hast! Jede Ziehung ist zufällig und transparent.",
+    "rulesTitle": "Regeln",
+    "rulesText": "Spieler müssen mindestens 18 Jahre alt sein. Tickets sind endgültig und nicht erstattungsfähig. Missbrauch wird nicht toleriert.",
+    "technicalTitle": "Technische Details",
+    "technicalText": "Bittery nutzt Chainlink VRF für Zufälligkeit und läuft vollständig in Smart Contracts.",
+    "trustTitle": "Vertrauen",
+    "trustText": "Alle Ziehungen und Transaktionen finden on-chain statt, so dass jeder die Ergebnisse überprüfen kann.",
+    "codeTitle": "Open Source",
+    "codeText": "Unser Code ist auf GitHub öffentlich einsehbar."
   }
 }
