@@ -104,6 +104,22 @@ npm run schedule:rooms
 ```
 The route executes the same logic and creates new rooms when the previous ones finish.
 
+## 🔍 Contract Verification
+
+Set `ETHERSCAN_API_KEY` in your `.env` so Hardhat can publish the contract source on Etherscan.
+The `verify:test` and `verify:main` scripts expect the deployed address followed by the constructor
+parameters: `coordinator`, `subscription ID`, `key hash` and `fee recipient`.
+
+Example for Sepolia:
+```bash
+npm run verify:test -- 0xYourContractAddress 0xCoordinator 1 0xKeyHash 0xFeeRecipient
+```
+
+For Polygon mainnet:
+```bash
+npm run verify:main -- 0xYourContractAddress 0xCoordinator 1 0xKeyHash 0xFeeRecipient
+```
+
 ---
 
 ## ❓ Why Bittery?
