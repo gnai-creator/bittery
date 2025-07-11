@@ -10,7 +10,7 @@ import {
   createConfig,
 } from "wagmi";
 import { polygon, polygonMumbai } from "wagmi/chains";
-import { publicProvider } from "wagmi/providers/public";
+import { http } from "wagmi";
 import { RainbowKitProvider, getDefaultWallets } from "@rainbow-me/rainbowkit";
 
 import {NextIntlClientProvider} from "next-intl";
@@ -30,7 +30,7 @@ const geistMono = Geist_Mono({
 
 const { chains, publicClient } = configureChains(
   [polygon, polygonMumbai],
-  [publicProvider()]
+  [http()]
 );
 const { connectors } = getDefaultWallets({
   appName: "Bittery",
