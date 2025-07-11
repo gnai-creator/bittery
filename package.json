@@ -7,9 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "hardhat test",
     "compile": "hardhat compile",
-    "deploy": "hardhat run scripts/deploy.ts --network sepolia",
+    "test": "hardhat test",
+    "deploy:test": "npx hardhat clean && hardhat run scripts/deploy.ts --network sepolia",
+    "deploy:main": "npx hardhat clean && hardhat run scripts/deploy.ts --network polygon",
+    "verify:test": "hardhat verify --network sepolia <CONTRACT_ADDRESS> <constructor args...>",
+    "verify:main": "hardhat verify --network polygon <CONTRACT_ADDRESS> <constructor args...>",
     "schedule": "ts-node scripts/scheduleDraw.ts"
   },
   "dependencies": {
