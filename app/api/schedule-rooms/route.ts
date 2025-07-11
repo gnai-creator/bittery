@@ -101,7 +101,10 @@ async function ensureRooms(network: Network) {
   await ensureRoomsForContract(contract);
 }
 
-export async function GET() {
+export async function GET(req: Request) {
+  if (req.headers.get('Authorization') !== `Bearer ${process.env.CRON_SECRET}`) {
+    return new NextResponse('Unauthorized', { status: 401 });
+  }
   try {
     await Promise.all([ensureRooms('test'), ensureRooms('main')]);
     return NextResponse.json({ ok: true });
