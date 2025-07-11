@@ -33,7 +33,7 @@ export default function RoomCard({ network, id }: Props) {
     setMaxPlayers(Number(room.maxPlayers));
     const p = Number(ethers.formatEther(room.ticketPrice));
     setPrice(p);
-    setPrize(p * room.maxPlayers);
+    setPrize(p * Number(room.maxPlayers) * 0.95);
   }
 
   useEffect(() => {
