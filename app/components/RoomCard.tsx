@@ -29,7 +29,7 @@ export default function RoomCard({ network, id }: Props) {
     const room = await contract.rooms(id);
     const params = new URLSearchParams(window.location.search);
     const ref = params.get('ref') || ethers.ZeroAddress;
-    const tx = await contract.connect(signer).buyTicket(id, ref, {
+    const tx = await (contract as any).connect(signer).buyTicket(id, ref, {
       value: room.ticketPrice,
     });
     await tx.wait();
