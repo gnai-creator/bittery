@@ -14,8 +14,8 @@ export function getContractConfig(network: Network) {
 
   const chainId =
     network === 'main'
-      ? Number(process.env.NEXT_PUBLIC_CHAIN_ID_MAIN || '1')
-      : Number(process.env.NEXT_PUBLIC_CHAIN_ID_TEST || '1');
+      ? Number(process.env.NEXT_PUBLIC_CHAIN_ID_MAIN || '137')
+      : Number(process.env.NEXT_PUBLIC_CHAIN_ID_TEST || '11155111');
 
   if (!address) {
     throw new Error(`Contract address not configured for network: ${network}`);
