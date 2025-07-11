@@ -13,7 +13,8 @@
     "deploy:main": "npx hardhat clean && hardhat run scripts/deploy.ts --network polygon",
     "verify:test": "hardhat verify --network sepolia <CONTRACT_ADDRESS> <constructor args...>",
     "verify:main": "hardhat verify --network polygon <CONTRACT_ADDRESS> <constructor args...>",
-    "schedule": "ts-node scripts/scheduleDraw.ts"
+    "schedule": "ts-node scripts/scheduleDraw.ts",
+    "init:rooms": "ts-node scripts/initRooms.ts"
   },
   "dependencies": {
     "@chainlink/contracts": "^1.2.0",
