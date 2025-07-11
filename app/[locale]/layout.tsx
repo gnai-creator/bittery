@@ -4,14 +4,12 @@ import TermsBanner from "../components/TermsBanner";
 import Footer from "../components/Footer";
 import "../globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
-import {
-  WagmiConfig,
-  configureChains,
-  createConfig,
-} from "wagmi";
+import { WagmiConfig, http } from "wagmi";
 import { polygon, polygonMumbai } from "wagmi/chains";
-import { http } from "wagmi";
-import { RainbowKitProvider, getDefaultWallets } from "@rainbow-me/rainbowkit";
+import {
+  RainbowKitProvider,
+  getDefaultConfig,
+} from "@rainbow-me/rainbowkit";
 
 import {NextIntlClientProvider} from "next-intl";
 import {setRequestLocale, getMessages} from "next-intl/server";
@@ -28,20 +26,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const { chains, publicClient } = configureChains(
-  [polygon, polygonMumbai],
-  [http()]
-);
-const { connectors } = getDefaultWallets({
+const wagmiConfig = getDefaultConfig({
   appName: "Bittery",
   projectId: "bittery",
-  chains,
+  chains: [polygon, polygonMumbai] as const,
+  transports: {
+    [polygon.id]: http(),
+    [polygonMumbai.id]: http(),
+  },
 });
-const wagmiConfig = createConfig({
-  autoConnect: true,
-  connectors,
-  publicClient,
-});
+const { chains } = wagmiConfig;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://bittery.org"),
