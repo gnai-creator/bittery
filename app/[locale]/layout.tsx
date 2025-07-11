@@ -4,8 +4,8 @@ import TermsBanner from "../components/TermsBanner";
 import Footer from "../components/Footer";
 import "../globals.css";
 
-import {NextIntlClientProvider, useMessages} from "next-intl";
-import {setRequestLocale} from "next-intl/server";
+import {NextIntlClientProvider} from "next-intl";
+import {setRequestLocale, getMessages} from "next-intl/server";
 import {locales} from "../../i18n";
 import { notFound } from "next/navigation";
 
@@ -50,13 +50,14 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-  params: { locale },
+  params,
 }: any) {
+  const {locale} = await params;
   if (!locales.includes(locale as any)) notFound();
   setRequestLocale(locale);
-  const messages = useMessages();
+  const messages = await getMessages();
   return (
     <html lang={locale}>
       <body
