@@ -76,6 +76,7 @@
     "privacyBullet4": "Tredjepartstjänster (t.ex. ChainLink VRF, Alchemy, CloudFlare) kan samla in metadata som IP-adresser.",
     "privacyBullet5": "Vi kan använda anonyma analyser för att förbättra webbplatsens prestanda.",
     "privacyConclusion": "Genom att använda Bittery samtycker du till denna sekretesspolicy. Om du inte håller med, vänligen koppla bort och avstå från att använda applikationen.",
-    "lastUpdated": "Senast uppdaterad: {date}"
+    "lastUpdated": "Senast uppdaterad: {date}",
+    "locale": "sv"
   }
 }

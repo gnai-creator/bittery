@@ -76,6 +76,7 @@
     "privacyBullet4": "Dienste von Drittanbietern (z. B. Chainlink VRF, Alchemie, CloudFlare) können Metadaten wie IP-Adressen sammeln.",
     "privacyBullet5": "Wir können anonyme Analysen verwenden, um die Leistung der Website zu verbessern.",
     "privacyConclusion": "Durch die Verwendung von Bitterie stimmen Sie dieser Datenschutzrichtlinie zu. Wenn Sie nicht zustimmen, trennen Sie die Anwendung bitte die Verbindung und unterlassen Sie sie nicht.",
-    "lastUpdated": "Zuletzt aktualisiert: {date}"
+    "lastUpdated": "Zuletzt aktualisiert: {date}",
+    "locale": "de"
   }
 }

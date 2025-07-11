@@ -152,11 +152,14 @@ export default function HomeClient() {
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight title">
           {t("title")}
         </h1>
-        <Link href={"terms"} className="text-sm text-gray-500 hover:underline">
+        <Link
+          href={`${t("locale")}/${"terms"}`}
+          className="text-sm text-gray-500 hover:underline"
+        >
           {t("terms")} •
         </Link>{" "}
         <Link
-          href={"privacy"}
+          href={`${t("locale")}/${"privacy"}`}
           className="text-sm text-gray-500 hover:underline"
         >
           {t("privacyPolicy")} •

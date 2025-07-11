@@ -76,6 +76,7 @@
     "privacyBullet4": "Les services tiers (par exemple, ChainLink VRF, Alchemy, CloudFlare) peuvent collecter des métadonnées telles que les adresses IP.",
     "privacyBullet5": "Nous pouvons utiliser des analyses anonymes pour améliorer les performances du site.",
     "privacyConclusion": "En utilisant Bitter, vous consentez à cette politique de confidentialité. Si vous n'êtes pas d'accord, veuillez déconnecter et vous abstenir d'utiliser l'application.",
-    "lastUpdated": "Dernière mise à jour: {date}"
+    "lastUpdated": "Dernière mise à jour: {date}",
+    "locale": "fr"
   }
 }

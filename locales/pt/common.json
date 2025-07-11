@@ -76,6 +76,8 @@
     "privacyBullet4": "Serviços de terceiros (ex.: Chainlink VRF, Alchemy, Cloudflare) podem coletar metadados como endereços IP.",
     "privacyBullet5": "Podemos usar análises anônimas para melhorar a performance do site.",
     "privacyConclusion": "Ao usar a Bittery, você concorda com esta política de privacidade. Se não concorda, desconecte-se e pare de usar a aplicação.",
-    "lastUpdated": "Última atualização: {date}"
+    "lastUpdated": "Última atualização: {date}",
+    "locale": "pt"
+
   }
 }
