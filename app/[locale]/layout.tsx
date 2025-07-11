@@ -3,6 +3,15 @@ import { Geist, Geist_Mono } from "next/font/google";
 import TermsBanner from "../components/TermsBanner";
 import Footer from "../components/Footer";
 import "../globals.css";
+import "@rainbow-me/rainbowkit/styles.css";
+import {
+  WagmiConfig,
+  configureChains,
+  createConfig,
+} from "wagmi";
+import { polygon, polygonMumbai } from "wagmi/chains";
+import { publicProvider } from "wagmi/providers/public";
+import { RainbowKitProvider, getDefaultWallets } from "@rainbow-me/rainbowkit";
 
 import {NextIntlClientProvider} from "next-intl";
 import {setRequestLocale, getMessages} from "next-intl/server";
@@ -17,6 +26,21 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const { chains, publicClient } = configureChains(
+  [polygon, polygonMumbai],
+  [publicProvider()]
+);
+const { connectors } = getDefaultWallets({
+  appName: "Bittery",
+  projectId: "bittery",
+  chains,
+});
+const wagmiConfig = createConfig({
+  autoConnect: true,
+  connectors,
+  publicClient,
 });
 
 export const metadata: Metadata = {
@@ -63,11 +87,15 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-br from-white to-gray-100 dark:from-neutral-900 dark:to-neutral-800 text-gray-900 dark:text-gray-100 flex flex-col min-h-screen`}
       >
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <main className="flex-grow">{children}</main>
-          <Footer />
-          <TermsBanner />
-        </NextIntlClientProvider>
+        <WagmiConfig config={wagmiConfig}>
+          <RainbowKitProvider chains={chains}>
+            <NextIntlClientProvider locale={locale} messages={messages}>
+              <main className="flex-grow">{children}</main>
+              <Footer />
+              <TermsBanner />
+            </NextIntlClientProvider>
+          </RainbowKitProvider>
+        </WagmiConfig>
       </body>
     </html>
   );

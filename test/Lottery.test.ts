@@ -4,25 +4,28 @@ import hre from "hardhat";
 const { ethers } = hre;
 
 describe("Bittery", function () {
-  const FEE_RECIPIENT = "0x9EA7EbEb25192B6d7e8e240A852e7EC56D4FB865";
   async function deployFixture() {
     const [owner, user] = await ethers.getSigners();
     const Lottery = await ethers.getContractFactory("Bittery");
     const lottery = (await Lottery.deploy(
-      ethers.ZeroAddress,
+      owner.address,
       0,
-      ethers.ZeroHash
+      ethers.ZeroHash,
+      owner.address
     )) as any;
     await lottery.waitForDeployment();
+    await lottery.createRoom(ethers.parseEther("0.01"), 2);
     return { lottery, owner, user };
   }
 
   it("should allow ticket purchase", async function () {
-    const { lottery, user } = await loadFixture(deployFixture);
+    const { lottery, user, owner } = await loadFixture(deployFixture);
     await expect(
-      lottery.connect(user).buyTicket({ value: ethers.parseEther("0.01") })
+      lottery.connect(user).buyTicket(0, ethers.ZeroAddress, {
+        value: ethers.parseEther("0.01"),
+      })
     ).to.changeEtherBalances(
-      [user, lottery, FEE_RECIPIENT],
+      [user, lottery, owner],
       [
         ethers.parseEther("-0.01"),
         ethers.parseEther("0.0095"),
@@ -40,7 +43,7 @@ describe("Bittery", function () {
   it("non-owner cannot update fee percent", async function () {
     const { lottery, user } = await loadFixture(deployFixture);
     await expect(lottery.connect(user).setFeePercent(10)).to.be.revertedWith(
-      "Not owner"
+      "Only callable by owner"
     );
   });
 
