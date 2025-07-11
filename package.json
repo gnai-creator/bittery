@@ -14,6 +14,7 @@
     "verify:test": "hardhat verify --network sepolia <CONTRACT_ADDRESS> <constructor args...>",
     "verify:main": "hardhat verify --network polygon <CONTRACT_ADDRESS> <constructor args...>",
     "schedule": "ts-node scripts/scheduleDraw.ts",
+    "schedule:rooms": "ts-node scripts/scheduleRooms.ts",
     "init:rooms": "ts-node scripts/initRooms.ts"
   },
   "dependencies": {
