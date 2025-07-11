@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 import "../globals.css";
 
 import {NextIntlClientProvider, useMessages} from "next-intl";
-import {unstable_setRequestLocale} from "next-intl/server";
+import {setRequestLocale} from "next-intl/server";
 import {locales} from "../../i18n";
 import { notFound } from "next/navigation";
 
@@ -53,12 +53,9 @@ export function generateStaticParams() {
 export default function RootLayout({
   children,
   params: { locale },
-}: Readonly<{
-  children: React.ReactNode;
-  params: { locale: string };
-}>) {
+}: any) {
   if (!locales.includes(locale as any)) notFound();
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
   const messages = useMessages();
   return (
     <html lang={locale}>
