@@ -15,6 +15,11 @@ export function useBitteryContract(network: Network) {
       return new ethers.Contract(address, abi, provider);
     }
     const rpc = publicClient?.transport?.url;
+    if (!rpc) {
+      throw new Error(
+        `RPC URL not configured for network ${network}. Check your wagmi setup.`
+      );
+    }
     const provider = new ethers.JsonRpcProvider(rpc);
     return new ethers.Contract(address, abi, provider);
   }, [walletClient, publicClient, network]);
