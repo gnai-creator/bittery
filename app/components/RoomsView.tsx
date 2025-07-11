@@ -12,9 +12,15 @@ export default function RoomsView({ network }: { network: Network }) {
     async function load() {
       try {
         const next = Number(await contract.nextRoomId());
-        const rooms = await Promise.all(
-          Array.from({ length: next }, (_, i) => contract.rooms(i))
-        );
+        const BATCH_SIZE = 3;
+        const rooms: any[] = [];
+        for (let i = 0; i < next; i += BATCH_SIZE) {
+          const batch = Array.from(
+            { length: Math.min(BATCH_SIZE, next - i) },
+            (_, j) => contract.rooms(i + j)
+          );
+          rooms.push(...(await Promise.all(batch)));
+        }
         const mapping: Record<number, number[]> = {};
         rooms.forEach((room: any) => {
           const max = Number(room.maxPlayers);
