@@ -48,6 +48,22 @@ Avoid using the `--turbopack` flag since the i18n setup is not compatible with i
 
 ---
 
+## ⚙️ Environment Variables
+
+Before running the frontend you must define the contract addresses for each network.
+Create a `.env.local` file and set the following variables:
+
+```env
+NEXT_PUBLIC_CONTRACT_ADDRESS_MAIN=0xYourMainnetAddress
+NEXT_PUBLIC_CHAIN_ID_MAIN=137
+NEXT_PUBLIC_CONTRACT_ADDRESS_TEST=0xYourTestnetAddress
+NEXT_PUBLIC_CHAIN_ID_TEST=80001
+```
+
+If these variables are missing the app will attempt to create a contract with an empty address and throw an `UNCONFIGURED_NAME` error.
+
+---
+
 ## 📤 Deployment Instructions
 
 Ensure you have a `.env` file with the following variables:
