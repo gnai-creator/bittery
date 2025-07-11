@@ -36,6 +36,18 @@ Share your referral link (?ref=YOUR_ADDRESS) and earn a portion of the fee whene
 
 ---
 
+## 🤖 Local Development
+
+Start the Next.js development server with:
+
+```bash
+npm run dev
+```
+
+Avoid using the `--turbopack` flag since the i18n setup is not compatible with it.
+
+---
+
 ## 📤 Deployment Instructions
 
 Ensure you have a `.env` file with the following variables:
