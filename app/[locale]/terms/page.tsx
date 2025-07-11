@@ -15,43 +15,41 @@ export const metadata = {
   },
 };
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export default function TermsPage() {
+  const t = useTranslations("common");
   return (
     <main className="max-w-3xl mx-auto py-12 px-4">
-      <h1 className="text-3xl font-bold mb-6">Terms of Use</h1>
+      <h1 className="text-3xl font-bold mb-6">{t("termsTitle")}</h1>
       <p className="mb-4">
-        By using the Bittery platform, you agree to the following terms and
-        conditions:
+        {t("termsIntro")}
       </p>
 
       <ul className="list-disc pl-6 space-y-2">
-        <li>You must be at least 18 years old to participate.</li>
+        <li>{t("termsBullet1")}</li>
         <li>
-          All bets are final. No refunds are allowed once a ticket is purchased.
+          {t("termsBullet2")}
         </li>
         <li>
-          The lottery system is decentralized and uses Chainlink VRF for
-          randomness.
+          {t("termsBullet3")}
         </li>
-        <li>We do not guarantee earnings. This is a game of chance.</li>
+        <li>{t("termsBullet4")}</li>
         <li>
-          Bittery reserves the right to pause or terminate the contract if abuse
-          or exploits are detected.
+          {t("termsBullet5")}
         </li>
         <li>
-          By connecting your wallet, you accept full responsibility for its
-          usage and security.
+          {t("termsBullet6")}
         </li>
-        <li>This dApp is experimental. Use at your own risk.</li>
+        <li>{t("termsBullet7")}</li>
       </ul>
 
-      <p className="mt-8 text-sm text-gray-500">Last updated: July 10, 2025</p>
+      <p className="mt-8 text-sm text-gray-500">{t("lastUpdated", { date: "July 10, 2025" })}</p>
       <Link
         href="../"
         className="text-blue-600 hover:underline mt-4 inline-block title"
       >
-        Back to Home
+        {t("backToHome")}
       </Link>
     </main>
   );

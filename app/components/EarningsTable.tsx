@@ -1,5 +1,6 @@
 "use client";
 import { useMemo } from "react";
+import { useTranslations } from "next-intl";
 
 interface RowData {
   players: number;
@@ -40,21 +41,22 @@ function generateData(start = 2, end = 50): RowData[] {
 }
 
 export default function EarningsTable() {
+  const t = useTranslations("common");
   const rows = useMemo(() => generateData(), []);
   return (
     <div className="overflow-x-auto w-full max-w-2xl mx-auto mt-8">
-      <h2 className="text-2xl font-bold title mb-2">Lottery Earnings Table</h2>
+      <h2 className="text-2xl font-bold title mb-2">{t("lotteryEarningsTable")}</h2>
       <table className="min-w-full text-sm border-collapse border">
         <thead>
           <tr>
-            <th className="border px-2">Players</th>
-            <th className="border px-2">Referrals</th>
-            <th className="border px-2">Referral Earnings (ETH)</th>
-            <th className="border px-2">Referral Earnings ($)</th>
-            <th className="border px-2">Chance to Win</th>
-            <th className="border px-2">Prize Pool (ETH)</th>
-            <th className="border px-2">Prize Pool ($)</th>
-            <th className="border px-2">Total Potential Gain ($)</th>
+            <th className="border px-2">{t("tablePlayers")}</th>
+            <th className="border px-2">{t("tableReferrals")}</th>
+            <th className="border px-2">{t("tableReferralEarningsETH")}</th>
+            <th className="border px-2">{t("tableReferralEarningsUSD")}</th>
+            <th className="border px-2">{t("tableChanceToWin")}</th>
+            <th className="border px-2">{t("tablePrizePoolETH")}</th>
+            <th className="border px-2">{t("tablePrizePoolUSD")}</th>
+            <th className="border px-2">{t("tableTotalPotentialGainUSD")}</th>
           </tr>
         </thead>
         <tbody>

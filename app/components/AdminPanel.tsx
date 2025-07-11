@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
+import { useTranslations } from "next-intl";
 import contractAbi from "../../contracts/Bittery.json"; // Replace with your ABI if needed
 
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || ""; // Replace with your deployed address
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default function AdminPanel({ provider, signer }: Props) {
+  const t = useTranslations("common");
   const [contract, setContract] = useState<ethers.Contract>();
   const [isOwner, setIsOwner] = useState(false);
   const [showPanel, setShowPanel] = useState(false);
@@ -70,7 +72,7 @@ export default function AdminPanel({ provider, signer }: Props) {
 
   async function updateFeePercent() {
     if (!contract || !signer) return;
-    if (!window.confirm("Confirm updating fee percent?")) return;
+    if (!window.confirm(t("confirmUpdateFeePercent"))) return;
     const tx = await contract
       .connect(signer)
       .getFunction("setFeePercent")(Number(feePercent));
@@ -80,7 +82,7 @@ export default function AdminPanel({ provider, signer }: Props) {
 
   async function updateReferralPercent() {
     if (!contract || !signer) return;
-    if (!window.confirm("Confirm updating referral percent?")) return;
+    if (!window.confirm(t("confirmUpdateReferralPercent"))) return;
     const tx = await contract
       .connect(signer)
       .getFunction("setReferralPercent")(Number(referralPercent));
@@ -90,7 +92,7 @@ export default function AdminPanel({ provider, signer }: Props) {
 
   async function updateFeeRecipient() {
     if (!contract || !signer) return;
-    if (!window.confirm("Confirm updating fee recipient?")) return;
+    if (!window.confirm(t("confirmUpdateFeeRecipient"))) return;
     const tx = await contract
       .connect(signer)
       .getFunction("setFeeRecipient")(feeRecipient);
@@ -107,57 +109,57 @@ export default function AdminPanel({ provider, signer }: Props) {
           onClick={() => setShowPanel(true)}
           className="rounded border border-gray-800 dark:border-gray-200 px-6 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         >
-          Admin Dashboard
+          {t("adminDashboard")}
         </button>
       )}
       {showPanel && (
         <div className="space-y-6 max-w-md">
           <div className="space-y-1">
-            <div>Current feePercent: {currentFeePercent}</div>
+            <div>{t("currentFeePercent", { value: currentFeePercent })}</div>
             <input
               type="number"
               value={feePercent}
               onChange={(e) => setFeePercent(e.target.value)}
               className="w-full px-2 py-1 border rounded"
-              placeholder="Set Fee Percent (0-100)"
+              placeholder={t("setFeePercentPlaceholder")}
             />
             <button
               onClick={updateFeePercent}
               className="rounded border border-gray-800 dark:border-gray-200 px-4 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
-              Confirm
+              {t("confirm")}
             </button>
           </div>
           <div className="space-y-1">
-            <div>Current referralPercent: {currentReferralPercent}</div>
+            <div>{t("currentReferralPercent", { value: currentReferralPercent })}</div>
             <input
               type="number"
               value={referralPercent}
               onChange={(e) => setReferralPercent(e.target.value)}
               className="w-full px-2 py-1 border rounded"
-              placeholder="Set Referral Percent (0-100)"
+              placeholder={t("setReferralPercentPlaceholder")}
             />
             <button
               onClick={updateReferralPercent}
               className="rounded border border-gray-800 dark:border-gray-200 px-4 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
-              Confirm
+              {t("confirm")}
             </button>
           </div>
           <div className="space-y-1">
-            <div>Current feeRecipient: {currentFeeRecipient}</div>
+            <div>{t("currentFeeRecipient", { value: currentFeeRecipient })}</div>
             <input
               type="text"
               value={feeRecipient}
               onChange={(e) => setFeeRecipient(e.target.value)}
               className="w-full px-2 py-1 border rounded"
-              placeholder="Set Fee Recipient (address)"
+              placeholder={t("setFeeRecipientPlaceholder")}
             />
             <button
               onClick={updateFeeRecipient}
               className="rounded border border-gray-800 dark:border-gray-200 px-4 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
-              Confirm
+              {t("confirm")}
             </button>
           </div>
         </div>

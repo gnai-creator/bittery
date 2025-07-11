@@ -153,31 +153,34 @@ export default function HomeClient() {
           {t("title")}
         </h1>
         <Link href={"terms"} className="text-sm text-gray-500 hover:underline">
-          Terms •
+          {t("terms")} •
         </Link>{" "}
         <Link
           href={"privacy"}
           className="text-sm text-gray-500 hover:underline"
         >
-          Privacy •
+          {t("privacyPolicy")} •
         </Link>{" "}
-        © 2025 Bittery LLC
+        {t("allRightsReserved", { year: 2025 })} {" "}
+        <span className="font-semibold">{t("bitteryLLC")}</span>
         <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg">
-          A Decentralized Lottery Powered by Chainlink VRF
+          {t("subtitle")}
         </p>
       </header>
       <div id="status" className="text-lg">
         {launched
-          ? "🟢 We're already launched! Buy your ticket now!"
-          : `⏳ ${launchCountdown} left until Bittery's launch`}
+          ? t("statusLaunched")
+          : t("statusCountdown", { time: launchCountdown })}
       </div>
-      {launched && <p className="text-lg">Next draw in: {timeLeft}</p>}
+      {launched && (
+        <p className="text-lg">{t("nextDrawIn", { time: timeLeft })}</p>
+      )}
       <InfoCarousel />
 
       <div className="flex justify-center p-4">
         <video controls autoPlay loop className="w-64 rounded-lg shadow-md">
           <source src="/Bittery - Always a Winner.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
+          {t("videoUnsupported")}
         </video>
       </div>
 
@@ -186,7 +189,7 @@ export default function HomeClient() {
           className="rounded bg-black text-white px-6 py-2 hover:bg-gray-800 transition-colors"
           onClick={connect}
         >
-          Connect Wallet
+          {t("connectWallet")}
         </button>
         {launched && (
           <button
@@ -194,7 +197,7 @@ export default function HomeClient() {
             className="rounded border border-gray-800 dark:border-gray-200 px-6 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             onClick={buy}
           >
-            Buy Ticket (0.01 ETH)
+            {t("buyTicket", { price: "0.01" })}
           </button>
         )}
       </div>
@@ -202,7 +205,7 @@ export default function HomeClient() {
       {launched && <ReferralLink />}
       <div className="w-full max-w-md text-left">
         <h2 className="text-xl font-semibold mb-2">
-          Players ({players.length})
+          {t("playersHeading")} ({players.length})
         </h2>
         <ul className="space-y-1">
           {players.map((p) => (
@@ -214,13 +217,13 @@ export default function HomeClient() {
       </div>
       {winner && (
         <div>
-          <h2 className="text-xl font-semibold">Last Winner</h2>
+          <h2 className="text-xl font-semibold">{t("lastWinner")}</h2>
           <p className="truncate">{winner}</p>
         </div>
       )}
       {winners.length > 0 && (
         <div className="w-full max-w-md text-left">
-          <h2 className="text-xl font-semibold mb-2">Recent Winners</h2>
+          <h2 className="text-xl font-semibold mb-2">{t("recentWinners")}</h2>
           <ul className="space-y-1">
             {winners.map((w) => (
               <li key={w} className="truncate">
