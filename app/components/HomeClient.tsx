@@ -6,7 +6,7 @@ import InfoCarousel from "./InfoCarousel";
 import ReferralLink from "./ReferralLink";
 import EarningsTable from "./EarningsTable";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "";
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
@@ -24,6 +24,7 @@ export default function HomeClient() {
   const [launched, setLaunched] = useState(false);
   const [launchCountdown, setLaunchCountdown] = useState("");
   const t = useTranslations("common");
+  const locale = useLocale();
 
   useEffect(() => {
     setAnimate(true);
@@ -153,13 +154,13 @@ export default function HomeClient() {
           {t("title")}
         </h1>
         <Link
-          href={`${t("locale")}/${"terms"}`}
+          href={`/${locale}/terms`}
           className="text-sm text-gray-500 hover:underline"
         >
           {t("terms")} •
         </Link>{" "}
         <Link
-          href={`${t("locale")}/${"privacy"}`}
+          href={`/${locale}/privacy`}
           className="text-sm text-gray-500 hover:underline"
         >
           {t("privacyPolicy")} •
