@@ -4,7 +4,6 @@ pragma solidity ^0.8.20;
 // Segurança contra reentrância e pagamentos
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Pausable.sol";
-import "@openzeppelin/contracts/security/PullPayment.sol";
 // Chainlink VRF para aleatoriedade
 import "@chainlink/contracts/src/v0.8/vrf/dev/VRFConsumerBaseV2Plus.sol";
 import "@chainlink/contracts/src/v0.8/vrf/dev/libraries/VRFV2PlusClient.sol";
@@ -18,7 +17,7 @@ import "@chainlink/contracts/src/v0.8/vrf/dev/libraries/VRFV2PlusClient.sol";
  * - Pagamentos (prêmio, reembolso) via PullPayment: usuário saca
  * - Suporte futuro para ERC20/MATIC/POLYGON com `paymentToken`
  */
-contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard, Pausable, PullPayment {
+contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard, Pausable {
     struct Room {
         uint256 id;
         uint256 ticketPrice;           // Preço do ticket (em wei)
@@ -52,6 +51,9 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard, Pausable, PullPaymen
     mapping(uint256 => uint256) public requestToRoomId;
     address[] public globalWinners;
 
+    // PullPayment storage (manual)
+    mapping(address => uint256) private _payments;
+
     // Eventos
     event RoomCreated(uint256 indexed roomId, uint256 price, uint256 maxPlayers, address paymentToken);
     event TicketBought(uint256 indexed roomId, address indexed player, address referrer);
@@ -75,12 +77,6 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard, Pausable, PullPaymen
     //              CONSTRUTOR
     // --------------------------------------------
 
-    /**
-     * @param _coordinator: Endereço do Chainlink VRF Coordinator
-     * @param _subscriptionId: ID da subscription VRF
-     * @param _keyHash: keyHash da VRF
-     * @param _feeRecipient: Endereço da wallet de taxas
-     */
     constructor(
         address _coordinator,
         uint256 _subscriptionId,
@@ -97,12 +93,6 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard, Pausable, PullPaymen
     //          CRIAÇÃO DE SALAS (ADMIN)
     // --------------------------------------------
 
-    /**
-     * @notice Owner/backend cria nova sala.
-     * @param ticketPrice: valor do ticket (em wei)
-     * @param maxPlayers: 0 = sala global (sem limite, manual draw)
-     * @param paymentToken: 0x0 = nativo (ETH/MATIC); outro = ERC20 (futuro)
-     */
     function createRoom(uint256 ticketPrice, uint256 maxPlayers, address paymentToken) external {
         require(msg.sender == owner(), "Only owner");
         require(ticketPrice > 0, "Invalid price");
@@ -123,11 +113,6 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard, Pausable, PullPaymen
     //             COMPRA DE TICKET
     // --------------------------------------------
 
-    /**
-     * @notice Jogador compra ticket (só nativo, ETH/MATIC)
-     * @param roomId: índice da sala
-     * @param referrer: endereço do referral (opcional, não pode ser self)
-     */
     function buyTicket(uint256 roomId, address referrer) external payable nonReentrant whenNotPaused {
         Room storage room = rooms[roomId];
         require(room.ticketPrice > 0, "Room does not exist");
@@ -180,9 +165,6 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard, Pausable, PullPaymen
     //          SORTEIO GLOBAL (ADMIN/CRON)
     // --------------------------------------------
 
-    /**
-     * @notice Owner/cron dispara sorteio em salas globais (sem limite)
-     */
     function triggerGlobalDraw(uint256 roomId) external {
         Room storage room = rooms[roomId];
         require(msg.sender == owner(), "Only owner/cron");
@@ -219,9 +201,6 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard, Pausable, PullPaymen
         requestToRoomId[requestId] = roomId;
     }
 
-    /**
-     * @notice Recebe o número randômico, escolhe ganhador e registra. Paga via PullPayment.
-     */
     function fulfillRandomWords(uint256 requestId, uint256[] calldata randomWords) internal override {
         require(msg.sender == address(s_vrfCoordinator), "Only VRF Coordinator");
 
@@ -239,7 +218,7 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard, Pausable, PullPaymen
         uint256 pot = room.ticketPrice * room.players.length;
         uint256 payout = pot * (100 - feePercent) / 100;
 
-        // Usando PullPayment: o usuário saca o prêmio quando quiser
+        // PullPayment manual: saldo para saque do usuário
         _asyncTransfer(winner, payout);
 
         globalWinners.push(winner);
@@ -250,9 +229,6 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard, Pausable, PullPaymen
     //      REEMBOLSO DE SALA EXPIRADA (ADMIN)
     // --------------------------------------------
 
-    /**
-     * @notice Owner/cron reembolsa sala expirada. Devolve ticket - fee para cada player.
-     */
     function refundExpiredRoom(uint256 roomId) external onlyOwner nonReentrant {
         Room storage room = rooms[roomId];
         require(room.maxPlayers > 0, "Not a standard room");
@@ -274,9 +250,6 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard, Pausable, PullPaymen
     //     ADMIN: SACAR SALDO TRAVADO/EXTRA
     // --------------------------------------------
 
-    /**
-     * @notice Admin pode sacar saldo travado (referral que falhou, dust, etc)
-     */
     function adminWithdraw(uint256 amount) external onlyOwner nonReentrant {
         require(address(this).balance >= amount, "Not enough balance");
         (bool sent, ) = payable(msg.sender).call{value: amount}("");
@@ -316,5 +289,36 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard, Pausable, PullPaymen
     }
     function getWinners() external view returns (address[] memory) {
         return globalWinners;
+    }
+
+    // --------------------------------------------
+    //        PULLPAYMENT MANUAL INTERNO
+    // --------------------------------------------
+
+    /**
+     * @notice Consulta saldo disponível para saque do endereço
+     */
+    function payments(address dest) public view returns (uint256) {
+        return _payments[dest];
+    }
+
+    /**
+     * @notice (INTERNAL) Adiciona saldo para saque para um endereço
+     */
+    function _asyncTransfer(address dest, uint256 amount) internal {
+        _payments[dest] += amount;
+    }
+
+    /**
+     * @notice Usuário (ou admin) pode sacar o saldo disponível
+     * @param payee Endereço que vai receber o valor (normalmente msg.sender)
+     */
+    function withdrawPayments(address payable payee) public nonReentrant {
+        uint256 payment = _payments[payee];
+        require(payment != 0, "No funds to withdraw");
+        _payments[payee] = 0;
+        (bool sent, ) = payee.call{value: payment}("");
+        require(sent, "Withdraw failed");
+        emit Withdraw(payee, payment);
     }
 }
