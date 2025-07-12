@@ -15,20 +15,21 @@ interface RowData {
   totalPotentialUSD: number;
 }
 
-const REF_PERCENT_NATIVE = 0.00025; // 2.5% of 0.01 token
+const REF_PERCENT_ETH = 0.00025; // 2.5% of 0.01 ETH
 function generateData(
   start = 2,
   end = 50,
   offset = 1,
-  usdRate = 3000
+  usdRate = 3000,
+  factor = 1
 ): RowData[] {
   const data: RowData[] = [];
   for (let players = start; players <= end; players += offset) {
     const referrals = players - 1;
-    const referralEarningsETH = referrals * REF_PERCENT_NATIVE;
+    const referralEarningsETH = referrals * REF_PERCENT_ETH * factor;
     const referralEarningsUSD = referralEarningsETH * usdRate;
     const chance = 1 / players;
-    const prizePoolETH = 0.0095 * players;
+    const prizePoolETH = 0.0095 * players * factor;
     const prizePoolUSD = prizePoolETH * usdRate;
     const totalPotentialUSD = referralEarningsUSD + prizePoolUSD * chance;
     data.push({
@@ -55,7 +56,12 @@ export default function EarningsTable() {
       : symbol === "POL"
       ? prices.POL ?? 1
       : 3000;
-  const rows = useMemo(() => generateData(2, 1000, 100, usdRate), [usdRate]);
+  const factor =
+    symbol === "POL" && prices.ETH && prices.POL ? prices.ETH / prices.POL : 1;
+  const rows = useMemo(
+    () => generateData(2, 1000, 100, usdRate, factor),
+    [usdRate, factor]
+  );
   return (
     <div className="overflow-x-auto w-full max-w-2xl mx-auto mt-8">
       <h2 className="text-2xl font-bold title mb-2">

@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useNativeSymbol } from "../../hooks/useNativeSymbol";
+import { useUsdPrices } from "../../hooks/useUsdPrices";
 
 const ETH_TO_USD = 3000;
 const REF_PERCENT_ETH = 0.00025; // 2.5% of 0.01 ETH
@@ -18,16 +19,16 @@ interface RowData {
   totalPotentialUSD: number;
 }
 
-function generateData(): RowData[][] {
+function generateData(factor = 1, usdRate = ETH_TO_USD): RowData[][] {
   const groups: RowData[][] = [];
   let group: RowData[] = [];
   for (let players = 2; players <= 1000; players++) {
     const referrals = players - 1;
-    const referralEarningsETH = referrals * REF_PERCENT_ETH;
-    const referralEarningsUSD = referralEarningsETH * ETH_TO_USD;
+    const referralEarningsETH = referrals * REF_PERCENT_ETH * factor;
+    const referralEarningsUSD = referralEarningsETH * usdRate;
     const chance = 1 / players;
-    const prizePoolETH = 0.0095 * players;
-    const prizePoolUSD = prizePoolETH * ETH_TO_USD;
+    const prizePoolETH = 0.0095 * players * factor;
+    const prizePoolUSD = prizePoolETH * usdRate;
     const totalPotentialUSD = referralEarningsUSD + prizePoolUSD * chance;
     group.push({
       players,
@@ -69,11 +70,23 @@ function useAnimatedNumber(value: number, duration = 400) {
 export default function SimulatorClient() {
   const t = useTranslations("common");
   const symbol = useNativeSymbol();
+  const prices = useUsdPrices();
   const [weeklyReferrals, setWeeklyReferrals] = useState(0);
-  const groups = useMemo(() => generateData(), []);
+  const usdRate =
+    symbol === "ETH"
+      ? prices.ETH ?? ETH_TO_USD
+      : symbol === "POL"
+      ? prices.POL ?? 1
+      : ETH_TO_USD;
+  const factor =
+    symbol === "POL" && prices.ETH && prices.POL ? prices.ETH / prices.POL : 1;
+  const groups = useMemo(
+    () => generateData(factor, usdRate),
+    [factor, usdRate]
+  );
 
-  const weeklyETH = weeklyReferrals * REF_PERCENT_ETH;
-  const weeklyUSD = weeklyETH * ETH_TO_USD;
+  const weeklyETH = weeklyReferrals * REF_PERCENT_ETH * factor;
+  const weeklyUSD = weeklyETH * usdRate;
   const monthlyUSD = weeklyUSD * 4;
   const yearlyUSD = weeklyUSD * 52;
 
