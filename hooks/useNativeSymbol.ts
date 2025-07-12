@@ -23,7 +23,11 @@ export function useNativeSymbol(network?: Network) {
     if (ethereum?.chainId) {
       updateFromChain(ethereum.chainId as string);
     } else {
-      const envId = Number(process.env.NEXT_PUBLIC_CHAIN_ID_MAIN || "137");
+      const envId = Number(
+        process.env.NEXT_PUBLIC_CHAIN_ID_MAIN ||
+          process.env.NEXT_PUBLIC_CHAIN_ID_TEST ||
+          "137"
+      );
       setSymbol(getNativeSymbol(envId));
     }
     if (ethereum?.on) {
