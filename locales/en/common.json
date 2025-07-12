@@ -9,7 +9,7 @@
     "metamaskRequired": "MetaMask is required",
     "generateReferralLink": "Generate referral link",
     "linkCopied": "Link copied!",
-    "referralReward": "You will earn approximately $ {reward} for each referred ticket purchase.",
+    "referralReward": "You will earn about $ {reward} when someone buys a 0.01 ETH ticket through your link (2.5% of the price). Rewards scale with the ticket price.",
     "and": "and",
     "subtitle": "A Decentralized Awards System Powered by Chainlink VRF",
     "statusLaunched": "🔴 We're already launched! Buy your ticket now!",
