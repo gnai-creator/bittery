@@ -25,9 +25,8 @@ export default function Navbar() {
     async function load() {
       try {
         const val = await contract.payments(address);
-        if (!val) {
+        if (val === "0x") {
           setBalance("0");
-          return;
         }
         setBalance(ethers.formatEther(val));
       } catch (err) {
@@ -47,9 +46,8 @@ export default function Navbar() {
         .withdrawPayments(address);
       await tx.wait();
       const val = await contract.payments(address);
-      if (!val) {
+      if (val === "0x") {
         setBalance("0");
-        return;
       }
       setBalance(ethers.formatEther(val));
       setOpen(false);
