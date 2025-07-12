@@ -100,6 +100,12 @@ CRON_SECRET=your_secret_for_cron
 Variables ending in `_MAIN` apply to Polygon mainnet, while `_TEST` ones are
 for Ethereum Sepolia.
 
+If `POLYGON_RPC_URL` or `SEPOLIA_RPC_URL` are missing Hardhat will fail with
+```
+ProviderError: the method eth_blockNumber does not exist/is not available
+```
+Ensure both RPC endpoints and `PRIVATE_KEY` are correctly configured.
+
 Then deploy with:
 ```bash
 npx hardhat run scripts/deploy.ts --network sepolia
