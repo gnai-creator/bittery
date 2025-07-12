@@ -77,6 +77,9 @@
     "privacyBullet5": "Nous pouvons utiliser des analyses anonymes pour améliorer les performances du site.",
     "privacyConclusion": "En utilisant Bitter, vous consentez à cette politique de confidentialité. Si vous n'êtes pas d'accord, veuillez déconnecter et vous abstenir d'utiliser l'application.",
     "lastUpdated": "Dernière mise à jour: {date}",
+    "historyLink": "History",
+    "historyTitle": "Completed Rooms",
+    "historyDescription": "Rooms that already have a winner.",
     "locale": "fr"
   }
 }

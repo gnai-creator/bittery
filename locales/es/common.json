@@ -77,6 +77,9 @@
     "privacyBullet5": "Podemos usar análisis anónimos para mejorar el rendimiento del sitio.",
     "privacyConclusion": "Al usar Bittery, usted acepta esta Política de privacidad. Si no está de acuerdo, desconecte y abstenga de usar la aplicación.",
     "lastUpdated": "Última actualización: {date}",
+    "historyLink": "History",
+    "historyTitle": "Completed Rooms",
+    "historyDescription": "Rooms that already have a winner.",
     "locale": "es"
   }
 }

@@ -5,7 +5,7 @@ import { useBitteryContract } from "../../hooks/useBitteryContract";
 import { Network } from "../../lib/contracts";
 import RoomCard from "./RoomCard";
 
-export default function RoomsView({ network }: { network: Network }) {
+export default function HistoryView({ network }: { network: Network }) {
   const contract = useBitteryContract(network);
   const [groups, setGroups] = useState<Record<number, number[]>>({});
 
@@ -37,7 +37,7 @@ export default function RoomsView({ network }: { network: Network }) {
         }
         const mapping: Record<number, number[]> = {};
         rooms.forEach((room: any) => {
-          if (room.winner === ethers.ZeroAddress) {
+          if (room.winner !== ethers.ZeroAddress) {
             const max = Number(room.maxPlayers);
             if (!mapping[max]) mapping[max] = [];
             mapping[max].push(Number(room.id));
