@@ -62,16 +62,6 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard, Pausable {
     event RoomRefunded(uint256 indexed roomId);
     event Withdraw(address indexed to, uint256 amount);
 
-    // OnlyOwner: do VRFConsumerBaseV2Plus
-    modifier onlyOwner() {
-        require(msg.sender == owner(), "Caller is not the owner");
-        _;
-    }
-
-    // Owner herdado do VRFConsumerBaseV2Plus
-    function owner() public view returns (address) {
-        return VRFConsumerBaseV2Plus.owner();
-    }
 
     // --------------------------------------------
     //              CONSTRUTOR
