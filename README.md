@@ -163,7 +163,7 @@ This project is licensed under the **Business Source License 1.1**.
 - 🚫 **Commercial use prohibited** unless licensed
 - 🔓 **License converts to MIT** on **July 10, 2075**
 
-For commercial licensing, contact: [contact@bitaward.net](mailto:contact@bitaward.net)
+For commercial licensing, contact: [contact@byttery.org](mailto:contact@bittery.org)
 
 View full license in [`LICENSE`](./LICENSE).
 
@@ -172,7 +172,7 @@ View full license in [`LICENSE`](./LICENSE).
 ## ✉️ Contact
 
 - 🧑 Author: Felipe Maya Muniz ([gnai-creator](https://github.com/gnai-creator))
-- 📬 Email: [contact@bitaward.net](mailto:contact@bitaward.net)
+- 📬 Email: [contact@byttery.org](mailto:contact@byttery.org)
 - 🌐 Project site: [https://bitaward.net](https://bitaward.net)
 
 ---
