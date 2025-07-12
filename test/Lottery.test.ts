@@ -14,7 +14,7 @@ describe("Bittery", function () {
       owner.address
     )) as any;
     await lottery.waitForDeployment();
-    await lottery.createRoom(ethers.parseEther("0.01"), 2);
+    await lottery.createRoom(ethers.parseEther("0.01"), 2, ethers.ZeroAddress);
     return { lottery, owner, user };
   }
 

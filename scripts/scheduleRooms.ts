@@ -60,7 +60,8 @@ async function ensureRoomsForContract(
         if (finished) {
           const tx = await contract.createRoom(
             ethers.parseEther(price),
-            maxPlayers
+            maxPlayers,
+            ethers.ZeroAddress
           );
           await tx.wait();
           const symbol = network === "main" ? "POL" : "ETH";
@@ -77,7 +78,8 @@ async function ensureRoomsForContract(
     if (latestIndex === -1) {
       const tx = await contract.createRoom(
         ethers.parseEther(price),
-        maxPlayers
+        maxPlayers,
+        ethers.ZeroAddress
       );
       await tx.wait();
       const symbol = network === "main" ? "POL" : "ETH";

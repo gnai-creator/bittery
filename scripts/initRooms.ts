@@ -46,7 +46,7 @@ async function initRooms(network: Network) {
 
   for (let i = startIndex; i < rooms.length; i++) {
     const { price, maxPlayers } = rooms[i];
-    const tx = await contract.createRoom(ethers.parseEther(price), maxPlayers);
+    const tx = await contract.createRoom(ethers.parseEther(price), maxPlayers, ethers.ZeroAddress);
     await tx.wait();
     const symbol = network === "main" ? "POL" : "ETH";
     console.log(

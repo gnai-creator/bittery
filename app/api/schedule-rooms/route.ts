@@ -1,20 +1,20 @@
-import { NextResponse } from 'next/server';
-import { ethers } from 'ethers';
-import artifact from '../../../contracts/Bittery.json';
-import { Network } from '../../../lib/contracts';
-import { getRooms, RoomConfig } from '../../../lib/rooms';
+import { NextResponse } from "next/server";
+import { ethers } from "ethers";
+import artifact from "../../../contracts/Bittery.json";
+import { Network } from "../../../lib/contracts";
+import { getRooms, RoomConfig } from "../../../lib/rooms";
 
-export const runtime = 'nodejs';
+export const runtime = "nodejs";
 
-const PRIVATE_KEY = process.env.PRIVATE_KEY || '';
+const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
 
 function getNetworkConfig(network: Network) {
   const rpcUrl =
-    network === 'main'
+    network === "main"
       ? process.env.POLYGON_RPC_URL
       : process.env.SEPOLIA_RPC_URL;
   const contractAddress =
-    network === 'main'
+    network === "main"
       ? process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_MAIN
       : process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_TEST;
 
@@ -24,11 +24,14 @@ function getNetworkConfig(network: Network) {
 
   const provider = new ethers.JsonRpcProvider(rpcUrl);
   const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
-  const contract = new ethers.Contract(contractAddress, (artifact as any).abi || artifact, wallet);
+  const contract = new ethers.Contract(
+    contractAddress,
+    (artifact as any).abi || artifact,
+    wallet
+  );
 
   return { contract };
 }
-
 
 async function ensureRoomsForContract(
   contract: ethers.Contract,
@@ -39,7 +42,7 @@ async function ensureRoomsForContract(
   try {
     next = await contract.nextRoomId();
   } catch (err: any) {
-    if (err?.message?.includes('bad data')) {
+    if (err?.message?.includes("bad data")) {
       next = 0n;
     } else {
       throw err;
@@ -65,12 +68,15 @@ async function ensureRoomsForContract(
         if (finished) {
           const tx = await contract.createRoom(
             ethers.parseEther(price),
-            maxPlayers
+            maxPlayers,
+            ethers.ZeroAddress
           );
           await tx.wait();
-          const symbol = network === 'main' ? 'POL' : 'ETH';
+          const symbol = network === "main" ? "POL" : "ETH";
           console.log(
-            `Created room #${(await contract.nextRoomId()) - 1n} with price ${price} ${symbol} and ${maxPlayers} players`
+            `Created room #${
+              (await contract.nextRoomId()) - 1n
+            } with price ${price} ${symbol} and ${maxPlayers} players`
           );
         }
         break;
@@ -80,11 +86,14 @@ async function ensureRoomsForContract(
     if (latestIndex === -1) {
       const tx = await contract.createRoom(
         ethers.parseEther(price),
-        maxPlayers
+        maxPlayers,
+        ethers.ZeroAddress
       );
       await tx.wait();
-      const symbol = network === 'main' ? 'POL' : 'ETH';
-      console.log(`Created initial room with price ${price} ${symbol} and ${maxPlayers} players`);
+      const symbol = network === "main" ? "POL" : "ETH";
+      console.log(
+        `Created initial room with price ${price} ${symbol} and ${maxPlayers} players`
+      );
     }
   }
 }
@@ -96,14 +105,16 @@ async function ensureRooms(network: Network) {
 }
 
 export async function GET(req: Request) {
-  if (req.headers.get('Authorization') !== `Bearer ${process.env.CRON_SECRET}`) {
-    return new NextResponse('Unauthorized', { status: 401 });
+  if (
+    req.headers.get("Authorization") !== `Bearer ${process.env.CRON_SECRET}`
+  ) {
+    return new NextResponse("Unauthorized", { status: 401 });
   }
   try {
-    await Promise.all([ensureRooms('test'), ensureRooms('main')]);
+    await Promise.all([ensureRooms("test"), ensureRooms("main")]);
     return NextResponse.json({ ok: true });
   } catch (err) {
-    console.error('Failed to ensure rooms:', err);
-    return new NextResponse('Internal Server Error', { status: 500 });
+    console.error("Failed to ensure rooms:", err);
+    return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
