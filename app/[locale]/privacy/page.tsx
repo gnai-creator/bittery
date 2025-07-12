@@ -1,16 +1,16 @@
 export const metadata = {
   title: "Privacy Policy",
-  description: "Privacy policy for using the Bittery platform",
+  description: "Privacy policy for using the Bitaward platform",
   openGraph: {
     title: "Privacy Policy",
-    description: "Privacy policy for using the Bittery platform",
+    description: "Privacy policy for using the Bitaward platform",
     images: ["/Bittery-Logo.png"],
-    url: "https://bittery.org/privacy",
+    url: "https://bitaward.net/privacy",
   },
   twitter: {
     card: "summary_large_image",
     title: "Privacy Policy",
-    description: "Privacy policy for using the Bittery platform",
+    description: "Privacy policy for using the Bitaward platform",
     images: ["/Bittery-Logo.png"],
   },
 };

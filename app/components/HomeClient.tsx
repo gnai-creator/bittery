@@ -125,7 +125,7 @@ export default function HomeClient() {
       </div>
 
       <header className="space-y-2">
-        <img src="/nav3.png" alt="Bittery Logo" className="mx-auto w-32 h-32" />
+        <img src="/nav3.png" alt="Bitaward Logo" className="mx-auto w-32 h-32" />
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight title">
           {t("title")}
         </h1>

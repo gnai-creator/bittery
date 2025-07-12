@@ -5,19 +5,19 @@ import HomeClient from "../components/HomeClient";
 export const metadata: Metadata = {
   title: "Home",
   description:
-    "Play the Bittery decentralized lottery. Connect your wallet and buy tickets for a chance to win.",
+    "Play the Bitaward decentralized lottery. Connect your wallet and buy tickets for a chance to win.",
   openGraph: {
-    title: "Bittery Lottery",
+    title: "Bitaward Lottery",
     description:
-      "Play the Bittery decentralized lottery. Connect your wallet and buy tickets for a chance to win.",
+      "Play the Bitaward decentralized lottery. Connect your wallet and buy tickets for a chance to win.",
     images: ["/Bittery-Logo.png"],
-    url: "https://bittery.org/",
+    url: "https://bitaward.net/",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Bittery Lottery",
+    title: "Bitaward Lottery",
     description:
-      "Play the Bittery decentralized lottery. Connect your wallet and buy tickets for a chance to win.",
+      "Play the Bitaward decentralized lottery. Connect your wallet and buy tickets for a chance to win.",
     images: ["/Bittery-Logo.png"],
   },
 };
