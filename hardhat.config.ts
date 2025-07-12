@@ -14,7 +14,7 @@ const config: HardhatUserConfig = {
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
     polygon: {
-      url: "https://polygon-rpc.com",
+      url: process.env.POLYGON_RPC_URL,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
   },
