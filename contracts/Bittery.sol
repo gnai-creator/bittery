@@ -45,7 +45,8 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard, Pausable {
         feeRecipient = _feeRecipient;
     }
 
-    function createRoom(uint256 ticketPrice, uint256 maxPlayers) external onlyOwner {
+    function createRoom(uint256 ticketPrice, uint256 maxPlayers) external {
+        require(msg.sender == owner(), "Ownable: caller is not the owner");
         require(ticketPrice > 0, "Invalid price");
         require(maxPlayers >= 2, "Minimum 2 players");
 
@@ -125,26 +126,31 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard, Pausable {
         emit WinnerPicked(roomId, winner);
     }
 
-    function setFeePercent(uint256 _feePercent) external onlyOwner {
+    function setFeePercent(uint256 _feePercent) external {
+        require(msg.sender == owner(), "Ownable: caller is not the owner");
         require(_feePercent <= 100, "Percent too high");
         feePercent = _feePercent;
     }
 
-    function setReferralPercent(uint256 _referralPercent) external onlyOwner {
+    function setReferralPercent(uint256 _referralPercent) external {
+        require(msg.sender == owner(), "Ownable: caller is not the owner");
         require(_referralPercent <= 100, "Referral percent too high");
         referralPercent = _referralPercent;
     }
 
-    function setFeeRecipient(address _feeRecipient) external onlyOwner {
+    function setFeeRecipient(address _feeRecipient) external {
+        require(msg.sender == owner(), "Ownable: caller is not the owner");
         require(_feeRecipient != address(0), "Invalid recipient");
         feeRecipient = _feeRecipient;
     }
 
-    function pause() external onlyOwner {
+    function pause() external {
+        require(msg.sender == owner(), "Ownable: caller is not the owner");
         _pause();
     }
 
-    function unpause() external onlyOwner {
+    function unpause() external {
+        require(msg.sender == owner(), "Ownable: caller is not the owner");
         _unpause();
     }
 
@@ -155,4 +161,5 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard, Pausable {
     function getWinners() external view returns (address[] memory) {
         return globalWinners;
     }
+
 }
