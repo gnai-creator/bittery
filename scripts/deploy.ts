@@ -6,6 +6,19 @@ dotenv.config();
 async function main() {
   const networkName = network.name;
 
+  const rpcUrl =
+    networkName === "sepolia"
+      ? process.env.SEPOLIA_RPC_URL
+      : process.env.POLYGON_RPC_URL;
+  const privateKey = process.env.PRIVATE_KEY;
+
+  if (!rpcUrl || !privateKey) {
+    console.error(
+      "❌ Erro: RPC_URL e PRIVATE_KEY devem estar definidos nas variáveis de ambiente."
+    );
+    process.exit(1);
+  }
+
   let coordinatorRaw: string | undefined;
   let subscriptionIdRaw: string | undefined;
   let keyHashRaw: string | undefined;
