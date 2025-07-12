@@ -7,20 +7,15 @@ export interface RoomConfig {
 
 const BASE_ROOMS: RoomConfig[] = [
   { maxPlayers: 10, price: "0.01" },
-  { maxPlayers: 10, price: "0.001" },
-  { maxPlayers: 10, price: "0.0005" },
+  { maxPlayers: 10, price: "0.005" },
   { maxPlayers: 20, price: "0.01" },
-  { maxPlayers: 20, price: "0.001" },
-  { maxPlayers: 20, price: "0.0005" },
+  { maxPlayers: 20, price: "0.005" },
   { maxPlayers: 50, price: "0.01" },
-  { maxPlayers: 50, price: "0.001" },
-  { maxPlayers: 50, price: "0.0005" },
+  { maxPlayers: 50, price: "0.005" },
   { maxPlayers: 100, price: "0.01" },
-  { maxPlayers: 100, price: "0.001" },
-  { maxPlayers: 100, price: "0.0005" },
+  { maxPlayers: 100, price: "0.005" },
   { maxPlayers: 1000, price: "0.01" },
-  { maxPlayers: 1000, price: "0.001" },
-  { maxPlayers: 1000, price: "0.0005" },
+  { maxPlayers: 1000, price: "0.005" },
 ];
 
 const PRICE_API =
