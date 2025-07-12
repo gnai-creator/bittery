@@ -123,13 +123,9 @@ export default function HomeClient() {
           {t("connectWallet")}
         </button>
       </div>
-      
+
       <header className="space-y-2">
-        <img
-          src="/Bittery-Logo.png"
-          alt="Bittery Logo"
-          className="mx-auto w-32 h-32"
-        />
+        <img src="/nav3.png" alt="Bittery Logo" className="mx-auto w-32 h-32" />
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight title">
           {t("title")}
         </h1>
@@ -152,8 +148,6 @@ export default function HomeClient() {
       </div>
 
       <InfoCarousel />
-
-      
 
       <ReferralLink />
       <EarningsTable />
