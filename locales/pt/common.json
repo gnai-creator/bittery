@@ -9,7 +9,7 @@
     "metamaskRequired": "Metamask é necessário",
     "generateReferralLink": "Gerar link de referência",
     "linkCopied": "Link copiado!",
-    "referralReward": "Você ganhará aproximadamente $ {reward} para cada compra de ingresso referida.",
+    "referralReward": "Você ganhará cerca de $ {reward} quando alguém comprar um bilhete de 0.01 ETH através do seu link (2,5% do valor). A recompensa varia conforme o preço do bilhete.",
     "and": "e",
     "subtitle": "Um Sistema Descentralizado de Recompensas Alimentado pelo Chainlink VRF",
     "statusLaunched": "🔴 Já estamos lançados! Compre seu bilhete agora!",

@@ -23,7 +23,7 @@
 
 ## 🤝 Referral System
 
-Share your referral link (?ref=YOUR_ADDRESS) and earn a portion of the fee whenever someone you invite buys a ticket. The default referral reward is 50% of the collected fee.
+Share your referral link (?ref=YOUR_ADDRESS) and earn a portion of the fee whenever someone you invite buys a ticket. The default referral reward is 50% of the collected fee, which equals 2.5% of the ticket price if the fee is 5%.
 
 ---
 
