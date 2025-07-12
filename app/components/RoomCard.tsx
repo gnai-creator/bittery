@@ -45,8 +45,9 @@ export default function RoomCard({ network, id }: Props) {
     const provider = contract.runner as ethers.BrowserProvider;
     const signer = await provider.getSigner();
     const room = await contract.rooms(id);
-    const params = new URLSearchParams(window.location.search);
-    const ref = params.get("ref") || ethers.ZeroAddress;
+    const ref =
+      (typeof window !== "undefined" && localStorage.getItem("referrer")) ||
+      ethers.ZeroAddress;
     const tx = await (contract as any).connect(signer).buyTicket(id, ref, {
       value: room.ticketPrice,
     });

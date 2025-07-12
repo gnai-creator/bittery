@@ -9,7 +9,7 @@
     "metamaskRequired": "Se requiere Metamask",
     "generateReferralLink": "Generar un enlace de referencia",
     "linkCopied": "Enlace copiado!",
-    "referralReward": "Ganará aproximadamente $ {reward} por cada compra de boletos referidos.",
+    "referralReward": "Ganará cerca de $ {reward} cuando alguien compre un boleto de 0.01 ETH a través de su enlace (2.5% del precio). La recompensa varía según el precio del boleto.",
     "and": "y",
     "howItWorksTitle": "Cómo funciona",
     "howItWorksText": "Compra un boleto, espera a que termine el temporizador y mira si ganaste. Cada sorteo es aleatorio y transparente.",
