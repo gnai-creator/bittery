@@ -43,7 +43,7 @@ describe("Bittery", function () {
   it("non-owner cannot update fee percent", async function () {
     const { lottery, user } = await loadFixture(deployFixture);
     await expect(lottery.connect(user).setFeePercent(10)).to.be.revertedWith(
-      "Only callable by owner"
+      "Ownable: caller is not the owner"
     );
   });
 
