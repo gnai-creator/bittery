@@ -38,7 +38,9 @@ export default function Navbar() {
     try {
       const provider = contract.runner as ethers.BrowserProvider;
       const signer = await provider.getSigner();
-      const tx = await contract.connect(signer).withdrawPayments(address);
+      const tx = await (contract as any)
+        .connect(signer)
+        .withdrawPayments(address);
       await tx.wait();
       const val = await contract.payments(address);
       setBalance(ethers.formatEther(val));
