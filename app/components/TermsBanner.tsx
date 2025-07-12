@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Link } from "../../navigation";
 
 const TERMS_VERSION = "2025-07-10"; // Atualize esta versão quando mudar os termos
@@ -9,7 +9,6 @@ const TERMS_VERSION = "2025-07-10"; // Atualize esta versão quando mudar os ter
 export default function TermsBanner() {
   const [accepted, setAccepted] = useState<boolean>(true);
   const t = useTranslations("common");
-  const locale = useLocale();
 
   useEffect(() => {
     const savedVersion = localStorage.getItem("termsVersionAccepted");
