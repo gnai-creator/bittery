@@ -27,22 +27,32 @@ export default function Navbar() {
     setMounted(true);
   }, []);
 
-  useEffect(() => {
+  async function loadBalance() {
     if (!address) return;
-    async function load() {
-      try {
-        const val = await contract.payments(address);
-        setBalance(ethers.formatEther(val));
-      } catch (err: any) {
-        if (err.code === "BAD_DATA") {
-          setBalance("0");
-        } else {
-          console.error(err);
-        }
+    try {
+      const val = await contract.payments(address);
+      setBalance(ethers.formatEther(val));
+    } catch (err: any) {
+      if (err.code === "BAD_DATA") {
+        setBalance("0");
+      } else {
+        console.error(err);
       }
     }
-    load();
+  }
+
+  useEffect(() => {
+    loadBalance();
+    if (!address) return;
+    const id = setInterval(loadBalance, 10000);
+    return () => clearInterval(id);
   }, [address, contract]);
+
+  useEffect(() => {
+    if (open) {
+      loadBalance();
+    }
+  }, [open]);
 
   async function withdraw() {
     if (!address) return;

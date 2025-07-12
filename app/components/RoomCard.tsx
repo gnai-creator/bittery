@@ -91,14 +91,18 @@ export default function RoomCard({ network, id }: Props) {
             </span>
           )}
       </div>
-      {winner && <div className="truncate">Winner: {winner}</div>}
+      {winner && winner !== ethers.ZeroAddress && (
+        <div className="truncate">Winner: {winner}</div>
+      )}
       {drawing && <div>Drawing...</div>}
-      <button
-        className="rounded border px-4 py-1 hover:bg-gray-100 dark:hover:bg-gray-800"
-        onClick={buy}
-      >
-        {t("buyTicket", { price: price.toFixed(4), symbol })}
-      </button>
+      {!winner && !drawing && (
+        <button
+          className="rounded border px-4 py-1 hover:bg-gray-100 dark:hover:bg-gray-800"
+          onClick={buy}
+        >
+          {t("buyTicket", { price: price.toFixed(4), symbol })}
+        </button>
+      )}
     </div>
   );
 }
