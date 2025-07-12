@@ -12,6 +12,7 @@ function short(addr: string) {
 }
 
 export default function Navbar() {
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
   const network: Network = pathname.includes("/main") ? "main" : "test";
   const { address, isConnected } = useAccount();
@@ -19,6 +20,10 @@ export default function Navbar() {
   const symbol = useNativeSymbol(network);
   const [balance, setBalance] = useState<string>("0");
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!address) return;
@@ -54,6 +59,16 @@ export default function Navbar() {
     } catch (err) {
       console.error(err);
     }
+  }
+
+  if (!mounted) {
+    return (
+      <nav className="bg-neutral-900 text-white flex justify-between  items-center px-4 py-2 gap-4">
+        <Link href="/" className="flex items-center gap-2">
+          <img src="/nav3.png" alt="Logo" width={40} height={40} />
+        </Link>
+      </nav>
+    );
   }
 
   return (
