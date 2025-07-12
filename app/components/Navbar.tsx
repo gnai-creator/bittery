@@ -51,7 +51,7 @@ export default function Navbar() {
   return (
     <nav className="bg-neutral-900 text-white flex items-center px-4 py-2 gap-4">
       <Link href="/" className="flex items-center gap-2">
-        <img src="/logo.png" alt="Logo" width={30} height={30} />
+        <img src="/nav.png" alt="Logo" width={30} height={30} />
       </Link>
       <div className="flex-1 flex justify-center gap-2">
         <Link
@@ -85,7 +85,9 @@ export default function Navbar() {
             href="#"
             onClick={(e) => {
               e.preventDefault();
-              (window as any).ethereum?.request?.({ method: "eth_requestAccounts" });
+              (window as any).ethereum?.request?.({
+                method: "eth_requestAccounts",
+              });
             }}
             className="px-3 py-1 rounded bg-orange-600 hover:bg-orange-700 text-sm"
           >
@@ -112,4 +114,3 @@ export default function Navbar() {
     </nav>
   );
 }
-
