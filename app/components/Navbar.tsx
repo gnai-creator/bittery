@@ -47,6 +47,10 @@ export default function Navbar() {
         .withdrawPayments(address);
       await tx.wait();
       const val = await contract.payments(address);
+      if (!val) {
+        setBalance("0");
+        return;
+      }
       setBalance(ethers.formatEther(val));
       setOpen(false);
     } catch (err) {
