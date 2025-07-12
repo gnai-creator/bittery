@@ -5,9 +5,13 @@ import lotteryAbi from "../contracts/Bittery.json";
 
 dotenv.config();
 
-const RPC_URL = process.env.POLYGON_RPC_URL || process.env.SEPOLIA_RPC_URL || "";
+const RPC_URL =
+  process.env.POLYGON_RPC_URL || process.env.SEPOLIA_RPC_URL || "";
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
-const CONTRACT_ADDRESS = "0xbfa9A081EDe54008287740EaD6CDE9bc7020f999";
+const CONTRACT_ADDRESS =
+  process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_MAIN ||
+  process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_TEST ||
+  "";
 
 if (!RPC_URL || !PRIVATE_KEY) {
   console.error("RPC_URL and PRIVATE_KEY must be set in the environment");
@@ -24,8 +28,13 @@ async function draw() {
     for (let i = 0; i < total; i++) {
       const players: string[] = await lottery.getRoomPlayers(i);
       const room = await lottery.rooms(i);
-      if (!room.drawing && room.winner === ethers.ZeroAddress && players.length >= 2) {
-        const drawFn = (lottery as any).draw ?? (lottery as any).requestRandomWinner;
+      if (
+        !room.drawing &&
+        room.winner === ethers.ZeroAddress &&
+        players.length >= 2
+      ) {
+        const drawFn =
+          (lottery as any).draw ?? (lottery as any).requestRandomWinner;
         if (typeof drawFn === "function") {
           const tx = await drawFn(i);
           await tx.wait();
