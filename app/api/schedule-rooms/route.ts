@@ -42,7 +42,7 @@ async function ensureRoomsForContract(
     let latestIndex = -1;
 
     for (let i = total - 1; i >= 0; i--) {
-      const room = await contract.rooms(i);
+      const room = await contract.getRoom(i);
       if (
         room.ticketPrice.toString() === ethers.parseEther(price).toString() &&
         room.maxPlayers === BigInt(maxPlayers)

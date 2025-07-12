@@ -12,6 +12,10 @@ export default function RoomsView({ network }: { network: Network }) {
     async function load() {
       try {
         const next = Number(await contract.getNextRoomId());
+        if (next === 0) {
+          setGroups({});
+          return;
+        }
         const BATCH_SIZE = 3;
         const rooms: any[] = [];
         for (let i = 0; i < next; i += BATCH_SIZE) {

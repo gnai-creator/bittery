@@ -37,6 +37,7 @@ async function initRooms(network: Network) {
   const { contract } = getNetworkConfig(network);
   const rooms = await getRooms(network);
   const next = await contract.getNextRoomId();
+
   const startIndex = Number(next);
   if (startIndex >= rooms.length) {
     console.log(`All rooms already exist on ${network}. Skipping creation.`);
