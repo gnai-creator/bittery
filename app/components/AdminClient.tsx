@@ -44,7 +44,7 @@ export default function AdminClient() {
     async function init() {
       if (!contract) return; // Extra check to satisfy TypeScript
       if (!signer) return; // Extra check to satisfy TypeScript
-      const admin = await contract.feeRecipient();
+      const admin = await contract.getFeeRecipient();
       const addr = await signer.getAddress();
       if (admin.toLowerCase() === addr.toLowerCase()) {
         setIsOwner(true);
