@@ -9,7 +9,7 @@
     "metamaskRequired": "Metamaske ist erforderlich",
     "generateReferralLink": "Überweisungslink erzeugen",
     "linkCopied": "Link kopiert!",
-    "referralReward": "Sie verdienen ungefähr $ {reward} für jeden genannten Ticketkauf.",
+    "referralReward": "Sie verdienen etwa $ {reward}, wenn jemand über Ihren Link ein 0.01 ETH Ticket kauft (2.5% des Preises). Die Belohnung variiert je nach Ticketpreis.",
     "and": "Und",
     "howItWorksTitle": "Wie es funktioniert",
     "howItWorksText": "Kaufe ein Ticket, warte bis der Timer endet und sieh, ob du gewonnen hast! Jede Ziehung ist zufällig und transparent.",

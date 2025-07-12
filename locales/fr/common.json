@@ -9,7 +9,7 @@
     "metamaskRequired": "Metamask est requis",
     "generateReferralLink": "Générer un lien de référence",
     "linkCopied": "Lien copié!",
-    "referralReward": "Vous gagnerez environ $ {reward} pour chaque achat de billets référé.",
+    "referralReward": "Vous gagnerez environ $ {reward} lorsque quelqu'un achète un billet de 0.01 ETH via votre lien (2.5% du prix). La récompense varie selon le prix du billet.",
     "and": "et",
     "howItWorksTitle": "Comment ça marche",
     "howItWorksText": "Achetez un billet, attendez la fin du compte à rebours et voyez si vous avez gagné ! Chaque tirage est aléatoire et transparent.",
