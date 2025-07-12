@@ -115,6 +115,15 @@ export default function HomeClient() {
         animate ? "animate-fade" : ""
       }`}
     >
+      <div className="flex justify-center gap-4">
+        <button
+          className="rounded dark:bg-neutral-900 text-white px-6 py-2 hover:bg-gray-800 transition-colors"
+          onClick={connect}
+        >
+          {t("connectWallet")}
+        </button>
+      </div>
+      
       <header className="space-y-2">
         <img
           src="/Bittery-Logo.png"
@@ -144,14 +153,7 @@ export default function HomeClient() {
 
       <InfoCarousel />
 
-      <div className="flex justify-center gap-4">
-        <button
-          className="rounded dark:bg-neutral-900 text-white px-6 py-2 hover:bg-gray-800 transition-colors"
-          onClick={connect}
-        >
-          {t("connectWallet")}
-        </button>
-      </div>
+      
 
       <ReferralLink />
       <EarningsTable />
