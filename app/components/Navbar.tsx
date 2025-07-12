@@ -53,7 +53,7 @@ export default function Navbar() {
   return (
     <nav className="bg-neutral-900 text-white flex items-center px-4 py-2 gap-4">
       <Link href="/" className="flex items-center gap-2">
-        <img src="/nav.png" alt="Logo" width={40} height={40} />
+        <img src="/nav2.png" alt="Logo" width={40} height={40} />
       </Link>
       <div className="flex-1 flex justify-center gap-2">
         <Link
