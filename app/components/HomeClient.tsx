@@ -119,6 +119,8 @@ export default function HomeClient() {
     }
   }
 
+  const ROOM_ID = 0;
+
   async function buy() {
     if (!contract || !signer) return;
     const referrer =
@@ -126,19 +128,19 @@ export default function HomeClient() {
       ZERO_ADDRESS;
     const tx = await (contract as any)
       .connect(signer)
-      .buyTicket(referrer, { value: ethers.parseEther("0.01") });
+      .buyTicket(ROOM_ID, referrer, { value: ethers.parseEther("0.01") });
     await tx.wait();
     getPlayers(contract);
   }
 
   async function getPlayers(c: ethers.Contract) {
-    const list: string[] = await c.getPlayers();
+    const list: string[] = await c.getRoomPlayers(ROOM_ID);
     setPlayers(list);
   }
 
   async function getWinner(c: ethers.Contract) {
-    const w: string = await c.recentWinner();
-    setWinner(w);
+    const room = await c.rooms(ROOM_ID);
+    setWinner(room.winner);
   }
 
   async function getWinners(c: ethers.Contract) {
