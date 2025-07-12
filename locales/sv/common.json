@@ -77,6 +77,9 @@
     "privacyBullet5": "Vi kan använda anonyma analyser för att förbättra webbplatsens prestanda.",
     "privacyConclusion": "Genom att använda Bittery samtycker du till denna sekretesspolicy. Om du inte håller med, vänligen koppla bort och avstå från att använda applikationen.",
     "lastUpdated": "Senast uppdaterad: {date}",
+    "historyLink": "History",
+    "historyTitle": "Completed Rooms",
+    "historyDescription": "Rooms that already have a winner.",
     "locale": "sv"
   }
 }

@@ -77,6 +77,9 @@
     "privacyBullet5": "Мы можем использовать анонимную аналитику для повышения производительности сайта.",
     "privacyConclusion": "Используя Bittery, вы соглашаетесь с этой политикой конфиденциальности. Если вы не согласны, пожалуйста, отключите и воздержитесь от использования приложения.",
     "lastUpdated": "Последнее обновление: {date}",
+    "historyLink": "History",
+    "historyTitle": "Completed Rooms",
+    "historyDescription": "Rooms that already have a winner.",
     "locale": "ru"
   }
 }

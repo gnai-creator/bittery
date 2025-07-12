@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Link, usePathname } from "../../navigation";
+import { useTranslations } from "next-intl";
 import { useAccount } from "wagmi";
 import { useBitteryContract } from "../../hooks/useBitteryContract";
 import { Network } from "../../lib/contracts";
@@ -18,6 +19,7 @@ export default function Navbar() {
   const { address, isConnected } = useAccount();
   const contract = useBitteryContract(network);
   const symbol = useNativeSymbol(network);
+  const t = useTranslations("common");
   const [balance, setBalance] = useState<string>("0");
   const [open, setOpen] = useState(false);
 
@@ -75,9 +77,17 @@ export default function Navbar() {
 
   return (
     <nav className="bg-neutral-900 text-white flex justify-between  items-center px-4 py-2 gap-4">
-      <Link href="/" className="flex items-center gap-2">
-        <img src="/nav3.png" alt="Logo" width={40} height={40} />
-      </Link>
+      <div className="flex items-center gap-4">
+        <Link href="/" className="flex items-center gap-2">
+          <img src="/nav3.png" alt="Logo" width={40} height={40} />
+        </Link>
+        <Link
+          href={`/${network}/history`}
+          className="text-sm hover:underline hidden sm:inline-block"
+        >
+          {t("historyLink")}
+        </Link>
+      </div>
 
       <div className="relative">
         {isConnected && address ? (

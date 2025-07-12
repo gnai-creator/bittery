@@ -78,6 +78,9 @@
     "privacyBullet5": "Podemos usar análises anônimas para melhorar a performance do site.",
     "privacyConclusion": "Ao usar a Bittery, você concorda com esta política de privacidade. Se não concorda, desconecte-se e pare de usar a aplicação.",
     "lastUpdated": "Última atualização: {date}",
+    "historyLink": "Histórico",
+    "historyTitle": "Salas Finalizadas",
+    "historyDescription": "Histórico de salas que já possuem vencedor.",
     "locale": "pt"
 
   }

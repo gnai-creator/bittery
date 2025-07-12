@@ -62,8 +62,7 @@ async function ensureRoomsForContract(
         latestIndex = i;
         const roomPlayers: string[] = room.players;
         const finished =
-          room.winner !== ethers.ZeroAddress ||
-          room.drawing ||
+          room.winner !== ethers.ZeroAddress &&
           roomPlayers.length >= maxPlayers;
         if (finished) {
           const tx = await contract.createRoom(
