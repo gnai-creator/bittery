@@ -4,6 +4,7 @@ import { ethers } from "ethers";
 import ConnectWalletButton from "./ConnectWalletButton";
 import { usePathname } from "../../navigation";
 import contractAbi from "../../contracts/Bittery.json";
+import { getContractConfig, Network } from "../../lib/contracts";
 
 export default function AdminClient() {
   const [provider, setProvider] = useState<ethers.BrowserProvider>();
@@ -25,30 +26,35 @@ export default function AdminClient() {
   const [winners, setWinners] = useState<string[]>([]);
 
   const pathname = usePathname();
+  const network: Network = pathname.includes("/main") ? "main" : "test";
 
   useEffect(() => {
     if (!provider) return;
-    const address = pathname.includes("/main")
-      ? process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_MAIN
-      : process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_TEST;
-    const c = new ethers.Contract(
-      address ?? "",
-      (contractAbi as any).abi || contractAbi,
-      provider
-    );
-    setContract(c);
-  }, [provider, pathname]);
+    try {
+      const { address, abi } = getContractConfig(network);
+      const c = new ethers.Contract(address, abi, provider);
+      setContract(c);
+    } catch (err) {
+      console.error(err);
+    }
+  }, [provider, network]);
 
   useEffect(() => {
     if (!contract || !signer) return;
     async function init() {
       if (!contract) return; // Extra check to satisfy TypeScript
       if (!signer) return; // Extra check to satisfy TypeScript
-      const admin = await contract.getFeeRecipient();
-      const addr = await signer.getAddress();
-      if (admin.toLowerCase() === addr.toLowerCase()) {
-        setIsOwner(true);
-        await refresh();
+      try {
+        const admin = await contract.getFeeRecipient();
+        const addr = await signer.getAddress();
+        if (admin.toLowerCase() === addr.toLowerCase()) {
+          setIsOwner(true);
+          await refresh();
+        }
+      } catch (err: any) {
+        if (err.code !== "BAD_DATA") {
+          console.error(err);
+        }
       }
     }
     init();
@@ -57,23 +63,33 @@ export default function AdminClient() {
 
   async function refresh() {
     if (!contract) return;
-    const fp = await contract.getFeePercent();
-    const rp = await contract.getReferralPercent();
-    const fr = await contract.getFeeRecipient();
-    const pausedState = await contract.paused();
-    const ws: string[] = await contract.getWinners();
-    setFeePercent(String(Number(fp)));
-    setReferralPercent(String(Number(rp)));
-    setFeeRecipient(fr);
-    setPaused(pausedState);
-    setWinners(ws);
+    try {
+      const fp = await contract.getFeePercent();
+      const rp = await contract.getReferralPercent();
+      const fr = await contract.getFeeRecipient();
+      const pausedState = await contract.paused();
+      const ws: string[] = await contract.getWinners();
+      setFeePercent(String(Number(fp)));
+      setReferralPercent(String(Number(rp)));
+      setFeeRecipient(fr);
+      setPaused(pausedState);
+      setWinners(ws);
+    } catch (err: any) {
+      if (err.code !== "BAD_DATA") {
+        console.error(err);
+      }
+    }
   }
 
   async function tx(fn: string, ...args: any[]) {
     if (!contract || !signer) return;
-    const tx = await (contract as any).connect(signer)[fn](...args);
-    await tx.wait();
-    refresh();
+    try {
+      const tx = await (contract as any).connect(signer)[fn](...args);
+      await tx.wait();
+      refresh();
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   const updateFeePercent = () => tx("setFeePercent", Number(feePercent));
