@@ -117,7 +117,7 @@ export default function HomeClient() {
     >
       <div className="flex justify-center gap-4">
         <button
-          className="rounded dark:bg-neutral-900 text-white px-6 py-2 hover:bg-gray-800 transition-colors"
+          className="rounded dark:bg-black text-white px-6 py-2 hover:bg-gray-800 transition-colors"
           onClick={connect}
         >
           {t("connectWallet")}
