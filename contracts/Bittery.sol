@@ -277,6 +277,12 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard, Pausable {
     function getFeeRecipient() external view returns (address) {
         return feeRecipient;
     }
+    function getFeePercent() external view returns (uint256) {
+        return feePercent;
+    }
+    function getReferralPercent() external view returns (uint256) {
+        return referralPercent;
+    }
 
     // ===================== PULLPAYMENT ================================
 

@@ -57,9 +57,9 @@ export default function AdminClient() {
 
   async function refresh() {
     if (!contract) return;
-    const fp = await contract.feePercent();
-    const rp = await contract.referralPercent();
-    const fr = await contract.feeRecipient();
+    const fp = await contract.getFeePercent();
+    const rp = await contract.getReferralPercent();
+    const fr = await contract.getFeeRecipient();
     const pausedState = await contract.paused();
     const ws: string[] = await contract.getWinners();
     setFeePercent(String(Number(fp)));
