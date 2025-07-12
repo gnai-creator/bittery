@@ -35,7 +35,16 @@ async function ensureRoomsForContract(
   rooms: RoomConfig[],
   network: Network
 ) {
-  const next = await contract.nextRoomId();
+  let next: bigint;
+  try {
+    next = await contract.nextRoomId();
+  } catch (err: any) {
+    if (err?.message?.includes('bad data')) {
+      next = 0n;
+    } else {
+      throw err;
+    }
+  }
   const total = Number(next);
 
   for (const { price, maxPlayers } of rooms) {
