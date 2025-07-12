@@ -7,7 +7,7 @@ export default function MainPage() {
     <main className="flex flex-col items-center gap-4 p-8">
       <h1 className="text-2xl font-bold">Mainnet Rooms</h1>
       <p className="text-gray-600">
-        Select a room to join the mainnet lottery.
+        Select a room to join the mainnet awards.
       </p>
       <RoomsView network="main" />
       <HomeClient />
