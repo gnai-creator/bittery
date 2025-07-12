@@ -11,7 +11,16 @@ export default function RoomsView({ network }: { network: Network }) {
   useEffect(() => {
     async function load() {
       try {
-        const next = Number(await contract.getNextRoomId());
+        let next = 0;
+        try {
+          next = Number(await contract.getNextRoomId());
+        } catch (err: any) {
+          if (err.code === "BAD_DATA") {
+            setGroups({});
+            return;
+          }
+          throw err;
+        }
         if (next === 0) {
           setGroups({});
           return;
