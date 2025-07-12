@@ -89,27 +89,6 @@ export default function HomeClient() {
     }
   }, []);
 
-  useEffect(() => {
-    if (!provider) return;
-    const address = pathname.includes("/main")
-      ? process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_MAIN
-      : process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_TEST;
-    const c = new ethers.Contract(address ?? "", lotteryAbi.abi, provider);
-    setContract(c);
-    getPlayers(c);
-    getWinner(c);
-    getWinners(c);
-    const listener = () => {
-      getWinner(c);
-      getWinners(c);
-    };
-    c.on("WinnerPicked", listener);
-    return () => {
-      c.off("WinnerPicked", listener);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [provider, pathname]);
-
   async function connect() {
     if ((window as any).ethereum) {
       const prov = new ethers.BrowserProvider((window as any).ethereum);
@@ -117,35 +96,6 @@ export default function HomeClient() {
       setProvider(prov);
       setSigner(await prov.getSigner());
     }
-  }
-
-  const ROOM_ID = 0;
-
-  async function buy() {
-    if (!contract || !signer) return;
-    const referrer =
-      (typeof window !== "undefined" && localStorage.getItem("referrer")) ||
-      ZERO_ADDRESS;
-    const tx = await (contract as any)
-      .connect(signer)
-      .buyTicket(ROOM_ID, referrer, { value: ethers.parseEther("0.01") });
-    await tx.wait();
-    getPlayers(contract);
-  }
-
-  async function getPlayers(c: ethers.Contract) {
-    const list: string[] = await c.getRoomPlayers(ROOM_ID);
-    setPlayers(list);
-  }
-
-  async function getWinner(c: ethers.Contract) {
-    const room = await c.rooms(ROOM_ID);
-    setWinner(room.winner);
-  }
-
-  async function getWinners(c: ethers.Contract) {
-    const list: string[] = await c.getWinners();
-    setWinners(list.slice(-5).reverse());
   }
 
   function getNextDraw() {
@@ -191,9 +141,7 @@ export default function HomeClient() {
           ? t("statusLaunched")
           : t("statusCountdown", { time: launchCountdown })}
       </div>
-      {launched && (
-        <p className="text-lg">{t("nextDrawIn", { time: timeLeft })}</p>
-      )}
+
       <InfoCarousel />
 
       <div className="flex justify-center gap-4">
@@ -203,64 +151,10 @@ export default function HomeClient() {
         >
           {t("connectWallet")}
         </button>
-        {launched && (
-          <button
-            id="buy-button"
-            className="rounded border border-gray-800 dark:border-gray-200 px-6 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            onClick={buy}
-          >
-            {t("buyTicket", { price: TICKET_PRICE.toFixed(2), symbol })}
-            {ticketPriceUSD && (
-              <span className="ml-2 text-sm text-gray-500">
-                (~ $ {ticketPriceUSD})
-              </span>
-            )}
-          </button>
-        )}
       </div>
 
-      {/* <div className="flex justify-center p-4">
-        <video controls autoPlay loop className="w-64 rounded-lg shadow-md">
-          <source src="/Bittery - Always a Winner.mp4" type="video/mp4" />
-          {t("videoUnsupported")}
-        </video>
-      </div> */}
-
-      {!launched && <EarningsTable />}
-      {!launched && <ReferralLink />}
-      {winner && (
-        <div>
-          <h2 className="text-xl font-semibold">{t("lastWinner")}</h2>
-          <p className="truncate">{winner}</p>
-        </div>
-      )}
-      {winners.length > 0 && (
-        <div className="w-full max-w-md text-left">
-          <h2 className="text-xl font-semibold mb-2">{t("recentWinners")}</h2>
-          <ul className="space-y-1">
-            {winners.map((w) => (
-              <li key={w} className="truncate">
-                {w}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {launched && (
-        <div className="w-full max-w-md text-left">
-          <h2 className="text-xl font-semibold mb-2">
-            {t("playersHeading")} ({players.length})
-          </h2>
-          <ul className="space-y-1">
-            {players.map((p) => (
-              <li key={p} className="truncate">
-                {p}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <ReferralLink />
+      <EarningsTable />
     </main>
   );
 }
