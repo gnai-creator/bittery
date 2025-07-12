@@ -24,24 +24,24 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://bittery.org"),
+  metadataBase: new URL("https://bitaward.net"),
   title: {
-    default: "Bittery",
-    template: "%s | Bittery",
+    default: "Bitaward",
+    template: "%s | Bitaward",
   },
   description: "Decentralized lottery game",
   openGraph: {
-    title: "Bittery",
+    title: "Bitaward",
     description: "Decentralized lottery game",
-    url: "https://bittery.org",
-    siteName: "Bittery",
+    url: "https://bitaward.net",
+    siteName: "Bitaward",
     images: ["/Bittery-Logo.png"],
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Bittery",
+    title: "Bitaward",
     description: "Decentralized lottery game",
     images: ["/Bittery-Logo.png"],
   },

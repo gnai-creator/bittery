@@ -24,7 +24,7 @@ export default function ReferralLink() {
         address = accounts[0];
       }
       if (!address) return;
-      const url = `https://bittery.org/?ref=${address}`;
+      const url = `https://bitaward.net/?ref=${address}`;
       setLink(url);
       await navigator.clipboard.writeText(url);
       setCopied(true);

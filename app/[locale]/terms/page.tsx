@@ -1,16 +1,16 @@
 export const metadata = {
   title: "Terms of Use",
-  description: "Terms of service for using the Bittery platform",
+  description: "Terms of service for using the Bitaward platform",
   openGraph: {
     title: "Terms of Use",
-    description: "Terms of service for using the Bittery platform",
+    description: "Terms of service for using the Bitaward platform",
     images: ["/Bittery-Logo.png"],
-    url: "https://bittery.org/terms",
+    url: "https://bitaward.net/terms",
   },
   twitter: {
     card: "summary_large_image",
     title: "Terms of Use",
-    description: "Terms of service for using the Bittery platform",
+    description: "Terms of service for using the Bitaward platform",
     images: ["/Bittery-Logo.png"],
   },
 };
