@@ -30,12 +30,13 @@ export default function Navbar() {
     async function load() {
       try {
         const val = await contract.payments(address);
-        if (val === "0x") {
-          setBalance("0");
-        }
         setBalance(ethers.formatEther(val));
-      } catch (err) {
-        console.error(err);
+      } catch (err: any) {
+        if (err.code === "BAD_DATA") {
+          setBalance("0");
+        } else {
+          console.error(err);
+        }
       }
     }
     load();
@@ -51,13 +52,14 @@ export default function Navbar() {
         .withdrawPayments(address);
       await tx.wait();
       const val = await contract.payments(address);
-      if (val === "0x") {
-        setBalance("0");
-      }
       setBalance(ethers.formatEther(val));
       setOpen(false);
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
+      if (err.code === "BAD_DATA") {
+        setBalance("0");
+      } else {
+        console.error(err);
+      }
     }
   }
 
