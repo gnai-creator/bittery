@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
 import { ethers } from 'ethers';
 import artifact from '../../../contracts/Bittery.json';
+import { Network } from '../../../lib/contracts';
+import { getRooms, RoomConfig } from '../../../lib/rooms';
 
 export const runtime = 'nodejs';
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY || '';
-
-type Network = 'test' | 'main';
 
 function getNetworkConfig(network: Network) {
   const rpcUrl =
@@ -29,30 +29,12 @@ function getNetworkConfig(network: Network) {
   return { contract };
 }
 
-interface RoomConfig {
-  maxPlayers: number;
-  price: string; // in ETH
-}
 
-const rooms: RoomConfig[] = [
-  { maxPlayers: 10, price: '0.01' },
-  { maxPlayers: 10, price: '0.001' },
-  { maxPlayers: 10, price: '0.0005' },
-  { maxPlayers: 20, price: '0.01' },
-  { maxPlayers: 20, price: '0.001' },
-  { maxPlayers: 20, price: '0.0005' },
-  { maxPlayers: 50, price: '0.01' },
-  { maxPlayers: 50, price: '0.001' },
-  { maxPlayers: 50, price: '0.0005' },
-  { maxPlayers: 100, price: '0.01' },
-  { maxPlayers: 100, price: '0.001' },
-  { maxPlayers: 100, price: '0.0005' },
-  { maxPlayers: 1000, price: '0.01' },
-  { maxPlayers: 1000, price: '0.001' },
-  { maxPlayers: 1000, price: '0.0005' },
-];
-
-async function ensureRoomsForContract(contract: ethers.Contract) {
+async function ensureRoomsForContract(
+  contract: ethers.Contract,
+  rooms: RoomConfig[],
+  network: Network
+) {
   const next = await contract.nextRoomId();
   const total = Number(next);
 
@@ -77,8 +59,9 @@ async function ensureRoomsForContract(contract: ethers.Contract) {
             maxPlayers
           );
           await tx.wait();
+          const symbol = network === 'main' ? 'MATIC' : 'ETH';
           console.log(
-            `Created room #${(await contract.nextRoomId()) - 1n} with price ${price} ETH and ${maxPlayers} players`
+            `Created room #${(await contract.nextRoomId()) - 1n} with price ${price} ${symbol} and ${maxPlayers} players`
           );
         }
         break;
@@ -91,14 +74,16 @@ async function ensureRoomsForContract(contract: ethers.Contract) {
         maxPlayers
       );
       await tx.wait();
-      console.log(`Created initial room with price ${price} ETH and ${maxPlayers} players`);
+      const symbol = network === 'main' ? 'MATIC' : 'ETH';
+      console.log(`Created initial room with price ${price} ${symbol} and ${maxPlayers} players`);
     }
   }
 }
 
 async function ensureRooms(network: Network) {
   const { contract } = getNetworkConfig(network);
-  await ensureRoomsForContract(contract);
+  const rooms = await getRooms(network);
+  await ensureRoomsForContract(contract, rooms, network);
 }
 
 export async function GET(req: Request) {

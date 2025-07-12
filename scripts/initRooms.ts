@@ -1,12 +1,12 @@
 import { ethers } from "ethers";
 import * as dotenv from "dotenv";
 import artifact from "../contracts/Bittery.json";
+import { Network } from "../lib/contracts";
+import { getRooms } from "../lib/rooms";
 
 dotenv.config();
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
-
-type Network = "test" | "main";
 
 function getNetworkConfig(network: Network) {
   const rpcUrl = network === "main" ? process.env.POLYGON_RPC_URL : process.env.SEPOLIA_RPC_URL;
@@ -26,31 +26,10 @@ function getNetworkConfig(network: Network) {
   return { contract };
 }
 
-interface RoomConfig {
-  maxPlayers: number;
-  price: string; // in ETH
-}
-
-const rooms: RoomConfig[] = [
-  { maxPlayers: 10, price: "0.01" },
-  { maxPlayers: 10, price: "0.001" },
-  { maxPlayers: 10, price: "0.0005" },
-  { maxPlayers: 20, price: "0.01" },
-  { maxPlayers: 20, price: "0.001" },
-  { maxPlayers: 20, price: "0.0005" },
-  { maxPlayers: 50, price: "0.01" },
-  { maxPlayers: 50, price: "0.001" },
-  { maxPlayers: 50, price: "0.0005" },
-  { maxPlayers: 100, price: "0.01" },
-  { maxPlayers: 100, price: "0.001" },
-  { maxPlayers: 100, price: "0.0005" },
-  { maxPlayers: 1000, price: "0.01" },
-  { maxPlayers: 1000, price: "0.001" },
-  { maxPlayers: 1000, price: "0.0005" },
-];
 
 async function initRooms(network: Network) {
   const { contract } = getNetworkConfig(network);
+  const rooms = await getRooms(network);
   const next = await contract.nextRoomId();
   const startIndex = Number(next);
   if (startIndex >= rooms.length) {
@@ -62,8 +41,9 @@ async function initRooms(network: Network) {
     const { price, maxPlayers } = rooms[i];
     const tx = await contract.createRoom(ethers.parseEther(price), maxPlayers);
     await tx.wait();
+    const symbol = network === 'main' ? 'MATIC' : 'ETH';
     console.log(
-      `Created room #${i} on ${network} with price ${price} ETH and ${maxPlayers} players`
+      `Created room #${i} on ${network} with price ${price} ${symbol} and ${maxPlayers} players`
     );
   }
 }
