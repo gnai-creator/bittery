@@ -42,6 +42,8 @@ export default function AdminClient() {
   useEffect(() => {
     if (!contract || !signer) return;
     async function init() {
+      if (!contract) return; // Extra check to satisfy TypeScript
+      if (!signer) return; // Extra check to satisfy TypeScript
       const owner = await contract.owner();
       const addr = await signer.getAddress();
       if (owner.toLowerCase() === addr.toLowerCase()) {
@@ -156,8 +158,8 @@ export default function AdminClient() {
             <h2 className="font-bold">Create Room</h2>
             <p className="text-sm text-gray-600">
               Ticket price in native token. Max players defines when the draw
-              happens (0 for global). Payment token is the ERC20 address or
-              0x0 for native.
+              happens (0 for global). Payment token is the ERC20 address or 0x0
+              for native.
             </p>
             <input
               type="text"
