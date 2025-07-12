@@ -100,7 +100,7 @@ contract Bittery is VRFConsumerBaseV2Plus, ReentrancyGuard, Pausable {
     }
 
     /**
-     * @notice Usuário compra ticket em sala (apenas ETH/MATIC nativo)
+     * @notice Usuário compra ticket em sala (apenas ETH/POL nativo)
      * @param roomId Id da sala
      * @param referrer Endereço referral (opcional, não pode ser o próprio)
      */

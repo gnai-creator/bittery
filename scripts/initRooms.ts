@@ -9,7 +9,10 @@ dotenv.config();
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
 
 function getNetworkConfig(network: Network) {
-  const rpcUrl = network === "main" ? process.env.POLYGON_RPC_URL : process.env.SEPOLIA_RPC_URL;
+  const rpcUrl =
+    network === "main"
+      ? process.env.POLYGON_RPC_URL
+      : process.env.SEPOLIA_RPC_URL;
   const contractAddress =
     network === "main"
       ? process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_MAIN
@@ -21,11 +24,14 @@ function getNetworkConfig(network: Network) {
 
   const provider = new ethers.JsonRpcProvider(rpcUrl);
   const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
-  const contract = new ethers.Contract(contractAddress, (artifact as any).abi || artifact, wallet);
+  const contract = new ethers.Contract(
+    contractAddress,
+    (artifact as any).abi || artifact,
+    wallet
+  );
 
   return { contract };
 }
-
 
 async function initRooms(network: Network) {
   const { contract } = getNetworkConfig(network);
@@ -41,7 +47,7 @@ async function initRooms(network: Network) {
     const { price, maxPlayers } = rooms[i];
     const tx = await contract.createRoom(ethers.parseEther(price), maxPlayers);
     await tx.wait();
-    const symbol = network === 'main' ? 'MATIC' : 'ETH';
+    const symbol = network === "main" ? "POL" : "ETH";
     console.log(
       `Created room #${i} on ${network} with price ${price} ${symbol} and ${maxPlayers} players`
     );

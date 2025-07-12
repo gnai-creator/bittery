@@ -10,7 +10,10 @@ dotenv.config();
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
 
 function getNetworkConfig(network: Network) {
-  const rpcUrl = network === "main" ? process.env.POLYGON_RPC_URL : process.env.SEPOLIA_RPC_URL;
+  const rpcUrl =
+    network === "main"
+      ? process.env.POLYGON_RPC_URL
+      : process.env.SEPOLIA_RPC_URL;
   const contractAddress =
     network === "main"
       ? process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_MAIN
@@ -22,11 +25,14 @@ function getNetworkConfig(network: Network) {
 
   const provider = new ethers.JsonRpcProvider(rpcUrl);
   const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
-  const contract = new ethers.Contract(contractAddress, (artifact as any).abi || artifact, wallet);
+  const contract = new ethers.Contract(
+    contractAddress,
+    (artifact as any).abi || artifact,
+    wallet
+  );
 
   return { contract };
 }
-
 
 async function ensureRoomsForContract(
   contract: ethers.Contract,
@@ -41,18 +47,28 @@ async function ensureRoomsForContract(
 
     for (let i = total - 1; i >= 0; i--) {
       const room = await contract.rooms(i);
-      if (room.ticketPrice.toString() === ethers.parseEther(price).toString() && room.maxPlayers === BigInt(maxPlayers)) {
+      if (
+        room.ticketPrice.toString() === ethers.parseEther(price).toString() &&
+        room.maxPlayers === BigInt(maxPlayers)
+      ) {
         latestIndex = i;
         const roomPlayers: string[] = room.players;
-        const finished = room.winner !== ethers.ZeroAddress || room.drawing || roomPlayers.length >= maxPlayers;
+        const finished =
+          room.winner !== ethers.ZeroAddress ||
+          room.drawing ||
+          roomPlayers.length >= maxPlayers;
         if (finished) {
           const tx = await contract.createRoom(
             ethers.parseEther(price),
             maxPlayers
           );
           await tx.wait();
-          const symbol = network === 'main' ? 'MATIC' : 'ETH';
-          console.log(`Created room #${await contract.nextRoomId() - 1n} with price ${price} ${symbol} and ${maxPlayers} players`);
+          const symbol = network === "main" ? "POL" : "ETH";
+          console.log(
+            `Created room #${
+              (await contract.nextRoomId()) - 1n
+            } with price ${price} ${symbol} and ${maxPlayers} players`
+          );
         }
         break;
       }
@@ -64,8 +80,10 @@ async function ensureRoomsForContract(
         maxPlayers
       );
       await tx.wait();
-      const symbol = network === 'main' ? 'MATIC' : 'ETH';
-      console.log(`Created initial room with price ${price} ${symbol} and ${maxPlayers} players`);
+      const symbol = network === "main" ? "POL" : "ETH";
+      console.log(
+        `Created initial room with price ${price} ${symbol} and ${maxPlayers} players`
+      );
     }
   }
 }

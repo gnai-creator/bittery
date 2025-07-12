@@ -59,7 +59,7 @@ async function ensureRoomsForContract(
             maxPlayers
           );
           await tx.wait();
-          const symbol = network === 'main' ? 'MATIC' : 'ETH';
+          const symbol = network === 'main' ? 'POL' : 'ETH';
           console.log(
             `Created room #${(await contract.nextRoomId()) - 1n} with price ${price} ${symbol} and ${maxPlayers} players`
           );
@@ -74,7 +74,7 @@ async function ensureRoomsForContract(
         maxPlayers
       );
       await tx.wait();
-      const symbol = network === 'main' ? 'MATIC' : 'ETH';
+      const symbol = network === 'main' ? 'POL' : 'ETH';
       console.log(`Created initial room with price ${price} ${symbol} and ${maxPlayers} players`);
     }
   }

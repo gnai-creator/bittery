@@ -32,10 +32,10 @@ export default function HomeClient() {
   const prices = useUsdPrices();
   const TICKET_PRICE = 0.01;
   const ticketPriceUSD =
-    symbol !== "UNKNOWN" && (symbol === "ETH" ? prices.ETH : prices.MATIC)
-      ? (
-          TICKET_PRICE * (symbol === "ETH" ? prices.ETH! : prices.MATIC!)
-        ).toFixed(2)
+    symbol !== "UNKNOWN" && (symbol === "ETH" ? prices.ETH : prices.POL)
+      ? (TICKET_PRICE * (symbol === "ETH" ? prices.ETH! : prices.POL!)).toFixed(
+          2
+        )
       : null;
 
   useEffect(() => {

@@ -8,7 +8,7 @@ export function useNativeSymbol(network?: Network) {
 
   useEffect(() => {
     if (network) {
-      setSymbol(network === "main" ? "MATIC" : "ETH");
+      setSymbol(network === "main" ? "POL" : "ETH");
       return;
     }
 

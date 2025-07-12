@@ -52,8 +52,8 @@ export default function EarningsTable() {
   const usdRate =
     symbol === "ETH"
       ? prices.ETH ?? 3000
-      : symbol === "MATIC"
-      ? prices.MATIC ?? 1
+      : symbol === "POL"
+      ? prices.POL ?? 1
       : 3000;
   const rows = useMemo(() => generateData(2, 1000, 100, usdRate), [usdRate]);
   return (
