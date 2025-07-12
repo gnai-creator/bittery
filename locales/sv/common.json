@@ -9,7 +9,7 @@
     "metamaskRequired": "Metamask krävs",
     "generateReferralLink": "Generera remisslänk",
     "linkCopied": "Länk kopia!",
-    "referralReward": "Du kommer att tjäna ungefär $ {reward} för varje hänvisat biljettköp.",
+    "referralReward": "Du tjänar cirka $ {reward} när någon köper en biljett för 0.01 ETH via din länk (2.5% av priset). Belöningen skalar med biljettpriset.",
     "and": "och",
     "howItWorksTitle": "Hur det fungerar",
     "howItWorksText": "Köp en biljett, vänta tills timern går ut och se om du vann! Varje dragning är slumpmässig och transparent.",
