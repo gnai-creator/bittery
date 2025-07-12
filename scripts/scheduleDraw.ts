@@ -20,13 +20,23 @@ const lottery = new ethers.Contract(CONTRACT_ADDRESS, lotteryAbi.abi, wallet);
 
 async function draw() {
   try {
-    const players: string[] = await lottery.getPlayers();
-    if (players.length >= 2) {
-      const tx = await lottery.requestRandomWinner();
-      await tx.wait();
-      console.log("Winner request sent", tx.hash);
-    } else {
-      console.log(`Skipping draw, only ${players.length} player(s)`);
+    const total = Number(await lottery.nextRoomId());
+    for (let i = 0; i < total; i++) {
+      const players: string[] = await lottery.getRoomPlayers(i);
+      const room = await lottery.rooms(i);
+      if (!room.drawing && room.winner === ethers.ZeroAddress && players.length >= 2) {
+        const drawFn = (lottery as any).draw ?? (lottery as any).requestRandomWinner;
+        if (typeof drawFn === "function") {
+          const tx = await drawFn(i);
+          await tx.wait();
+          console.log(`Winner request sent for room ${i}`, tx.hash);
+        } else {
+          console.log("No public draw function found on contract");
+          break;
+        }
+      } else {
+        console.log(`Skipping room ${i}, only ${players.length} player(s)`);
+      }
     }
   } catch (err) {
     console.error("Failed to execute draw:", err);
