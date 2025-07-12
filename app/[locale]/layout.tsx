@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import TermsBanner from "../components/TermsBanner";
 import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 import "../globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import WagmiProviders from "../components/WagmiProviders";
@@ -68,6 +69,7 @@ export default async function RootLayout({
       >
         <WagmiProviders>
           <NextIntlClientProvider locale={locale} messages={messages}>
+            <Navbar />
             <main className="flex-grow">{children}</main>
             <Footer />
             <TermsBanner />
