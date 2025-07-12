@@ -39,7 +39,7 @@ async function ensureRoomsForContract(
   rooms: RoomConfig[],
   network: Network
 ) {
-  const next = await contract.nextRoomId();
+  const next = await contract.getNextRoomId();
   const total = Number(next);
 
   for (const { price, maxPlayers } of rooms) {
@@ -66,7 +66,7 @@ async function ensureRoomsForContract(
           const symbol = network === "main" ? "POL" : "ETH";
           console.log(
             `Created room #${
-              (await contract.nextRoomId()) - 1n
+              (await contract.getNextRoomId()) - 1n
             } with price ${price} ${symbol} and ${maxPlayers} players`
           );
         }

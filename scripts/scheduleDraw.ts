@@ -33,7 +33,7 @@ function getNetworkConfig(network: Network) {
 
 async function drawForContract(contract: ethers.Contract, network: Network) {
   try {
-    const total = Number(await contract.nextRoomId());
+    const total = Number(await contract.getNextRoomId());
     for (let i = 0; i < total; i++) {
       const players: string[] = await contract.getRoomPlayers(i);
       const room = await contract.rooms(i);

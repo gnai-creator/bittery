@@ -25,6 +25,10 @@ export default function Navbar() {
     async function load() {
       try {
         const val = await contract.payments(address);
+        if (!val) {
+          setBalance("0");
+          return;
+        }
         setBalance(ethers.formatEther(val));
       } catch (err) {
         console.error(err);

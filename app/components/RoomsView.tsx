@@ -11,7 +11,7 @@ export default function RoomsView({ network }: { network: Network }) {
   useEffect(() => {
     async function load() {
       try {
-        const next = Number(await contract.nextRoomId());
+        const next = Number(await contract.getNextRoomId());
         const BATCH_SIZE = 3;
         const rooms: any[] = [];
         for (let i = 0; i < next; i += BATCH_SIZE) {
