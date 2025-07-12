@@ -16,15 +16,14 @@ interface RowData {
 }
 
 const REF_PERCENT_ETH = 0.00025; // 2.5% of 0.01 ETH
+
 function generateData(
-  start = 2,
-  end = 50,
-  offset = 1,
+  playersList: number[] = [10, 20, 50, 100, 1000],
   usdRate = 3000,
   factor = 1
 ): RowData[] {
   const data: RowData[] = [];
-  for (let players = start; players <= end; players += offset) {
+  for (const players of playersList) {
     const referrals = players - 1;
     const referralEarningsETH = referrals * REF_PERCENT_ETH * factor;
     const referralEarningsUSD = referralEarningsETH * usdRate;
@@ -59,7 +58,7 @@ export default function EarningsTable() {
   const factor =
     symbol === "POL" && prices.ETH && prices.POL ? prices.ETH / prices.POL : 1;
   const rows = useMemo(
-    () => generateData(2, 1000, 100, usdRate, factor),
+    () => generateData([10, 20, 50, 100, 1000], usdRate, factor),
     [usdRate, factor]
   );
   return (
