@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="public/logo.png" alt="Bittery Logo" width="250"/>
+  <img src="public/logo.png" alt="Bitaward Logo" width="250"/>
 </p>
 
-# 🎲 Bittery
+# 🎲 Bitaward
 
-**Bittery** is a decentralized, fair, and transparent lottery system built on the Polygon network for mainnet and Ethereum Sepolia for testing. It uses **Chainlink VRF** (Verifiable Random Function) to ensure that all draws are provably random and tamper-proof.
+**Bitaward** is a decentralized, fair, and transparent lottery system built on the Polygon network for mainnet and Ethereum Sepolia for testing. It uses **Chainlink VRF** (Verifiable Random Function) to ensure that all draws are provably random and tamper-proof.
 
 ---
 
@@ -64,7 +64,7 @@ NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_walletconnect_id
 
 The WalletConnect project ID identifies your app on WalletConnect Cloud. Sign up
 at <https://cloud.walletconnect.com>, create a project, and copy the generated
-identifier. If not provided, the app falls back to the default `bittery`
+identifier. If not provided, the app falls back to the default `bitaward`
 identifier used in development.
 
 If these variables are missing the app will attempt to create a contract with an empty address and throw an `UNCONFIGURED_NAME` error.
@@ -144,9 +144,9 @@ npm run verify:main -- 0xYourContractAddress 0xCoordinator 1 0xKeyHash 0xFeeReci
 
 ---
 
-## ❓ Why Bittery?
+## ❓ Why Bitaward?
 
-Most blockchain lotteries either rely on backend systems or have hidden rules. Bittery is:
+Most blockchain lotteries either rely on backend systems or have hidden rules. Bitaward is:
 
 - ✅ Fully decentralized and self-contained
 - 🔍 Provably fair using Chainlink VRF
@@ -163,7 +163,7 @@ This project is licensed under the **Business Source License 1.1**.
 - 🚫 **Commercial use prohibited** unless licensed
 - 🔓 **License converts to MIT** on **July 10, 2075**
 
-For commercial licensing, contact: [contact@bittery.org](mailto:contact@bittery.org)
+For commercial licensing, contact: [contact@bitaward.net](mailto:contact@bitaward.net)
 
 View full license in [`LICENSE`](./LICENSE).
 
@@ -172,15 +172,15 @@ View full license in [`LICENSE`](./LICENSE).
 ## ✉️ Contact
 
 - 🧑 Author: Felipe Maya Muniz ([gnai-creator](https://github.com/gnai-creator))
-- 📬 Email: [contact@bittery.org](mailto:contact@bittery.org)
-- 🌐 Project site: [https://www.bittery.org](https://www.bittery.org)
+- 📬 Email: [contact@bitaward.net](mailto:contact@bitaward.net)
+- 🌐 Project site: [https://bitaward.net](https://bitaward.net)
 
 ---
 
 ## ⚠ Disclaimer
 
-Bittery is a decentralized lottery protocol currently released under a non-commercial license (BUSL 1.1).  
+Bitaward is a decentralized lottery protocol currently released under a non-commercial license (BUSL 1.1).
 Commercial deployment — including real-money use, hosted platforms, and integrations — is **strictly prohibited without an official license** from the author.
 
-If you wish to operate Bittery commercially or as a public service, please request a commercial license at: [contact@bittery.org](mailto:contact@bittery.org)
+If you wish to operate Bitaward commercially or as a public service, please request a commercial license at: [contact@bitaward.net](mailto:contact@bitaward.net)
 
