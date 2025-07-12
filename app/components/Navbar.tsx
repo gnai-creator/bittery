@@ -51,28 +51,11 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="bg-neutral-900 text-white flex items-center px-4 py-2 gap-4">
+    <nav className="bg-neutral-900 text-white flex justify-between  items-center px-4 py-2 gap-4">
       <Link href="/" className="flex items-center gap-2">
         <img src="/nav3.png" alt="Logo" width={40} height={40} />
       </Link>
-      <div className="flex-1 flex justify-center gap-2">
-        <Link
-          href="/main"
-          className={`px-4 py-1 rounded text-sm ${
-            network === "main" ? "bg-orange-600" : "bg-orange-500"
-          } hover:bg-orange-700`}
-        >
-          Mainnet
-        </Link>
-        <Link
-          href="/test"
-          className={`px-4 py-1 rounded text-sm ${
-            network === "test" ? "bg-orange-600" : "bg-orange-500"
-          } hover:bg-orange-700`}
-        >
-          Testnet
-        </Link>
-      </div>
+
       <div className="relative">
         {isConnected && address ? (
           <button

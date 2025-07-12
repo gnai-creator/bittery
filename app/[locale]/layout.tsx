@@ -3,13 +3,14 @@ import { Geist, Geist_Mono } from "next/font/google";
 import TermsBanner from "../components/TermsBanner";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import Networks from "../components/Networks";
 import "../globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import WagmiProviders from "../components/WagmiProviders";
 
-import {NextIntlClientProvider} from "next-intl";
-import {setRequestLocale, getMessages} from "next-intl/server";
-import {locales} from "../../i18n";
+import { NextIntlClientProvider } from "next-intl";
+import { setRequestLocale, getMessages } from "next-intl/server";
+import { locales } from "../../i18n";
 import { notFound } from "next/navigation";
 
 const geistSans = Geist({
@@ -21,7 +22,6 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://bittery.org"),
@@ -54,11 +54,8 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-export default async function RootLayout({
-  children,
-  params,
-}: any) {
-  const {locale} = await params;
+export default async function RootLayout({ children, params }: any) {
+  const { locale } = await params;
   if (!locales.includes(locale as any)) notFound();
   setRequestLocale(locale);
   const messages = await getMessages();
@@ -70,6 +67,7 @@ export default async function RootLayout({
         <WagmiProviders>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <Navbar />
+            <Networks />
             <main className="flex-grow">{children}</main>
             <Footer />
             <TermsBanner />
